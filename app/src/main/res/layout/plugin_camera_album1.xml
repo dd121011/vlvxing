@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/albumback"
+    android:orientation="vertical" >
+
+    <com.handongkeji.widget.MyTitleLayout
+        android:id="@+id/addProductTopTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <GridView
+        android:id="@+id/myGrid"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/albumback"
+        android:horizontalSpacing="6dp"
+        android:numColumns="3"
+        android:verticalSpacing="6dp" />
+
+    <TextView
+        android:id="@+id/myText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="相册没有图片"
+        android:textColor="@color/black"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="3dp"
+        android:background="#eaeaea" >
+
+        <Button
+            android:id="@+id/ok_button"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp" />
+    </RelativeLayout>
+
+</LinearLayout>

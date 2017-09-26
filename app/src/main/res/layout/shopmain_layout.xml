@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_f3f3f4"
+    android:orientation="vertical">
+
+    <include layout="@layout/head" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/head_lin">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/lin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingBottom="15dp"
+                android:paddingLeft="12dp"
+                android:paddingTop="15dp">
+
+                <ImageView
+                    android:id="@+id/car_img"
+                    android:layout_width="96dp"
+                    android:layout_height="72dp"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/name_txt"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:ellipsize="end"
+                            android:maxLines="2"
+                            android:textColor="@color/color_313131"
+                            android:textSize="15sp" />
+                        <LinearLayout
+                            android:id="@+id/call_rel"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:gravity="center"
+                            android:paddingBottom="10dp">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@mipmap/call_blue" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/content_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="2"
+                        android:paddingRight="44dp"
+                        android:textColor="@color/color_313131"
+                        android:layout_marginTop="5dp"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <WebView
+                android:id="@+id/webview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/lin"
+                android:layout_marginTop="8dp"
+                android:background="@color/white" />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

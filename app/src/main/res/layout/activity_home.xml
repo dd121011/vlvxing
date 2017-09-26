@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <!--<android.support.v4.widget.NestedScrollView-->
+    <!--android:id="@+id/scroll_view"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:fillViewport="true">-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:orientation="vertical">-->
+    <include layout="@layout/common_select" />
+
+    <!--<com.youth.banner.Banner-->
+        <!--android:id="@+id/public_pager"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="178dp"-->
+        <!--android:visibility="visible"-->
+        <!--app:indicator_drawable_selected="@drawable/selected_radius"-->
+        <!--app:indicator_drawable_unselected="@drawable/noselected_radius" />-->
+
+    <com.sivin.Banner
+        android:id="@+id/public_pager"
+        android:layout_width="match_parent"
+        android:layout_height="178dp" />
+    <TextView
+        android:id="@+id/txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@mipmap/hot"
+        android:drawablePadding="16dp"
+        android:paddingLeft="12dp"
+        android:paddingTop="13dp"
+        android:text="热门景点"
+        android:textColor="@color/color_313131"
+        android:textSize="16sp" />
+
+    <com.handongkeji.widget.NoScrollGridView
+        android:id="@+id/hot_grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="4"
+        android:paddingBottom="16dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="18dp"
+        android:verticalSpacing="10dp"
+        android:scrollbars="none"></com.handongkeji.widget.NoScrollGridView>
+
+    <include layout="@layout/five_tab" />
+    <!--<com.handongkeji.widget.PagerSlidingTabStrip-->
+    <!--android:id="@+id/pagerTabStrip"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="44dp"-->
+    <!--android:background="@color/white"-->
+    <!--android:paddingLeft="12dp"-->
+    <!--android:paddingRight="12dp"-->
+    <!--app:pstsIndicatorColor="@color/color_ea5413"-->
+    <!--app:pstsShouldExpand="true"-->
+    <!--app:pstsTabTextColor="@color/isselect_txt"-->
+    <!--/>-->
+
+    <!--<com.handongkeji.widget.FixedViewPager-->
+    <!--android:id="@+id/viewPager"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_weight="1"-->
+    <!--/>-->
+    <!--</LinearLayout>-->
+    <!--</android.support.v4.widget.NestedScrollView>-->
+</LinearLayout>

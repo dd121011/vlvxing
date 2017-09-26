@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_select" />
+
+    <!--<com.youth.banner.Banner-->
+        <!--android:id="@+id/public_pager"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="178dp"-->
+        <!--android:visibility="visible"-->
+        <!--app:indicator_drawable_selected="@drawable/selected_radius"-->
+        <!--app:indicator_drawable_unselected="@drawable/noselected_radius" />-->
+    <com.sivin.Banner
+        android:id="@+id/public_pager"
+        android:layout_width="match_parent"
+        android:layout_height="178dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="16dp"
+        android:paddingTop="19dp"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/tab1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="14dp"
+            android:drawableTop="@mipmap/zijiayou"
+            android:gravity="center"
+            android:text="自驾游"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tab2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="14dp"
+            android:drawableTop="@mipmap/zhoumoyou"
+            android:gravity="center"
+            android:text="周末游"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tab3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="14dp"
+            android:drawableTop="@mipmap/nongjiayuan"
+            android:gravity="center"
+            android:text="农家院"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tab4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="14dp"
+            android:drawableTop="@mipmap/jingdianyongche"
+            android:gravity="center"
+            android:text="景点用车"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tab5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="14dp"
+            android:drawableTop="@mipmap/gengduo"
+            android:gravity="center"
+            android:text="更多"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@color/color_e3e3e3" />
+    <!--<com.handongkeji.widget.PagerSlidingTabStrip-->
+    <!--android:id="@+id/pagerTabStrip"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="44dp"-->
+    <!--android:background="@color/white"-->
+    <!--android:paddingLeft="12dp"-->
+    <!--android:paddingRight="12dp"-->
+    <!--app:pstsIndicatorColor="@color/color_ea5413"-->
+    <!--app:pstsShouldExpand="true"-->
+    <!--app:pstsTabTextColor="@color/isselect_txt"-->
+    <!--/>-->
+    <include layout="@layout/five_tab"/>
+</LinearLayout>

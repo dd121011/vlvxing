@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/detailhead_layout" />
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_lin"
+        android:layout_below="@+id/title_lin"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/recommon_lin"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp">
+
+                    <TextView
+                        android:id="@+id/all_txt"
+                        style="@style/common_type"
+                        android:text="全部(0)" />
+
+                    <TextView
+                        android:id="@+id/good_txt"
+                        style="@style/common_type"
+                        android:text="好评(0)" />
+
+                    <TextView
+                        android:id="@+id/center_txt"
+                        style="@style/common_type"
+                        android:text="中评(0)" />
+
+                    <TextView
+                        android:id="@+id/bad_txt"
+                        style="@style/common_type"
+                        android:text="差评(0)" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="@color/color_e3e3e3" />
+
+                <include layout="@layout/loadcommon_list" />
+            </LinearLayout>
+
+            <com.vlvxing.app.widget.FixLinearLayout
+                android:id="@+id/details_lin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <com.youth.banner.Banner
+                    android:id="@+id/public_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="178dp"
+                    android:visibility="visible"
+                    app:indicator_drawable_selected="@drawable/selected_radius"
+                    app:indicator_drawable_unselected="@drawable/noselected_radius" />
+                <LinearLayout
+                    android:id="@+id/isfrm_lin0"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="10dp"
+                        android:paddingBottom="14dp"
+                        android:paddingLeft="12dp"
+                        android:paddingRight="12dp"
+                        >
+                        <TextView
+                            android:id="@+id/content_txt0"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:lineSpacingExtra="5dp"
+                            android:lines="2"
+                            android:singleLine="true"
+                            android:textColor="@color/color_313131"
+                            android:textSize="16sp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="10dp"
+                            >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="￥"
+                                android:textColor="@color/color_a54836"
+                                android:textSize="11sp" />
+
+                            <TextView
+                                android:id="@+id/price_txt0"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:textColor="@color/color_ea5413"
+                                android:textSize="19sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:text="起/人"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:background="@color/color_e3e3e3" />
+                    <LinearLayout
+                        android:id="@+id/local_rel"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:background="@drawable/borderstyle_blue"
+                        >
+                        <TextView
+                            android:id="@+id/address_txt"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@mipmap/place"
+                            android:drawablePadding="10dp"
+                            android:textColor="@color/color_313131"
+                            android:textSize="16sp"
+                            />
+                        <TextView
+                            android:id="@+id/distance_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableRight="@mipmap/jump"
+                            android:drawablePadding="10dp"
+                            android:textColor="@color/color_ea5413"
+                            android:textSize="14sp"
+                            android:text="0km"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/isfrm_lin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    >
+                    <TextView
+                        android:id="@+id/content_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:ellipsize="end"
+                        android:lineSpacingExtra="5dp"
+                        android:lines="2"
+                        android:paddingLeft="12dp"
+                        android:paddingRight="12dp"
+                        android:textColor="@color/color_313131"
+                        android:textSize="16sp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="13dp"
+                        android:orientation="horizontal"
+                        android:paddingBottom="14dp"
+                        android:paddingLeft="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="￥"
+                            android:textColor="@color/color_a54836"
+                            android:textSize="11sp" />
+
+                        <TextView
+                            android:id="@+id/price_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:textColor="@color/color_ea5413"
+                            android:textSize="19sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:text="起/人"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:background="@color/color_e3e3e3" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/borderstyle_white"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txt1"
+                        style="@style/tab_day_select"
+                        android:text="产品特色"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/txt2"
+                        style="@style/tab_day_select"
+                        android:text="费用说明"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/txt3"
+                        style="@style/tab_day_select"
+                        android:text="预定须知" />
+                </LinearLayout>
+
+                <com.handongkeji.widget.FixedViewPager
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+            </com.vlvxing.app.widget.FixLinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+    <include layout="@layout/detailsbottom_layout" />
+</RelativeLayout>

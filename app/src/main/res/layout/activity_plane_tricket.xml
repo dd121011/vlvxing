@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_eaeaea">
+
+    <include layout="@layout/plane_head" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:orientation="vertical">
+
+
+    <com.sivin.Banner
+        android:id="@+id/plane_pager"
+        android:layout_width="match_parent"
+        android:layout_height="120dp" />
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:background="@color/bg_eaeaea">
+        <RadioButton
+            android:id="@+id/left_radio_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:button="@null"
+            android:textSize="15sp"
+            android:checked="true"
+            android:textColor="@color/plane_radiobtn_textcolor_selector"
+            android:text="单程"/>
+        <RadioButton
+            android:id="@+id/right_radio_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:button="@null"
+            android:textSize="15sp"
+            android:textColor="@color/plane_radiobtn_textcolor_selector"
+            android:text="往返"/>
+
+    </RadioGroup>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/view_left"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@color/color_ea5413" />
+
+        <View
+            android:id="@+id/view_right"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:visibility="invisible"
+            android:background="@color/color_ea5413" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="30dp"
+        android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_eaeaea">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:paddingTop="10dp"
+            android:orientation="vertical"
+            android:layout_weight="1">
+        <TextView
+            android:id="@+id/city_txt_left"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp"
+            android:gravity="left|center_vertical"
+            android:textColor="@color/black"
+            android:text="中国"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/text_color_75"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="5dp">
+            <ImageView
+                android:id="@+id/go_or_come"
+                android:layout_width="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:background="@mipmap/go_or_back"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/city_txt_right"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingRight="5dp"
+            android:gravity="right|center_vertical"
+            android:text="日本"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/text_color_75"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:background="@color/bg_eaeaea">
+        <TextView
+            android:id="@+id/txt_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:paddingLeft="5dp"
+            android:text=""/>
+        <TextView
+            android:id="@+id/txt_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:textSize="12sp"
+            android:textColor="@color/text_color_75"
+            android:text="今天"/>
+    </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="30dp"
+            >
+            <Button
+                android:id="@+id/search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:background="@drawable/red_btn"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:text="搜索"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        android:layout_weight="1"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:background="@color/bg_eaeaea"
+        android:layout_gravity="center"
+        android:paddingBottom="5dp">
+
+        <Button
+            android:id="@+id/bottom_left_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:button="@null"
+            android:textSize="12sp"
+            android:drawablePadding="5dp"
+            android:background="@null"
+            android:drawableTop="@drawable/my_plane_order_radiobutton"
+            android:textColor="@color/plane_radiobtn_textcolor_selector"
+            android:text="我的机票订单"/>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"/>
+        <Button
+            android:id="@+id/bottom_right_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:button="@null"
+            android:textSize="12sp"
+            android:drawablePadding="5dp"
+            android:background="@null"
+            android:drawableTop="@drawable/plane__travel_radiobutton"
+            android:textColor="@color/plane_radiobtn_textcolor_selector"
+            android:text=" 出行无忧 "/>
+
+
+    </LinearLayout>
+</LinearLayout>

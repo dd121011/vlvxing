@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <!-- 日历购票相关 -->
+    <color name="calendar_disable_color">#DDDDDD</color>
+    <color name="qianhuise">#cccccc</color>
+    <color name="calendar_enable_color">#666666</color>
+    <color name="calendar_threeday_color">#FA383A</color>
+<!--    <color name="white">#fff</color>-->
+    <color name="colorPlane">#ea5413</color>
+
+
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="color_333333">#333333</color>
+    <color name="color_313131">#313131</color>
+    <color name="color_111111">#111111</color>
+    <color name="color_444444">#444444</color>
+    <color name="color_666666">#666666</color>
+    <color name="bg_eaeaea">#eaeaea</color>
+    <color name="bg_eaeas">#363850</color>
+<color name="color_06f400">#06f400</color>
+    <color name="theme_blue">#008df9</color>
+    <!-- 背景颜色 -->
+    <color name="fl_me_bg">#ecebed</color>
+    <color name="fl_me_textTitle">#646464</color>
+    <color name="fl_me_textTitle1">#db9c60</color>
+    <!--<color name="black">#ff000000</color>-->
+    <color name="white">#FFFFFF</color>
+    <color name="text_hui">#fafafa</color>
+    <color name="text_hui989898">#989898</color>
+    <color name="bg_hui909090">#909090</color>
+    <color name="bg_zi7924b2">#7924b2</color>
+    <color name="bg_hui646464">#646464</color>
+    <color name="bg_huif0f0f0">#f0f0f0</color>
+    <color name="bg_huiededed">#ededed</color>
+    <color name="bg_huifafafa">#fafafa</color>
+    <color name="bg_hui474747">#474747</color>
+    <color name="bg_huiC8C8C8">#c8c8c8</color>
+    <color name="bg_t_huiC8C8C8">#afc8c8c8</color>
+    <color name="bg_hui797979">#797979</color>
+    <color name="bg_huifaf9fa">#faf9fa</color>
+    <color name="bg_huieaeaea">#eaeaea</color>
+    <color name="bg_hui4b4b4b">#4b4b4b</color>
+    <color name="bg_huicccccc">#cccccc</color>
+    <color name="bg_huid5d5d5">#d5d5d5</color>
+    <color name="bg_huif5f5f5">#f5f5f5</color>
+    <color name="bg_huiDBDBDB">#DBDBDB</color>
+    <color name="bg_hui999999">#999999</color>
+    <color name="bg_hongC5F14F7A">#C5F14F7A</color>
+
+    <color name="bg_lanC5304EAE">#C5304EAE</color>
+    <color name="bg_hongC5ED3740">#C5ED3740</color>
+    <color name="bg_hongC5FF000D">#C5FF000D</color>
+    <color name="bg_lanC558C5E6">#C558C5E6</color>
+
+    <color name="bg_lanaE43872">#E43872</color>
+    <color name="bg_lana527FE5">#527FE5</color>
+    <color name="bg_lanaE53838">#E53838</color>
+    <color name="bg_lana06CCA1">#06CCA1</color>
+    <color name="bg_hongd8505c">#d8505c</color>
+    <color name="bg_huang1">#FFED9E37</color>
+
+
+    <!-- 字体颜色 -->
+    <color name="text_black">#000000</color>
+    <color name="text_home_bottom">#646464</color>
+    <color name="bg_me_top">#5f000000</color>
+
+
+
+    <color name="line_gray">#E0E0E0</color>
+    <color name="color_e3e3e3">#e3e3e3</color>
+    <color name="color_e6ebf0">#e6ebf0</color>
+    <color name="color_e7e7e7">#e7e7e7</color>
+    <color name="color_363850">#363850</color>
+    <color name="color_f1f1f1">#f1f1f1</color>
+    <color name="province_line_border">#D0D0D0</color>
+    <color name="color_949494">#949494</color>
+    <color name="psts_background_tab_pressed">#1AFFFFFF</color>
+</resources>

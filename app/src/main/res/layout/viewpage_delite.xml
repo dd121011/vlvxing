@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <com.handongkeji.ui.HackyViewPager
+        android:id="@+id/delete"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </com.handongkeji.ui.HackyViewPager>
+    
+    <ImageView 
+        android:id="@+id/iv_delete"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/tanydelete"/>
+
+</RelativeLayout>

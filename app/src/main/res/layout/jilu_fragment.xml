@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_select1" />
+
+    <ListView
+        android:id="@+id/result_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/select_lin"
+        android:visibility="gone"
+        ></ListView>
+
+    <RelativeLayout
+        android:id="@+id/map_rel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/select_lin"
+        android:background="@color/white"
+        android:visibility="visible"
+        >
+
+        <com.baidu.mapapi.map.MapView
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></com.baidu.mapapi.map.MapView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/select_lin"
+            >
+
+
+            <LinearLayout
+                android:id="@+id/three_lin"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="bottom"
+                android:layout_marginRight="6dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/share_lin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/borderstyle_whiter"
+                    android:layout_marginTop="15dp"
+                    android:paddingBottom="6dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:paddingTop="6dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/share_red" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/conceal_lin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/borderstyle_whiter"
+                    android:layout_marginTop="15dp"
+                    android:paddingBottom="9dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:paddingTop="9dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/conceal" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tmc_lin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/borderstyle_whiter"
+                    android:layout_marginTop="15dp"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="5dp">
+
+                    <CheckBox
+                        android:id="@+id/tmc_check"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:button="@null"
+                        android:background="@drawable/tmc_checkbox_selector" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/wc_lin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/borderstyle_whiter"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:paddingTop="10dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/wc" />
+                </LinearLayout>
+
+               <LinearLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:orientation="vertical"
+                   android:gravity="center"
+                   android:layout_marginTop="80dp"
+                   >
+                   <LinearLayout
+                       android:id="@+id/navigate_lin"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:background="@drawable/borderstyle_whiter"
+                       android:paddingBottom="6dp"
+                       android:paddingLeft="6dp"
+                       android:paddingRight="6dp"
+                       android:paddingTop="6dp">
+
+                       <ImageView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:src="@mipmap/navigate" />
+                   </LinearLayout>
+
+                   <LinearLayout
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="15dp"
+                       android:background="@drawable/borderstyle_whiter"
+                       android:orientation="vertical"
+                       android:paddingLeft="9dp"
+                       android:paddingRight="9dp"
+                       android:visibility="gone"
+                       >
+
+                       <ImageView
+                           android:id="@+id/add_img"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:paddingBottom="15dp"
+                           android:paddingTop="12dp"
+                           android:src="@mipmap/fangda" />
+
+                       <ImageView
+                           android:id="@+id/less_img"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:paddingBottom="12dp"
+                           android:paddingTop="15dp"
+                           android:src="@mipmap/suoxao" />
+                   </LinearLayout>
+               </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/go_destination"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/borderstyle_whiter"
+            android:layout_marginBottom="80dp"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"
+            android:layout_alignParentBottom="true"
+            android:padding="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_ea5413"
+                android:layout_centerInParent="true"
+                android:textSize="15sp"
+                android:text="路线规划"/>
+        </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/bottom_lin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp">
+
+            <LinearLayout
+                android:id="@+id/play_lin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/circle_white"
+                    android:padding="20dp">
+
+                    <ImageView
+                        android:id="@+id/play_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/play" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/camera_lin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/circle_white"
+                    android:padding="20dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/scamera" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/over_lin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/circle_white"
+                    android:padding="20dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/jieshu" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="75dp"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="60dp"
+        android:layout_marginTop="300dp"
+        >
+        <LinearLayout
+            android:id="@+id/year_lin1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/transparent_bg"
+            android:orientation="vertical"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            >
+
+            <ImageView
+                android:id="@+id/year_img1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="4dp"
+                android:paddingTop="4dp"
+                android:src="@mipmap/year"
+                />
+            <RelativeLayout
+                android:id="@+id/year_rel1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:visibility="gone"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/yuan"
+                    />
+                <TextView
+                    android:id="@+id/year_txt1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2017"
+                    android:textSize="13sp"
+                    android:textColor="@color/white"
+                    android:layout_centerInParent="true"
+                    />
+            </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/year_lin2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/transparent_bg1"
+            android:orientation="vertical"
+            android:gravity="right"
+            android:visibility="gone"
+            android:paddingRight="5dp"
+            >
+            <ImageView
+                android:id="@+id/year_img2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="4dp"
+                android:paddingTop="4dp"
+                android:src="@mipmap/year"
+                />
+            <RelativeLayout
+                android:id="@+id/year_rel2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:visibility="gone"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/yuan"
+                    />
+                <TextView
+                    android:id="@+id/year_txt2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2017"
+                    android:textSize="13sp"
+                    android:textColor="@color/white"
+                    android:layout_centerInParent="true"
+                    />
+            </RelativeLayout>
+            <View
+                android:layout_width="62dp"
+                android:layout_height="2dp"
+                android:background="@color/color_dddddd"
+                android:layout_gravity="center"
+                />
+            <ListView
+                android:id="@+id/year_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@null"
+                >
+            </ListView>
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</RelativeLayout>

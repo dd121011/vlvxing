@@ -1,0 +1,550 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.vlvxing.app">
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="25" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+
+    <!-- 地图权限 -->
+
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+
+    <!-- 读取联系人信息权限 -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- 发送短信 -->
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <!-- 阅读消息 -->
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <!-- 写入消息 -->
+    <uses-permission android:name="android.permission.WRITE_SMS" />
+    <!-- 接收消息 -->
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+
+    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 允许应用读取低级别的系统日志文件 -->
+    <uses-permission android:name="android.permission.READ_LOGS" />
+
+    <!-- 友盟有关权限 -->
+    <uses-permission android:name="android.permission.SET_DEBUG_APP" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <!-- 只为具有BLE的设备提供 -->
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+    <!-- 必选 -->
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <!-- 百度导航 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.READ_LOGS" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+    <!-- SDK1.5需要android.permission.GET_TASKS权限判断本程序是否为当前运行的应用? -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <!-- 来电消音 -->
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- 摄影机 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.SET_DEBUG_APP" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+
+    <!-- 上传视频需要的权限 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- 录制视频需要的权限 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_VIDEO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <application
+        android:name=".common.MyApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/logos"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/MyTheme.Basic">
+        <service
+            android:name="com.handongkeji.common.MyAccountsService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator" />
+        </service>
+        <service android:name="com.handongkeji.autoupdata.UpdataService" />
+        <!-- 百度定位所需要的服务 -->
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
+        <!-- 配置百度地图的秘钥  WyUZseqlQX5PjW6NtVwBefLhu2QKEWGe-->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="n8cvlDfzIrc3viOVvlilovh1jHQOFVzv" />
+
+        <!--拍照适配Android7.0-->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.vlvxing.app.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
+        <!--未安装支付宝则跳转到h5界面进行支付-->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <activity
+            android:name="com.alipay.sdk.app.H5AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+
+        <!-- 友盟 -->
+        <activity
+            android:name="com.umeng.socialize.editorpage.ShareActivity"
+            android:excludeFromRecents="true"
+            android:theme="@style/Theme.UMDefault" />
+        <!-- 设置友盟appid -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5940c6db677baa2d6b001a98" />
+        <meta-data
+            android:name="UMENG_MESSAGE_SECRET"
+            android:value="f573c6aba4f73fbb67731327b4b630bc" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Channel ID" />
+        <!-- 微信平台 -->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- 微信回调 -->
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:configChanges="locale"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!-- 新浪微博 -->
+        <activity
+            android:name=".wxapi.WBShareActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <service
+            android:name="com.sina.weibo.sdk.net.DownloadService"
+            android:exported="false" />
+        <!-- QQ QQ空间 -->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent100424468" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- 加载页-->
+        <activity android:name=".ui.SplashActivity"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!-- 导航页 -->
+        <activity
+            android:name=".ui.GuidenceActivity"
+            android:screenOrientation="portrait" />
+        <!-- 主页面 -->
+        <activity
+            android:name=".ui.MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:launchMode="singleTask"
+            />
+        <!-- 登录 -->
+        <activity
+            android:name=".ui.LoginActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <!-- 注册 -->
+        <activity
+            android:name=".ui.RegisterActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <!-- 忘记密码 -->
+        <activity
+            android:name=".ui.ForgetPwdActivity"
+            android:screenOrientation="portrait" />
+        <!-- 更改手机号 -->
+        <activity
+            android:name=".ui.UpdatePhoneActivity"
+            android:screenOrientation="portrait" />
+        <!-- 设置 -->
+        <activity
+            android:name=".ui.SettingActivity"
+            android:screenOrientation="portrait" />
+        <!-- 关于我们 -->
+        <activity
+            android:name=".ui.AboutUsActivity"
+            android:screenOrientation="portrait" />
+        <!-- 意见反馈 -->
+        <activity
+            android:name=".ui.FeedBackActivity"
+            android:screenOrientation="portrait" />
+        <!-- 个人信息 -->
+        <activity
+            android:name=".ui.UserInfoActivity"
+            android:screenOrientation="portrait" />
+        <!-- 选择本地图片 -->
+        <activity
+            android:name=".ui.UserHeadimgSetDialogActivity2"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyBottomDialogStyle" />
+        <!-- 选择性别 -->
+        <activity
+            android:name=".ui.GenderSexDialogActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyBottomDialogStyle" />
+        <!-- 跳转到url -->
+        <activity
+            android:name="com.handongkeji.ui.BrowseActivity"
+            android:screenOrientation="portrait" />
+        <!-- 我的订单-->
+        <activity android:name=".ui.MyOrderActivity"
+            android:screenOrientation="portrait"
+            />
+        <!-- 附近-->
+        <activity
+            android:name=".ui.FuJinActivity"
+            android:screenOrientation="portrait"
+            />
+        <!-- 首页 热门目的地-->
+        <activity
+            android:name=".ui.HotAreaActivity"
+            android:screenOrientation="portrait"
+            />
+        <!-- 附近  周末游、自驾游-->
+        <activity
+            android:name=".ui.WeekActivity"
+            android:screenOrientation="portrait"
+            />
+        <!-- 附近  农家院-->
+        <activity
+            android:name=".ui.FarmyardActivity"
+            android:screenOrientation="portrait"
+            />
+        <!-- 附近  景点用车-->
+        <activity
+            android:name=".ui.ScenicCarActivity"
+            android:screenOrientation="portrait"
+            />
+        <!-- 用车-->
+        <activity
+            android:name=".ui.ByCarActivity"
+            android:screenOrientation="portrait"
+            />
+        <!-- 线路详情-->
+        <activity
+            android:name=".ui.LineDetailsActivity"
+            android:screenOrientation="portrait"
+            />
+        <!-- 定制游-->
+        <activity
+            android:name=".ui.CustomTourActivity"
+            android:screenOrientation="portrait"
+            />
+        <!-- 编辑 用户名、邮箱、电话-->
+        <activity
+            android:name=".ui.UpdateActivity"
+            android:screenOrientation="portrait"
+            />
+        <!-- 城市列表-->
+        <activity
+            android:name="com.handongkeji.selecity.SelestorCityActivity"
+            android:screenOrientation="portrait"
+            />
+        <!-- 定制游选择城市-->
+        <activity
+            android:name=".ui.SelectCityActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--我的定制-->
+        <activity
+            android:name=".ui.MyProCustomActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--定制详情-->
+        <activity
+            android:name=".ui.ProCustomDetailActivity"
+            android:screenOrientation="portrait"
+            />
+        <!-- 查看大图-->
+        <activity
+            android:name="com.handongkeji.ui.ViewPagerActivity"
+            android:screenOrientation="portrait"
+            />
+        <!-- 国内游-->
+        <activity
+            android:name=".ui.HomeActivity"
+            android:screenOrientation="portrait"
+            />
+        <!-- 国内游 景点-->
+        <activity
+            android:name=".ui.HomeScenicActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--搜索-->
+        <activity
+            android:name=".ui.SelectActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--填写订单-->
+        <activity
+            android:name=".ui.WriteOrderActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            />
+        <!--订单详情-->
+        <activity
+            android:name=".ui.OrderDetailActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--评价-->
+        <activity
+            android:name=".ui.RemarkOrderActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--评论 上传图片 选择本地图片-->
+        <activity android:name="com.handongkeji.ui.AlbumActivity1"
+            android:screenOrientation="portrait"
+            />
+        <!--我的收藏-->
+        <activity
+            android:name=".ui.MyCollectActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--消息中心-->
+        <activity
+            android:name=".ui.MessageCenterActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--消息列表-->
+        <activity
+            android:name=".ui.SystemMessageActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--V头条-->
+        <activity
+            android:name=".ui.VHeadsActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--V头条详情-->
+        <activity
+            android:name=".ui.VheadsDetailActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--发现景点-->
+        <activity
+            android:name=".ui.FindScienceActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--导航-->
+        <activity
+            android:name=".common.BaiDuMap"
+            android:screenOrientation="portrait"
+            />
+        <!--选择导航地图的类型-->
+        <activity
+            android:name=".common.GenderDialogActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyBottomDialogStyle" >
+        </activity>
+        <!--店铺主页-->
+        <activity
+            android:name=".ui.ShopMainActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--添加图片标注点-->
+        <activity
+            android:name=".ui.AddImgMakerActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--保存轨迹-->
+        <activity
+            android:name=".ui.SaveTrackActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--图片保存后-->
+        <activity
+            android:name=".ui.SaveAfterActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--轨迹详情-->
+        <activity
+            android:name=".ui.TrackDetailActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            />
+        <!--添加视频标注点-->
+        <activity
+            android:name=".ui.AddVideoMakerActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--播放视频-->
+        <activity
+            android:name=".ui.VideoPlayActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--视频保存后-->
+        <activity
+            android:name=".ui.SaveAfterVideoActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--轨迹线路-->
+        <activity
+            android:name=".ui.TrackActivity"
+            android:screenOrientation="portrait"
+            />
+
+        <!--机票-->
+        <activity android:name=".ui.PlaneTicketActivity"
+            android:screenOrientation="portrait"
+            />
+
+        <!--横向日期选择页面并展示车票列表-->
+        <activity
+            android:name=".ui.PlaneSearchActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--机票选择城市-->
+        <activity
+            android:name="com.handongkeji.selecity.PlaneSelestorCityActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--日期选择页面-->
+        <activity
+            android:name="com.vlvxing.app.lib.CalendarSelectorActivity"
+            android:screenOrientation="portrait"
+            />
+
+        <!--机票详情-->
+        <activity
+            android:name=".ui.PlaneDetailsActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--已完成订单详情-->
+        <activity
+            android:name=".ui.PlaneCompletedOrderActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--我的机票订单-->
+        <activity
+            android:name=".ui.PlaneOrderActivity"
+            android:screenOrientation="portrait"
+            />
+
+    </application>
+
+</manifest>

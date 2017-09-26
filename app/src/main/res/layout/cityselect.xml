@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/select_lin"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:visibility="visible"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_f3f3f4"
+        android:orientation="horizontal"
+        android:paddingBottom="7dp"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="7dp"
+        >
+
+        <LinearLayout
+            android:id="@+id/return_lin"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@mipmap/return_red" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/serch_lin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/borderstyle_whiter"
+            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/select_edt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="11dp"
+                android:drawableLeft="@mipmap/search"
+                android:drawablePadding="5dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:hint="搜索国家、城市"
+                android:textSize="14sp"
+                android:background="@null"
+                />
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/exit_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="取消"
+            android:textSize="16sp"
+            android:textColor="@color/color_333333"
+            android:paddingLeft="15dp"
+            android:gravity="center"
+            />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/d7"/>
+</LinearLayout>

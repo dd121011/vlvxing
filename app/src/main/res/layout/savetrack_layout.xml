@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_f3f3f4"
+    android:orientation="vertical">
+
+    <include layout="@layout/head" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:background="@color/white">
+
+        <EditText
+            android:id="@+id/name_edt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/borderstyle_white"
+            android:hint="标注点名称"
+            android:textSize="14sp"
+            android:paddingBottom="8dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="8dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:background="@drawable/borderstyle_whiter">
+
+        <EditText
+            android:id="@+id/content_edt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:minLines="4"
+            android:gravity="top|left"
+            android:hint="请输入轨迹描述"
+            android:paddingLeft="12dp"
+            android:paddingTop="12dp"
+            android:textSize="14sp" />
+    </LinearLayout>
+</LinearLayout>

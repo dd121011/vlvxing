@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        >
+        <LinearLayout
+            android:id="@+id/return_lin"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:gravity="left">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="13dp"
+                android:src="@mipmap/return_red" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginRight="50dp"
+            >
+            <LinearLayout
+                android:id="@+id/lin1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tab1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="13dp"
+                    android:paddingTop="13dp"
+                    android:duplicateParentState="true"
+                    android:text="接送机"
+                    android:textColor="@color/isselect_txt"
+                    android:textSize="16sp" />
+
+                <View
+                    android:id="@+id/line1"
+                    android:layout_width="18dp"
+                    android:layout_height="2dp"
+                    android:layout_gravity="center"
+                    android:background="@color/color_ea5413" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lin2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tab2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="13dp"
+                    android:paddingTop="13dp"
+                    android:duplicateParentState="true"
+                    android:text="景点用车"
+                    android:textColor="@color/isselect_txt"
+                    android:textSize="16sp" />
+
+                <View
+                    android:id="@+id/line2"
+                    android:layout_width="18dp"
+                    android:layout_height="2dp"
+                    android:layout_gravity="center"
+                    android:background="@color/color_ea5413"
+                    android:visibility="gone"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/d7"/>
+
+            <LinearLayout
+                android:id="@+id/lin_tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/tab_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tab_tv_0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="选择排序"
+                            android:textColor="@color/color_313131"
+                            android:textSize="14sp" />
+
+                        <ImageView
+                            android:id="@+id/tab_iv_0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:src="@drawable/pull_isselect"
+                            android:duplicateParentState="true"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/tab_local"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tab_tv_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:paddingLeft="2dp"
+                            android:paddingRight="2dp"
+                            android:singleLine="true"
+                            android:text="位置选择"
+                            android:textColor="@color/color_313131"
+                            android:textSize="14sp" />
+
+                        <ImageView
+                            android:id="@+id/tab_iv_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:src="@drawable/pull_isselect"
+                            android:duplicateParentState="true"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="@color/color_e3e3e3" />
+
+           <include layout="@layout/loadcommon_list"/>
+        <!--</LinearLayout>-->
+    <!--</android.support.v4.widget.NestedScrollView>-->
+</LinearLayout>

@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 基本颜色定义 -->
+    <color name="schoolname">#0475c5</color>
+    <color name="red">#FF0000</color>
+    <color name="grey">#B2B2B2</color>
+    <color name="grey1">#eaeaea</color>
+    <color name="lgrey">#d6d6d6</color>
+    <color name="dgrey">#C9C9C9</color>
+    <color name="dlgrey">#666666</color>
+    <color name="black">#000000</color>
+    <color name="nine_two">#929292</color>
+    <color name="fe">#fe7562</color>
+    <color name="green_txt">#00ae84</color>
+    <!--<color name="white">#FFFFFF</color>-->
+    <color name="btn_white_normal">#f7f8f8</color>
+    <color name="color_bcbcbc">#bcbcbc</color>
+    <color name="color_dd5462">#dd5462</color>
+    <color name="color_edb949">#edb949</color>
+    <color name="cb">#cbcbcb</color>
+    <color name="bsix">#b6b6b6</color>
+    <color name="line_bg">#FAFDFD</color>
+    <color name="nine_seven">#979797</color>
+    <color name="onee">#1e1e1e</color>
+    <color name="four_three">#434343</color>
+    <color name="grey_e">#eeeeee</color>
+    <color name="one_f">#1f1f1f</color>
+    <color name="item_coupon_text_lan">#08A5D3</color>
+    <color name="item_coupon_text_fen">#ff728d</color>
+    <color name="qianfense">#ececec</color>
+    <color name="color_ef">#efefef</color>
+    <color name="white1">#f2f2f2</color>
+    <color name="yellow">#ffff00</color>
+    <color name="orange">#FB6236</color>
+    <color name="dorange">#FF5722</color>
+    <color name="golden">#ff6600</color>
+    <color name="lbg">#f7f7f7</color>
+    <color name="poloere">#F8F3F0</color>
+    <!-- 米黄色 -->
+    <color name="subtransparent">#e0000000</color>
+    <!-- 透明 -->
+    <color name="transparent">#00000000</color>
+    <!-- 半透明 -->
+    <color name="translucent">#66000000</color>
+    <!-- 半透明 -->
+    <color name="bottomtext">#9d9d9d</color>
+    <color name="bottomtextpress">#9d9d9d</color>
+
+    <!-- 背景色定义 -->
+    <color name="content_bg">#f0f0f0</color>
+    <!-- 内容背景 -->
+    <color name="bg_diagnose">#fafafa</color>
+    <color name="title_bg">#FAFAFA</color>
+    <!-- 标题栏背景 -->
+    <color name="scroll_tabs">#08a0c4</color>
+    <!-- scrollTabs文字颜色 -->
+    <color name="black_dialog_bg">#cc242424</color>
+    <!-- 对话框半透明黑色背景 -->
+    <color name="black_guide_bg">#aa242424</color>
+    <!-- 对话框半透明黑色背景 -->
+    <color name="bg_red">#F36843</color>
+    <!-- 红色背景 -->
+    <color name="bg_green">#87AA3B</color>
+    <!-- 绿色背景 -->
+    <color name="bg_blue">#3399CC</color>
+    <color name="color_2D9FEA">#2D9FEA</color>
+    <!-- 蓝色背景 -->
+    <color name="bg_redtitle">#c40000</color>
+    <!-- 红色背景 -->
+    <color name="bg_bluetitle">#08a0c4</color>
+    <!-- 蓝色背景 -->
+    <color name="bg_blacktitle">#4b4c4e</color>
+    <!-- 蓝色背景 -->
+    <color name="item_bg">#dfdfdf</color>
+    <!-- 条目背景 -->
+
+
+    <!-- 按钮背景颜色定义 -->
+    <color name="btn_unable">#9f353E47</color>
+    <!-- 按钮不可点使用颜色 -->
+    <color name="btn_red">#EC4E43</color>
+    <!-- 红色按钮 -->
+    <color name="btn_dred">#BD1F14</color>
+    <!-- 深一点的红色 -->
+    <color name="btn_lred">#FF6750</color>
+    <!-- 淡一点的红色 -->
+    <color name="btn_green">#55BC75</color>
+    <!-- 绿色按钮 -->
+    <color name="btn_dgreen">#27B362</color>
+    <!-- 深一点的绿色 -->
+    <color name="btn_lgreen">#88E3D7</color>
+    <!-- 淡一点的绿色 -->
+    <color name="btn_grey">#CAC8C9</color>
+    <!-- 灰色按钮 -->
+    <color name="btn_dgrey">#575757</color>
+    <!-- 深一点的灰色 -->
+    <color name="btn_lgrey">#ECE8E7</color>
+    <!-- 淡一点的灰色 -->
+    <color name="btn_golden">#ED9444</color>
+    <!-- 金色按钮 -->
+    <color name="btn_dgolden">#C86A14</color>
+    <!-- 深一点的金色 -->
+    <color name="btn_blue">#3399CC</color>
+    <!-- 蓝色按钮 -->
+    <color name="btn_dblue">#397E86</color>
+    <!-- 蓝色按钮 -->
+    <color name="btn_orange">#E86740</color>
+    <!-- 橙色按钮 -->
+    <color name="btn_white">#FFFFFF</color>
+    <!-- 白色按钮 -->
+    <!-- 文字颜色定义 -->
+    <color name="text_title">#ff0000</color>
+    <!-- 标题文本颜色 -->
+    <color name="text_subtitle">#412420</color>
+    <!-- 标题文本颜色 -->
+    <color name="text_common">#A2A2A2</color>
+    <!-- 普通文本颜色 -->
+    <color name="text_light">#ADADB0</color>
+    <!-- 淡一点的普通文本颜色 -->
+    <color name="text_green">#107E71</color>
+    <color name="text_red">#EE6459</color>
+    <color name="text_golden">#FEA013</color>
+    <color name="text_dgrey">#707070</color>
+    <color name="edit_hint">#989898</color>
+    <color name="albumback">#E1E0DE</color>
+    <color name="none_color">#00000000</color>
+    <color name="plugin_camera_black">#000000</color>
+    <!-- 控件颜色定义 -->
+    <color name="fengexian">#CAC8C9</color>
+
+    <!-- 其他 -->
+    <color name="style_red">#ff4c41</color>
+    <color name="style_divider_color">#C9C7CD</color>
+    <color name="listview_line_color">#dfdfdf</color>
+    <color name="listview_line_color1">#d4d4d4</color>
+    <!-- 中度灰色 -->
+    <!-- 其他 -->
+    <!-- 最新设定颜色 -->
+    <color name="bg_all">#f0f0f0</color>
+    <!-- 所有界面背景颜色 -->
+    <color name="text_color_25">#252525</color>
+    <!-- 字体颜色为黑色 -->
+    <color name="text_color_3">#333333</color>
+    <!-- 字体颜色为黑色 -->
+    <color name="text_color_6">#666666</color>
+    <!-- 字体颜色为深灰色 -->
+    <color name="text_color_0">#dedede</color>
+    <color name="text_color_42">#424242</color>
+    <color name="text_color_bd">#bdbdbd</color>
+    <color name="text_color_21">#212121</color>
+    <!-- 字体颜色为灰色 -->
+    <color name="text_color_75">#757575</color>
+    <!-- 字体颜色为深灰色 -->
+    <color name="text_color_61">#616161</color>
+    <!-- 字体颜色为深灰色 -->
+    <color name="text_color_f8">#f8f8f8</color>
+    <!-- 字体颜色为深灰色 -->
+    <color name="text_color_9">#999999</color>
+    <color name="text_color_95">#959595</color>
+    <!-- 字体颜色为浅灰色 -->
+    <color name="text_color_yellow">#ff6634</color>
+    <!-- 字体颜色为橙色 -->
+    <color name="text_color_green">#7ab33e</color>
+    <!-- 字体颜色为绿色 -->
+    <color name="text_color_select">#2782d0</color>
+    <!-- 我的页面各个tabView的字体颜色 -->
+    <color name="bg_title">#ffffff</color>
+    <!-- 顶部标题栏背景颜色 -->
+    <color name="bg_color">#f0f0f0</color>
+    <color name="color_dark_gray">#cccccc</color>
+    <color name="no_net_bg">#fef4b9</color>
+    <!-- 无网络布局背景 -->
+    <color name="no_net_text">#8e6940</color>
+    <!-- 无网络字体颜色 -->
+    <color name="btn_bg">#ff6634</color>
+    <!-- 按钮颜色，橙色 -->
+    <color name="btn_bg_two">#2782d0</color>
+    <!-- 下拉刷新颜色 -->
+    <color name="project_green_bg">#c0dbbc</color>
+    <!-- 项目列表状态背景-绿 -->
+    <color name="project_yellow_bg">#ffb49c</color>
+    <!-- 项目列表状态背景-黄 -->
+    <color name="project_gray_bg">#cccccc</color>
+    <color name="project_red_bg">#fd7d3b</color>
+    <!-- 项目列表状态背景-灰 -->
+    <color name="project_blue_bg">#aac6d2</color>
+    <!-- 项目列表状态背景-蓝 -->
+    <color name="text_color_blue">#446ea5</color>
+    <!-- 字体颜色为蓝色 -->
+    <color name="swiperefreshlayout_bg">#2e84cd</color>
+    <!-- 刷新控件背景 -->
+    <!-- 发起 -->
+    <color name="launch_item_txt_title_color">#212121</color>
+    <!-- 发起条目标题 -->
+    <color name="item_view_color">#e0e0e0</color>
+    <!-- 发起条目分割线 -->
+    <color name="launch_item_txt_num_color">#ffa821</color>
+    <!-- 发起条目数字 -->
+    <color name="bg_color_f5">#f5f5f5</color>
+    <!-- 发起条目数字 -->
+
+
+    <color name="base_color">#2982d0</color>
+    <color name="textColor_light_black">#212121</color>
+
+    <color name="title_bgc1">#6f7291</color>
+    <color name="title_red">#DE5C4C</color>
+    <color name="color_a54836">#a54836</color>
+    <color name="title_red1">#74362d</color>
+    <color name="color_dd5d4b">#dd5d4b</color>
+    <color name="color_dddddd">#dddddd</color>
+    <color name="title_red2">#ed8174</color>
+    <color name="d7">#d7d7d7</color>
+    <color name="color_A7A7A7">#A7A7A7</color>
+    <color name="d4">#d4d4d4</color>
+    <color name="dc">#dcdcdc</color>
+    <color name="threed">#3d3d3d</color>
+    <color name="sixf">#6f749f</color>
+    <color name="three1">#313567</color>
+    <color name="three5">#313565</color>
+    <color name="red_color">#ff0504</color>
+    <color name="af">#afafaf</color>
+    <color name="eightb">#8b8b8b</color>
+    <color name="color_E4867A">#E4867A</color>
+    <color name="color_793E39">#793E39</color>
+    <color name="color_F38375">#F38375</color>
+    <color name="color_575A87">#575A87</color>
+    <color name="color_989aac">#989aac</color>
+    <color name="color_e41d1b">#e41d1b</color>
+    <color name="color_2f3665">#2f3665</color>
+    <color name="color_a3a3a3">#a3a3a3</color>
+    <color name="color_45a1db">#45a1db</color>
+    <color name="color_51668e">#51668e</color>
+    <color name="color_84634f">#84634f</color>
+    <color name="color_348b97">#348b97</color>
+    <color name="color_ff6666">#ff6666</color>
+    <color name="color_a5a5a5">#a5a5a5</color>
+    <color name="color_388de3">#388de3</color>
+    <color name="color_fb9e4d">#fb9e4d</color>
+    <color name="color_f0f0f0">#f0f0f0</color>
+    <color name="color_ea5413">#ea5413</color>
+    <color name="color_aaea5413">#aaea5413</color>
+    <color name="color_00baff">#00baff</color>
+    <color name="color_f3f3f4">#f3f3f4</color>
+    <color name="color_999999">#999999</color>
+    <color name="color_1aad19">#1aad19</color>
+    <color name="dialog_btn_default">#e2e2e2</color>
+    <color name="color_dc0000">#dc0000</color>
+    <color name="color_c1c1c1">#c1c1c1</color>
+    <color name="color_ffc9b1">#ffc9b1</color>
+</resources>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+    <include layout="@layout/head"/>
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/head_lin"
+        >
+    </com.baidu.mapapi.map.MapView>
+    <LinearLayout
+        android:id="@+id/three_lin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+       android:layout_marginRight="15dp"
+        android:orientation="vertical"
+        android:paddingBottom="150dp">
+
+        <LinearLayout
+            android:id="@+id/navigate_lin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/borderstyle_whiter"
+            android:paddingBottom="12dp"
+            android:paddingLeft="9dp"
+            android:paddingRight="9dp"
+            android:paddingTop="12dp"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/navigate" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

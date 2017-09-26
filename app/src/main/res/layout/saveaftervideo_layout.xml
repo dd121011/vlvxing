@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/head"/>
+    <RelativeLayout
+        android:id="@+id/rel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/head_lin"
+        android:background="@color/black"
+        >
+        <ImageView
+            android:id="@+id/bg_img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/qiche"
+            android:scaleType="centerCrop"
+            android:layout_centerVertical="true"
+            />
+        <ImageView
+            android:id="@+id/video_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/video"
+            android:layout_centerInParent="true"
+            />
+        <LinearLayout
+            android:id="@+id/share_lin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/head_lin"
+            android:visibility="gone"
+            android:layout_alignParentRight="true"
+            >
+            <include layout="@layout/share_dialog"/>
+        </LinearLayout>
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/name_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="北京"
+        android:textSize="19sp"
+        android:textColor="@color/color_313131"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/rel"
+        />
+    <TextView
+        android:id="@+id/time_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2017-01-12 07:12"
+        android:textSize="14sp"
+        android:textColor="@color/color_666666"
+        android:layout_marginLeft="12dp"
+        android:layout_marginBottom="22dp"
+        android:layout_marginTop="14dp"
+        android:layout_below="@+id/name_txt"
+        />
+</RelativeLayout>

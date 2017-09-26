@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_eaeaea"
+    android:orientation="vertical" >
+    <LinearLayout
+        android:id="@+id/back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/plane_back_img" />
+    <RelativeLayout
+        android:id="@+id/serch_lin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/borderstyle_whiter"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/select_edt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:drawableLeft="@mipmap/search"
+            android:drawablePadding="5dp"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:hint="搜索国家、城市"
+            android:textSize="14sp"
+            android:background="@null"
+            />
+    </RelativeLayout>
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/activity_select_city_gps_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:visibility="gone" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#50e0e0e0" />
+
+        <TextView
+            android:id="@+id/site"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="35dp"
+            android:text=""
+            android:textColor="#ff6633"
+            android:textSize="19dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="17dp"
+            android:layout_toRightOf="@+id/site"
+            android:text="GPS定位"
+            android:textColor="#adadad"
+            android:textSize="19dp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:text="未开通"
+        android:textColor="#000"
+        android:textSize="18sp"
+        android:visibility="gone" />
+    <LinearLayout
+        android:id="@+id/history"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/history_txt"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:background="#dddddd"
+            android:paddingBottom="10dip"
+            android:paddingLeft="10dip"
+            android:paddingRight="0dp"
+            android:paddingTop="10dip"
+            android:text="历史"
+            android:textColor="@color/color_333333" />
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:numColumns="3"
+            android:verticalSpacing="10dp"
+            android:horizontalSpacing="10dp">
+
+        </GridView>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/hot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/hot_txt"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:background="#dddddd"
+            android:paddingBottom="10dip"
+            android:paddingLeft="10dip"
+            android:paddingRight="0dp"
+            android:paddingTop="10dip"
+            android:text="热门"
+            android:textColor="@color/color_333333" />
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:numColumns="3"
+            android:verticalSpacing="10dp"
+            android:horizontalSpacing="10dp">
+
+        </GridView>
+    </LinearLayout>
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:background="@color/bg_eaeaea">
+        <RadioButton
+            android:id="@+id/left_radio_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:button="@null"
+            android:textSize="15sp"
+            android:checked="true"
+            android:textColor="@color/plane_radiobtn_textcolor_selector"
+            android:text="国内"/>
+        <RadioButton
+            android:id="@+id/right_radio_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:button="@null"
+            android:textSize="15sp"
+            android:textColor="@color/plane_radiobtn_textcolor_selector"
+            android:text="国际/港澳台"/>
+
+    </RadioGroup>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/view_left"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@color/color_ea5413" />
+
+        <View
+            android:id="@+id/view_right"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:visibility="invisible"
+            android:background="@color/color_ea5413" />
+    </LinearLayout>
+    <FrameLayout
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_eaeaea">
+
+        <ListView
+            android:id="@+id/result_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+        </ListView>
+
+        <include layout="@layout/common_no_data" />
+
+            <ListView
+                android:id="@+id/country_lvcountry"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:divider="@null"
+                android:focusable="true" />
+
+            <TextView
+                android:id="@+id/dialog"
+                android:layout_width="80.0dip"
+                android:layout_height="80.0dip"
+                android:layout_gravity="center"
+                android:background="@drawable/selector_city_bg"
+                android:gravity="center"
+                android:textColor="#ffffffff"
+                android:textSize="30.0dip"
+                android:visibility="invisible" />
+
+            <com.handongkeji.selecity.PlaneSideBar
+                android:id="@+id/fast_scroller"
+                android:layout_width="30.0dip"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="@dimen/layout_5dp"
+                android:paddingBottom="@dimen/layout_5dp"
+                android:layout_gravity="top|right|center"
+                android:background="@null"
+                android:scaleType="centerInside"
+                android:src="@drawable/dic_background" />
+    </FrameLayout>
+
+</LinearLayout>

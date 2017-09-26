@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_select1" />
+
+    <!--<android.support.v4.widget.NestedScrollView-->
+        <!--android:id="@+id/scroll_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:fillViewport="true">-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:orientation="vertical">-->
+
+            <LinearLayout
+                android:id="@+id/lin_tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/tab_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tab_tv_0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="选择排序"
+                            android:textColor="@color/color_313131"
+                            android:textSize="14sp" />
+
+                        <ImageView
+                            android:id="@+id/tab_iv_0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:src="@drawable/pull_isselect"
+                            android:duplicateParentState="true"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/tab_local"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tab_tv_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:paddingLeft="2dp"
+                            android:paddingRight="2dp"
+                            android:singleLine="true"
+                            android:text="位置选择"
+                            android:textColor="@color/color_313131"
+                            android:textSize="14sp" />
+
+                        <ImageView
+                            android:id="@+id/tab_iv_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:src="@drawable/pull_isselect"
+                            android:duplicateParentState="true"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="@color/color_e3e3e3" />
+
+           <include layout="@layout/loadcommon_list"/>
+        <!--</LinearLayout>-->
+    <!--</android.support.v4.widget.NestedScrollView>-->
+</LinearLayout>

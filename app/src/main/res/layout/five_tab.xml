@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/lin1"
+            style="@style/tab_type"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title1"
+                style="@style/tab_txt"
+                android:duplicateParentState="true"
+                android:text="全部" />
+
+            <View
+                android:id="@+id/line1"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@color/color_ea5413"
+                android:duplicateParentState="true" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lin2"
+            style="@style/tab_type"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title2"
+                style="@style/tab_txt"
+                android:duplicateParentState="true"
+                android:text="自助" />
+
+            <View
+                android:id="@+id/line2"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@color/color_ea5413"
+                android:duplicateParentState="true"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lin3"
+            style="@style/tab_type"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title3"
+                style="@style/tab_txt"
+                android:duplicateParentState="true"
+                android:text="特价" />
+
+            <View
+                android:id="@+id/line3"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@color/color_ea5413"
+                android:duplicateParentState="true"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lin4"
+            style="@style/tab_type"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title4"
+                style="@style/tab_txt"
+                android:duplicateParentState="true"
+                android:text="主题" />
+
+            <View
+                android:id="@+id/line4"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@color/color_ea5413"
+                android:duplicateParentState="true"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lin5"
+            style="@style/tab_type"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title5"
+                style="@style/tab_txt"
+                android:duplicateParentState="true"
+                android:text="排序" />
+
+            <View
+                android:id="@+id/line5"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@color/color_ea5413"
+                android:duplicateParentState="true"
+                android:visibility="gone" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

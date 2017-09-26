@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal" >
+
+    <LinearLayout
+        android:id="@+id/pop_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#f0f0f0"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/map_w_baidu"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/button_press_color_set"
+            android:text="百度地图（网页版）"
+            android:textColor="#212121"
+            android:textSize="16sp" />
+        <Button
+            android:id="@+id/map_tencent"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/button_press_color_set"
+            android:text="腾讯地图"
+            android:layout_marginTop="1dp"
+            android:textColor="#212121"
+            android:textSize="16sp" />
+        
+        <Button
+            android:id="@+id/map_gaode"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/button_press_color_set"
+            android:text="高德地图"
+            android:visibility="gone"
+            android:layout_marginTop="1dp"
+            android:textColor="#212121"
+            android:textSize="16sp" />
+        
+
+        <Button
+            android:id="@+id/map_baidu"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="1dp"
+            android:background="@drawable/button_press_color_set"
+            android:text="百度地图"
+            android:textColor="#212121"
+            android:visibility="gone"
+            android:textSize="16sp" />
+        <Button
+            android:id="@+id/map_google"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="1dp"
+            android:background="@drawable/button_press_color_set"
+            android:text="谷歌地图"
+            android:textColor="#212121"
+             android:visibility="gone"
+            android:textSize="16sp" />
+		<View 
+		    android:layout_width="match_parent"
+		    android:layout_height="8dp"
+		    android:background="#f0f0f0"
+		    />
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/button_press_color_set"
+            android:text="取消"
+            android:textColor="#212121"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/bg_eaeaea"
+    android:orientation="vertical"
+    tools:context="com.vlvxing.app.ui.PlaneSearchActivity">
+
+    <LinearLayout
+        android:id="@+id/head_lin"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <!--标题-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_centerInParent="true">
+                <TextView
+                    android:id="@+id/head_title_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="title"
+                    android:textColor="@color/color_333333"
+                    android:textSize="18sp" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@mipmap/go_img"/>
+                <TextView
+                    android:id="@+id/head_title_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="title"
+                    android:textColor="@color/color_333333"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/return_lin"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:gravity="left">
+
+                <ImageView
+                    android:id="@+id/btn_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="13dp"
+                    android:src="@mipmap/plane_back_img" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/right_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingRight="15dp"
+                android:paddingLeft="15dp"
+                android:text="保存"
+                android:textColor="@color/color_ea5413"
+                android:textSize="15sp"
+                android:visibility="gone"
+                />
+            <ImageView
+                android:id="@+id/right_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingRight="15dp"
+                android:paddingLeft="15dp"
+                android:src="@mipmap/share_red"
+                android:visibility="gone" />
+            <ImageView
+                android:id="@+id/scode_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:layout_toLeftOf="@+id/right_img"
+                android:visibility="gone" />
+            <TextView
+                android:id="@+id/headbuttom_line"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="#dfdfdf" />
+
+            <TextView
+                android:id="@+id/tab_icon2"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:text="2"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:visibility="gone"
+                />
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+    <devs.mulham.horizontalcalendar.HorizontalCalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/head_lin"
+        android:background="@color/colorPlane"
+        app:textColorSelected="#FFFF"
+        app:textSizeDayName="14sp"
+        app:textSizeDayNumber="20sp"/>
+
+    <ListView
+        android:id="@+id/body_list"
+        android:layout_below="@id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/bg_eaeaea"
+        android:divider="#666666"
+        android:dividerHeight="1dp">
+
+    </ListView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/qianhuise"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/screenBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="8dp"
+            android:button="@null"
+            android:background="@null"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:textColor="@color/plane_radiobtn_textcolor_selector"
+            android:text="筛选"/>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="8dp"
+            android:gravity="center"
+            android:background="@null"
+            android:textSize="15sp"
+            android:drawablePadding="-20dp"
+            android:layout_gravity="center"
+            android:drawableRight="@drawable/bg_plane_price_checkbox_selector"
+            android:textColor="@color/plane_radiobtn_textcolor_selector"
+            android:button="@null"
+            android:text="时间"/>
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:padding="8dp"
+            android:background="@null"
+            android:textSize="15sp"
+            android:checked="true"
+            android:drawableRight="@drawable/bg_plane_price_checkbox_selector"
+            android:drawablePadding="-20dp"
+            android:textColor="@color/plane_radiobtn_textcolor_selector"
+            android:text="价格最低"/>
+
+    </LinearLayout>
+</LinearLayout>

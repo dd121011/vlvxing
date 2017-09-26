@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:id="@+id/check_all"
+    android:layout_below="@+id/list_lin"
+    android:orientation="horizontal"
+    android:visibility="visible"
+    android:background="@color/white"
+    >
+
+    <LinearLayout
+        android:id="@+id/isall_lin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:paddingLeft="12dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ischecked_all" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:duplicateParentState="true"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp"
+            android:text="全选"
+            android:textColor="@color/color_333333"
+            android:textSize="19sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/delete_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/color_c1c1c1"
+        android:gravity="center"
+        android:paddingLeft="21dp"
+        android:paddingRight="21dp"
+        android:text="删除"
+        android:textColor="@color/white"
+        android:textSize="19sp" />
+</LinearLayout>
