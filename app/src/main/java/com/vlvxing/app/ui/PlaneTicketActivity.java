@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -62,7 +63,7 @@ public class PlaneTicketActivity extends BaseActivity{
     @Bind(R.id.search)
     Button search;//搜索
     @Bind(R.id.go_or_come)
-    ImageView imgBtn;//切换城市
+    LinearLayout imgBtn;//切换城市
     @Bind(R.id.bottom_left_btn)
     Button bottomLeftBtn;
     @Bind(R.id.bottom_right_btn)

@@ -107,13 +107,12 @@
                 android:background="@color/text_color_75"/>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/go_or_come"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_gravity="center"
-            android:layout_marginRight="5dp">
+            android:padding="10dp"
+            android:layout_gravity="center">
             <ImageView
-                android:id="@+id/go_or_come"
                 android:layout_width="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:background="@mipmap/go_or_back"
