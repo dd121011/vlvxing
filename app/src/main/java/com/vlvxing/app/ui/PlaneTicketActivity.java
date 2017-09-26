@@ -138,13 +138,13 @@ public class PlaneTicketActivity extends BaseActivity{
                 //出发城市
                 Intent cityGo = new Intent(mcontext, PlaneSelestorCityActivity.class);
                 cityGo.putExtra("type", 1);
-                startActivityForResult(cityGo, 1);//日历展示页面
+                startActivityForResult(cityGo, 1);//出发城市选择
                 break;
             case R.id.city_txt_right:
                 //到达城市
                 Intent cityArrive = new Intent(mcontext, PlaneSelestorCityActivity.class);
                 cityArrive.putExtra("type", 2);
-                startActivityForResult(cityArrive, 2);//日历展示页面
+                startActivityForResult(cityArrive, 2);//到达城市选择
                 break;
             case R.id.txt_date:
                 Intent i = new Intent(mcontext, CalendarSelectorActivity.class);

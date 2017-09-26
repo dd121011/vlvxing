@@ -3,9 +3,11 @@ package com.vlvxing.app.lib;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.handongkeji.ui.BaseActivity;
@@ -33,16 +35,19 @@ public class CalendarSelectorActivity extends BaseActivity {
 	 * 上次预订日
 	 */
 	public static final String ORDER_DAY = "order_day";
-
 	private int daysOfSelect;
 	private String orderDay;
-
 	private ListView listView;
 	@Bind(R.id.head_title)
 	TextView headTitle;
 	@Bind(R.id.right_txt)
 	TextView rightTxt;
-
+	@Bind(R.id.radio_group)
+	RadioGroup radioGroup;//単程、往返的父控件
+	@Bind(R.id.view_left)
+	View viewLeft;//类似背景选择器 左
+	@Bind(R.id.view_right)
+	View viewRight;//类似背景选择器 右
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,10 +74,34 @@ public class CalendarSelectorActivity extends BaseActivity {
 					result.putExtra("days", days);
 				}
 				setResult(RESULT_OK, result);
-				finish();
+//				finish();
+			}
+		});
+		radioGroupOnCheckChange();
+	}
+
+	/**
+	 * 去程、返程的父容器选择状态的事件监听
+	 */
+	private void radioGroupOnCheckChange(){
+		radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+				if(R.id.left_radio_btn == checkedId){
+					//単程
+					viewLeft.setVisibility(View.VISIBLE);
+					viewRight.setVisibility(View.INVISIBLE);
+				}
+
+				if(R.id.right_radio_btn == checkedId){
+					//往返
+					viewLeft.setVisibility(View.INVISIBLE);
+					viewRight.setVisibility(View.VISIBLE);
+				}
 			}
 		});
 	}
+
 	@OnClick({R.id.return_lin, R.id.right_txt})
 	public void onClick(View view) {
 		switch (view.getId()) {
