@@ -21,8 +21,10 @@ import butterknife.OnClick;
 
 public class PlaneDetailsActivity extends BaseActivity{
 
-    @Bind(R.id.head_title)
-    TextView headTitle;//标题
+    @Bind(R.id.head_title_left)
+    TextView headTitleLeft;//标题
+    @Bind(R.id.head_title_right)
+    TextView headTitleRight;//标题右
     @Bind(R.id.btn_back)
     ImageView ban_back;//返回键
     @Bind(R.id.details_withdrawal_txt)
@@ -46,7 +48,8 @@ public class PlaneDetailsActivity extends BaseActivity{
         goCity = getIntent().getStringExtra("goCity");//出发城市
         arriveCity = getIntent().getStringExtra("arriveCity");//到达城市
         date = getIntent().getStringExtra("date");//出发日期
-        headTitle.setText(goCity+"-"+arriveCity);
+        headTitleLeft.setText(goCity);
+        headTitleRight.setText(arriveCity);
 
     }
 
@@ -66,6 +69,11 @@ public class PlaneDetailsActivity extends BaseActivity{
                 break;
             case R.id.book:
                 //预订
+                Intent intent = new Intent(mcontext,PlaneBuyDetailsActivity.class);
+                intent.putExtra("goCity",goCity);//出发城市
+                intent.putExtra("arriveCity",arriveCity);//到达城市
+                intent.putExtra("date",date);//出发日期
+                startActivity(intent);
 
                 break;
 

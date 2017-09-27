@@ -42,12 +42,12 @@ public class CalendarSelectorActivity extends BaseActivity {
 	TextView headTitle;
 	@Bind(R.id.right_txt)
 	TextView rightTxt;
-	@Bind(R.id.radio_group)
-	RadioGroup radioGroup;//単程、往返的父控件
-	@Bind(R.id.view_left)
-	View viewLeft;//类似背景选择器 左
-	@Bind(R.id.view_right)
-	View viewRight;//类似背景选择器 右
+//	@Bind(R.id.radio_group)
+//	RadioGroup radioGroup;//単程、往返的父控件
+//	@Bind(R.id.view_left)
+//	View viewLeft;//类似背景选择器 左
+//	@Bind(R.id.view_right)
+//	View viewRight;//类似背景选择器 右
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +60,9 @@ public class CalendarSelectorActivity extends BaseActivity {
 		headTitle.setText("选择日期");
 		rightTxt.setVisibility(View.VISIBLE);
 		rightTxt.setText("确定");
-		rightTxt.setTextColor(getResources().getColor(R.color.color_ea5413));
+//		rightTxt.setTextColor(getResources().getColor(R.color.color_ea5413));
 		CalendarListAdapter adapter = new CalendarListAdapter(this, daysOfSelect, orderDay);
 		listView.setAdapter(adapter);
-
 		adapter.setOnCalendarOrderListener(new CalendarListAdapter.OnCalendarOrderListener() {
 
 			@Override
@@ -74,32 +73,32 @@ public class CalendarSelectorActivity extends BaseActivity {
 					result.putExtra("days", days);
 				}
 				setResult(RESULT_OK, result);
-//				finish();
+				finish();
 			}
 		});
-		radioGroupOnCheckChange();
+//		radioGroupOnCheckChange();
 	}
 
 	/**
 	 * 去程、返程的父容器选择状态的事件监听
 	 */
 	private void radioGroupOnCheckChange(){
-		radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-				if(R.id.left_radio_btn == checkedId){
-					//単程
-					viewLeft.setVisibility(View.VISIBLE);
-					viewRight.setVisibility(View.INVISIBLE);
-				}
-
-				if(R.id.right_radio_btn == checkedId){
-					//往返
-					viewLeft.setVisibility(View.INVISIBLE);
-					viewRight.setVisibility(View.VISIBLE);
-				}
-			}
-		});
+//		radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//			@Override
+//			public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+//				if(R.id.left_radio_btn == checkedId){
+//					//単程
+//					viewLeft.setVisibility(View.VISIBLE);
+//					viewRight.setVisibility(View.INVISIBLE);
+//				}
+//
+//				if(R.id.right_radio_btn == checkedId){
+//					//往返
+//					viewLeft.setVisibility(View.INVISIBLE);
+//					viewRight.setVisibility(View.VISIBLE);
+//				}
+//			}
+//		});
 	}
 
 	@OnClick({R.id.return_lin, R.id.right_txt})

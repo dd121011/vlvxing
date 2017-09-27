@@ -544,6 +544,11 @@
             android:name=".ui.PlaneOrderActivity"
             android:screenOrientation="portrait"
             />
+        <!--我的机票订单-->
+        <activity
+            android:name=".ui.PlaneBuyDetailsActivity"
+            android:screenOrientation="portrait"
+            />
 
     </application>
 
