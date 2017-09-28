@@ -87,64 +87,11 @@
         android:textColor="#000"
         android:textSize="18sp"
         android:visibility="gone" />
-    <LinearLayout
-        android:id="@+id/history"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/history_txt"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1.0"
-            android:background="#dddddd"
-            android:paddingBottom="10dip"
-            android:paddingLeft="10dip"
-            android:paddingRight="0dp"
-            android:paddingTop="10dip"
-            android:text="历史"
-            android:textColor="@color/color_333333" />
-        <GridView
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:numColumns="3"
-            android:verticalSpacing="10dp"
-            android:horizontalSpacing="10dp">
-
-        </GridView>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/hot"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/hot_txt"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1.0"
-            android:background="#dddddd"
-            android:paddingBottom="10dip"
-            android:paddingLeft="10dip"
-            android:paddingRight="0dp"
-            android:paddingTop="10dip"
-            android:text="热门"
-            android:textColor="@color/color_333333" />
-        <GridView
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:numColumns="3"
-            android:verticalSpacing="10dp"
-            android:horizontalSpacing="10dp">
-
-        </GridView>
-    </LinearLayout>
     <RadioGroup
         android:id="@+id/radio_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:orientation="horizontal"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
@@ -175,6 +122,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="2dp"
+        android:visibility="gone"
         android:orientation="horizontal">
 
         <View

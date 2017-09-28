@@ -12,8 +12,11 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -30,6 +33,7 @@ import com.handongkeji.selecity.model.SortModel;
 import com.handongkeji.ui.BaseActivity;
 import com.handongkeji.utils.CharacterParser;
 import com.handongkeji.widget.KeyboardLayout1;
+import com.handongkeji.widget.MyGridView;
 import com.vlvxing.app.R;
 import com.vlvxing.app.common.Constants;
 import com.vlvxing.app.common.MyApp;
@@ -88,6 +92,12 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
     private int type;
     private Intent intent;
     private LinearLayout listViewHeader;
+    private Context mcontext;
+    LayoutInflater inflater;
+    private String historyCityName [] ={"广 州","北 京","上 海"};
+    private String hotCityName [] ={"北 京","上 海","广 州","深 圳"};
+    private String historyCityResult = "";
+    private String hotCityResult = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +107,8 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
         serchLin.setFocusable(true);
         serchLin.setFocusableInTouchMode(true);
         serchLin.requestFocus();
+        mcontext = this;
+        inflater= LayoutInflater.from(this);
         init();// 初始化控件
         loadData();// 获取首页列表
         radioGroupOnCheckChange();//注册国际、国内的选择事件
@@ -125,6 +137,73 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
     }
     private void init() {
         View headerView = getLayoutInflater().inflate(R.layout.plane_listview_header, null);
+        GridView historyCity = (MyGridView) headerView.findViewById(R.id.history_city);
+        GridView hotCity = (MyGridView) headerView.findViewById(R.id.hot_city);
+        GridViewHistory historyAdapter =new GridViewHistory(mcontext,historyCityName);
+        historyCity.setAdapter(historyAdapter);
+
+        GridViewHot hotAdapter = new GridViewHot(mcontext,hotCityName);
+        hotCity.setAdapter(hotAdapter);
+
+        historyCity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                historyAdapter.changeState(position);
+                int selectorPosition = position;
+                historyCityResult = historyCityName[selectorPosition];
+
+                if (type == 1) {
+//                        myApp.setCity_name(name);
+//                        myApp.setAreaid(locationId);
+                    intent.putExtra("name", historyCityResult.trim());
+                    intent.putExtra("locationId", "");
+                    setResult(RESULT_OK, intent);
+                    finish();
+//                        startActivity(new Intent(mContext, MainActivity.class));
+                } else if(type == 2){
+//                        intent.putExtra("areaname", name);
+//                        intent.putExtra("areaid", locationId);
+                    intent.putExtra("name", historyCityResult.trim());
+                    intent.putExtra("locationId", "");
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+//                Toast.makeText(mcontext, "历史城市"+selectorPosition, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        hotCity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                hotAdapter.changeState(position);
+                int selectorPosition = position;
+
+                hotCityResult    = hotCityName[selectorPosition];
+
+                if (type == 1) {
+//                        myApp.setCity_name(name);
+//                        myApp.setAreaid(locationId);
+                    intent.putExtra("name", hotCityResult.trim());
+                    intent.putExtra("locationId", "");
+                    setResult(RESULT_OK, intent);
+                    finish();
+//                        startActivity(new Intent(mContext, MainActivity.class));
+                } else if(type == 2){
+//                        intent.putExtra("areaname", name);
+//                        intent.putExtra("areaid", locationId);
+                    intent.putExtra("name", hotCityResult.trim());
+                    intent.putExtra("locationId", "");
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+
+
+//                Toast.makeText(mcontext, "热门城市"+selectorPosition, Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         commonNoDataLayout.setVisibility(View.GONE);
         intent = getIntent();
@@ -151,7 +230,6 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
                 if (s.length() > 0) {
                     resultList.setVisibility(View.VISIBLE);
                     countryLvcountry.setVisibility(View.GONE);
-
                     selectCity();
                 } else {
                     resultList.setVisibility(View.GONE);
@@ -240,7 +318,6 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
             }
             return convertView;
         }
-
 
         class ViewHolder {
             TextView title;
@@ -496,6 +573,135 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
         TextView tvLetter;
         TextView tvTitle;
         View line;
+    }
+
+
+    class GridViewHistory extends BaseAdapter{
+        private Context context=null;
+        private String data[]=null;
+        private int selectorPosition = -1;
+
+        private class Holder{
+            LinearLayout city_lin;
+            ImageView item_img;
+            TextView item_tex;
+        }
+        //构造方法
+        public GridViewHistory(Context context, String[] data) {
+            this.context = context;
+            this.data = data;
+
+        }
+
+
+        @Override
+        public int getCount() {
+            return data.length;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return data[position];
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View view, ViewGroup viewGroup) {
+            Holder holder;
+            if(view==null){
+                view = inflater.inflate(R.layout.act_plane_hot_city_gridview_item,null);
+                holder=new Holder();
+                holder.item_img=(ImageView)view.findViewById(R.id.city_selector_img);
+                holder.item_tex=(TextView)view.findViewById(R.id.city_name);
+                holder.city_lin = (LinearLayout)view.findViewById(R.id.city_lin);
+                view.setTag(holder);
+            }else{
+                holder=(Holder) view.getTag();
+            }
+
+            holder.item_tex.setText(data[position]);
+            if (selectorPosition == position) {
+                holder.item_img.setVisibility(View.VISIBLE);
+            } else {
+                //其他的恢复原来的状态
+                holder.item_img.setVisibility(View.INVISIBLE);
+            }
+
+            return view;
+        }
+        public void changeState(int pos) {
+            selectorPosition = pos;
+            notifyDataSetChanged();
+
+        }
+    }
+
+    class GridViewHot extends BaseAdapter{
+        private Context context=null;
+        private String data[]=null;
+        private int selectorPosition = -1;
+
+        private class Holder{
+            LinearLayout city_lin;
+            ImageView item_img;
+            TextView item_tex;
+        }
+        //构造方法
+        public GridViewHot(Context context, String[] data) {
+            this.context = context;
+            this.data = data;
+
+        }
+
+
+        @Override
+        public int getCount() {
+            return data.length;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return data[position];
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View view, ViewGroup viewGroup) {
+            Holder holder;
+            if(view==null){
+                view = inflater.inflate(R.layout.act_plane_hot_city_gridview_item,null);
+                holder=new Holder();
+                holder.item_img=(ImageView)view.findViewById(R.id.city_selector_img);
+                holder.item_tex=(TextView)view.findViewById(R.id.city_name);
+                holder.city_lin = (LinearLayout)view.findViewById(R.id.city_lin);
+                view.setTag(holder);
+            }else{
+                holder=(Holder) view.getTag();
+            }
+
+            holder.item_tex.setText(data[position]);
+            if (selectorPosition == position) {
+                holder.item_img.setVisibility(View.VISIBLE);
+            } else {
+                //其他的恢复原来的状态
+                holder.item_img.setVisibility(View.INVISIBLE);
+            }
+
+            return view;
+        }
+        public void changeState(int pos) {
+            selectorPosition = pos;
+            notifyDataSetChanged();
+
+        }
     }
 
 }

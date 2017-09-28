@@ -1,5 +1,6 @@
 package com.vlvxing.app.ui;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import com.handongkeji.ui.BaseActivity;
 
 import com.vlvxing.app.R;
 
+import com.vlvxing.app.common.MyApp;
 import com.vlvxing.app.lib.CalendarSelectorActivity;
 
 
@@ -68,8 +70,16 @@ public class PlaneTicketActivity extends BaseActivity{
     Button bottomLeftBtn;
     @Bind(R.id.bottom_right_btn)
     Button bottomGightBtn;
+    @Bind(R.id.date_right_lin)
+    LinearLayout dateRightLin;//返程票 日期布局
+    @Bind(R.id.txt_date_right)
+    TextView dateRight;//返程日期
+    @Bind(R.id.txt_day_right)
+    TextView dayRight;//代表周几 或者今明后哪天
     private Context mcontext;
     private String dateFormat = null;
+    private int flag = 1;//为1时代表単程 2时往返
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +90,7 @@ public class PlaneTicketActivity extends BaseActivity{
         mcontext = this;
         txtDate.setText(getNowDate());
         radioGroupOnCheckChange();//注册単程、返程的选择事件
+        cityLefttxt.setText(MyApp.getInstance().getCity_name());
 //        String city = MyApp.getInstance().getCity_name();
 //        if (!StringUtils.isStringNull(city)) {
 //            cityLefttxt.setText(city);
@@ -112,12 +123,18 @@ public class PlaneTicketActivity extends BaseActivity{
                     //単程
                     viewLeft.setVisibility(View.VISIBLE);
                     viewRight.setVisibility(View.INVISIBLE);
+                    flag = 1;
+                    dateRightLin.setVisibility(View.INVISIBLE);
                 }
 
                 if(R.id.right_radio_btn == checkedId){
                     //往返
                     viewLeft.setVisibility(View.INVISIBLE);
                     viewRight.setVisibility(View.VISIBLE);
+                    flag = 2;
+                    dateRightLin.setVisibility(View.VISIBLE);
+                    dateRight.setText(getNowDate());
+
                 }
             }
         });
@@ -149,7 +166,7 @@ public class PlaneTicketActivity extends BaseActivity{
             case R.id.txt_date:
                 Intent i = new Intent(mcontext, CalendarSelectorActivity.class);
                 i.putExtra(CalendarSelectorActivity.DAYS_OF_SELECT, 60);
-                i.putExtra(CalendarSelectorActivity.ORDER_DAY, "20170919");
+                i.putExtra(CalendarSelectorActivity.ORDER_DAY, dateFormat);
                 startActivityForResult(i, 3);//日历展示页面
                 break;
             case R.id.search:

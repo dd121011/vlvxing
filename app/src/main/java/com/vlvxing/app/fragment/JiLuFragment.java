@@ -303,7 +303,6 @@ public class JiLuFragment extends Fragment implements BDLocationListener, OnGetP
     private boolean isPhoto = false;
     private LatLng lng = null;  //目的地经纬度
 
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -365,6 +364,7 @@ public class JiLuFragment extends Fragment implements BDLocationListener, OnGetP
 //                markerOverlay.remove();
 //            }
 //        }
+        lng = null;
         mBaiduMap.clear();
         Point targetScreen = mBaiduMap.getMapStatus().targetScreen;
         LatLngBounds bound = mBaiduMap.getMapStatus().bound;
@@ -632,7 +632,10 @@ public class JiLuFragment extends Fragment implements BDLocationListener, OnGetP
                 if (info == null) {
                     return false;
                 }
-
+                if (lng !=null)
+                {
+                    return false;
+                }
                 String id = marker.getExtraInfo().getString("id");
                 int type = marker.getExtraInfo().getInt("type", 0); // //0图片  1视屏 2轨迹
                 RecordMapModel.DataBean bean = null;
@@ -643,7 +646,7 @@ public class JiLuFragment extends Fragment implements BDLocationListener, OnGetP
                     startActivity(new Intent(mContext, SaveAfterActivity.class).putExtra("id", id).putExtra("data", bean)); //图片详情
                 } else if (type == 1) {
                     startActivity(new Intent(mContext, SaveAfterVideoActivity.class).putExtra("id", id).putExtra("data", bean)); //视频详情
-                } else {
+                } else if(type == 2){
                     startActivity(new Intent(mContext, TrackDetailActivity.class).putExtra("id", id)); //轨迹详情
                 }
                 return true;
@@ -732,6 +735,7 @@ public class JiLuFragment extends Fragment implements BDLocationListener, OnGetP
      * 在地图中添加折线和marker点
      */
     protected void AddorDeleteMarkerInMap() {
+        lng = null;
         mBaiduMap.clear();
         isLocal = true;
         List<LatLng> latLngs = new ArrayList<LatLng>();
@@ -957,6 +961,7 @@ public class JiLuFragment extends Fragment implements BDLocationListener, OnGetP
                 }
                 break;
             case R.id.navigate_lin: //定位当前位置
+                lng = null;
                 mBaiduMap.clear();
                 destination.setVisibility(View.GONE);
                 isLocal = true;
@@ -974,6 +979,7 @@ public class JiLuFragment extends Fragment implements BDLocationListener, OnGetP
                 destination.setVisibility(View.GONE);
                 isLocal = true;
                 mBaiduMap.clear();
+                lng = null;
 
                 //从onResume()函数中copy过来的
                 int isrecord = MyApp.getInstance().getIsrecord();
@@ -990,6 +996,7 @@ public class JiLuFragment extends Fragment implements BDLocationListener, OnGetP
 //                }
                 isRecord = true;  //  标记已经开始录制
                 MyApp.getInstance().setCity_id_flag(false);  //  开始录制了，将状态保存到sp中，持久化保存
+                lng = null;
                 mBaiduMap.clear();
                 isLocal = true;
                 CacheData.getFileNameById("1"); //删除该轨迹本地缓存的数据
@@ -1001,6 +1008,7 @@ public class JiLuFragment extends Fragment implements BDLocationListener, OnGetP
                 destination.setVisibility(View.GONE);
                 isPhoto = true;
                 if (!isRecord) {
+                    lng = null;
                     mBaiduMap.clear();
 //                    // 开启定位图层
 //                    mBaiduMap.setMyLocationEnabled(true);
@@ -1546,13 +1554,13 @@ public class JiLuFragment extends Fragment implements BDLocationListener, OnGetP
         private void moveToLocation(LatLng lng){
             if (lng!=null) {
                 //构建Marker图标
-                BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.zhongdian);
-                //构建MarkerOption，用于在地图上添加Marker
-                OverlayOptions option = new MarkerOptions()
-                        .position(lng)
-                        .icon(bitmap);
-                //在地图上添加Marker，并显示
-                mBaiduMap.addOverlay(option);
+//                BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.null);
+//                //构建MarkerOption，用于在地图上添加Marker
+//                OverlayOptions option = new MarkerOptions()
+//                        .position(lng)
+//                        .icon(bitmap);
+//                //在地图上添加Marker，并显示
+//                mBaiduMap.addOverlay(option);
                 //定义地图状态
                 MapStatus mMapStatus = new MapStatus.Builder()
                         .target(lng)

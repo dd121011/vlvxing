@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/bg_eaeaea"
+    android:orientation="vertical"
+    tools:context="com.vlvxing.app.ui.PlaneDetailsActivity">
+
+    <LinearLayout
+        android:id="@+id/city_lin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/city_shape_corner"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:paddingBottom="5dp">
+        <ImageView
+            android:id="@+id/city_selector_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:gravity="center"
+            android:background="@mipmap/city_selector"/>
+        <TextView
+            android:id="@+id/city_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:text="天 津"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

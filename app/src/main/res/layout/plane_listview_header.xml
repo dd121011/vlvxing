@@ -2,12 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_eaeaea"
     android:orientation="vertical">
+
     <LinearLayout
         android:id="@+id/history"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/history_txt"
             android:layout_width="fill_parent"
@@ -20,15 +23,21 @@
             android:paddingTop="10dip"
             android:text="历史"
             android:textColor="@color/color_333333" />
-        <GridView
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:numColumns="3"
-            android:verticalSpacing="10dp"
-            android:horizontalSpacing="10dp">
 
-        </GridView>
+        <com.handongkeji.widget.MyGridView
+            android:id="@+id/history_city"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:horizontalSpacing="10dp"
+            android:numColumns="3"
+            android:columnWidth="80dp"
+            android:verticalSpacing="10dp">
+
+        </com.handongkeji.widget.MyGridView>
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/hot"
         android:layout_width="match_parent"
@@ -46,12 +55,16 @@
             android:paddingTop="10dip"
             android:text="热门"
             android:textColor="@color/color_333333" />
-        <GridView
+        <com.handongkeji.widget.MyGridView
+            android:id="@+id/hot_city"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:horizontalSpacing="10dp"
             android:numColumns="3"
-            android:verticalSpacing="10dp"
-            android:horizontalSpacing="10dp">
-        </GridView>
+            android:columnWidth="80dp"
+            android:verticalSpacing="10dp">
+        </com.handongkeji.widget.MyGridView>
     </LinearLayout>
 </LinearLayout>
