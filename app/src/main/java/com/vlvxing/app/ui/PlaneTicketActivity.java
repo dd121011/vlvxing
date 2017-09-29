@@ -1,33 +1,58 @@
 package com.vlvxing.app.ui;
 
 import android.app.Application;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.handongkeji.handler.RemoteDataHandler;
+import com.handongkeji.modle.ResponseData;
 import com.handongkeji.selecity.PlaneSelestorCityActivity;
 
 import com.handongkeji.ui.BaseActivity;
 
+import com.handongkeji.ui.BrowseActivity;
+import com.handongkeji.utils.StringUtils;
+import com.sivin.Banner;
+import com.sivin.BannerAdapter;
 import com.vlvxing.app.R;
 
+import com.vlvxing.app.adapter.DialogFourAdapter;
+import com.vlvxing.app.adapter.DialogThreeAdapter;
+import com.vlvxing.app.common.Constants;
 import com.vlvxing.app.common.MyApp;
 import com.vlvxing.app.lib.CalendarSelectorActivity;
+import com.vlvxing.app.model.SysadModel;
+import com.vlvxing.app.utils.ToastUtils;
 
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -79,7 +104,13 @@ public class PlaneTicketActivity extends BaseActivity{
     private Context mcontext;
     private String dateFormat = null;
     private int flag = 1;//为1时代表単程 2时往返
+    private Dialog vDialog;
 
+    @Bind(R.id.plane_pager)
+    Banner publicPager;//轮播
+    //轮播图数据源
+    private List<SysadModel.DataBean> img_list = new ArrayList<>();
+    private List<String> bannerData = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,13 +122,87 @@ public class PlaneTicketActivity extends BaseActivity{
         txtDate.setText(getNowDate());
         radioGroupOnCheckChange();//注册単程、返程的选择事件
         cityLefttxt.setText(MyApp.getInstance().getCity_name());
+        getBananer();
+        int img_width = MyApp.getInstance().getScreenWidth();
+        ViewGroup.LayoutParams params = publicPager.getLayoutParams();
+        params.height = (img_width * 150) / 375; // 750:500
+        publicPager.setLayoutParams(params);
+
 //        String city = MyApp.getInstance().getCity_name();
 //        if (!StringUtils.isStringNull(city)) {
 //            cityLefttxt.setText(city);
 //        }
 
     }
+    private void a(){
+        publicPager.setOnBannerItemClickListener(new Banner.OnBannerItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                SysadModel.DataBean bean = img_list.get(position);
+                String adcontents = bean.getAdcontents();// url
+                String adtype = bean.getAdtype();
+//                if ("1".equals(adtype)) { //跳新闻详情
+////                    startActivity(new Intent(mcontext, RenZAndPersonInfoActivity.class).putExtra("newid",adcontents));
+//                } else if ("2".equals(adtype)) {
+                Intent intent = new Intent(mcontext, BrowseActivity.class);
+                intent.putExtra("url", adcontents);
+                startActivity(intent);
+//                } else if ("3".equals(adtype)) {
+//
+//                }
+            }
+        });
+    }
 
+    //获取bananer图
+    public void getBananer() {
+        String url = Constants.URL_SYSAD;
+        HashMap<String, String> params = new HashMap<>();
+        params.put("categoryId", "0"); //分类id(0:首页，1国内，2国外  3附近)
+        RemoteDataHandler.asyncTokenPost(url, mcontext, true, params, new RemoteDataHandler.Callback() {
+                    @Override
+                    public void dataLoaded(ResponseData data) {
+                        String json = data.getJson();
+                        if (StringUtils.isStringNull(json)) {
+                            return;
+                        }
+                        Gson gson = new Gson();
+                        SysadModel model = gson.fromJson(json, SysadModel.class);
+                        final int status = model.getStatus();
+                        if (status == 1) {
+                            img_list = model.getData();
+                            for (int i = 0; i < model.getData().size(); i++) {
+                                bannerData.add(model.getData().get(i).getAdpicture());
+                            }
+                            setBannerData();
+                        } else {
+//                            ToastUtils.show(getContext(), model.getMessage());
+                        }
+                    }
+                }
+        );
+    }
+
+    /**
+     * 设置bananer图
+     */
+    private void setBannerData() {
+//        publicPager.setIndicatorGravity(BannerConfig.RIGHT);
+//        publicPager.setImages(bannerData).
+//       setImageLoader(new GlideImageLoader()).isAutoPlay(true).setDelayTime(1000)
+//                .start();
+
+        publicPager.setBannerAdapter(new BannerAdapter<String>(bannerData) {
+            @Override
+            protected void bindTips(TextView tv, String o) {
+
+            }
+            @Override
+            public void bindImage(ImageView imageView, String o) {
+                Glide.with(mcontext).load(o).into(imageView);
+            }
+        });
+    }
     //获取当前日期
     private String getNowDate(){
         Calendar c = Calendar.getInstance();//
@@ -134,7 +239,6 @@ public class PlaneTicketActivity extends BaseActivity{
                     flag = 2;
                     dateRightLin.setVisibility(View.VISIBLE);
                     dateRight.setText(getNowDate());
-
                 }
             }
         });
@@ -179,7 +283,6 @@ public class PlaneTicketActivity extends BaseActivity{
                 searchIntent.putExtra("goCity", goCity);
                 searchIntent.putExtra("arriveCity", arriveCity);
                 searchIntent.putExtra("date", dateFormat);
-
 //                startActivityForResult(searchIntent, 4);//横向日期选择并展示车票列表
                 startActivity(searchIntent);//横向日期选择并展示车票列表
                 }else{
@@ -198,9 +301,27 @@ public class PlaneTicketActivity extends BaseActivity{
                 startActivity(intent);
                 break;
             case R.id.bottom_right_btn:
-
+                //v行无忧
+                showDialog();
                 break;
         }
+    }
+    private void showDialog() {
+        vDialog = new Dialog(this, R.style.BottomDialog);
+        View contentView = LayoutInflater.from(this).inflate(R.layout.plane_vxingwuyou_dialog, null);
+//        ListView listview = (ListView) contentView.findViewById(R.id.listview);//展示UI容器 body中listview
+//        ImageView close = (ImageView) contentView.findViewById(R.id.close);//关闭
+
+        vDialog.setContentView(contentView);
+        ViewGroup.LayoutParams layoutParams = contentView.getLayoutParams();
+        layoutParams.width = getResources().getDisplayMetrics().widthPixels;
+//        layoutParams.height = (int)(getResources().getDisplayMetrics().heightPixels * 0.8);
+        contentView.setLayoutParams(layoutParams);
+        vDialog.getWindow().setGravity(Gravity.CENTER_HORIZONTAL);
+        vDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
+        vDialog.setCanceledOnTouchOutside(true);
+        vDialog.show();
+
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -208,8 +329,7 @@ public class PlaneTicketActivity extends BaseActivity{
         if (requestCode == 3 && resultCode == RESULT_OK) {
             if (data!=null){
             //日期选择
-                 dateFormat = data.getStringExtra(CalendarSelectorActivity.ORDER_DAY).replaceAll("#", "-");
-
+                dateFormat = data.getStringExtra(CalendarSelectorActivity.ORDER_DAY).replaceAll("#", "-");
                 Toast.makeText(mcontext, " dateFormat!"+dateFormat, Toast.LENGTH_SHORT).show();
             String orderInfo = data.getStringExtra(CalendarSelectorActivity.ORDER_DAY);
                 if(orderInfo!=null){
@@ -223,8 +343,6 @@ public class PlaneTicketActivity extends BaseActivity{
                 }else{
                     txtDay.setVisibility(View.INVISIBLE);
                 }
-
-
             }
 			 //*****注意*****
 			// 如需转换为Calendar

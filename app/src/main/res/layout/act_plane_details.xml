@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:background="@drawable/shape_corner">
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:text="09月15日周五"
             android:textSize="15sp"
-            android:textColor="@color/colorPlane"/>
+            android:textColor="@color/orangePlane"/>
 
     </LinearLayout>
         <LinearLayout
@@ -50,7 +50,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPlane"
+            android:background="@color/orangePlane"
             android:paddingTop="40dp"
             android:paddingLeft="5dp"
             android:paddingBottom="40dp"
@@ -163,7 +163,7 @@
                 android:id="@+id/book"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/red_btn"
+                android:background="@drawable/orange_btn"
                 android:textSize="18sp"
                 android:gravity="center"
                 android:layout_alignTop="@+id/price_txt"

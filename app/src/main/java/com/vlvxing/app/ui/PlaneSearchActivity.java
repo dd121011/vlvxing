@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 
 import com.handongkeji.ui.BaseActivity;
+import com.sivin.Banner;
 import com.vlvxing.app.R;
 import com.vlvxing.app.adapter.DialogFourAdapter;
 import com.vlvxing.app.adapter.DialogThreeAdapter;
@@ -287,7 +288,7 @@ public class PlaneSearchActivity extends BaseActivity  {
                                     switch(entry.getKey()){
                                         case "first":
                                             checkFirst.setChecked(true);
-                                        break;
+                                            break;
                                         case "second":
                                             checkSecond.setChecked(true);
                                             break;
@@ -300,7 +301,7 @@ public class PlaneSearchActivity extends BaseActivity  {
                                     }
                                 }
                             }
-                         }
+                        }
                         first.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -350,7 +351,7 @@ public class PlaneSearchActivity extends BaseActivity  {
                                 }
                             }
                         });
-                           break;
+                        break;
                     case R.id.three_btn://航空公司
                         first_lin.setVisibility(View.GONE);
                         listview.setVisibility(View.VISIBLE);
@@ -441,6 +442,7 @@ public class PlaneSearchActivity extends BaseActivity  {
         });
 
     }
+
 
 
 

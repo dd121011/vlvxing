@@ -112,7 +112,6 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
         init();// 初始化控件
         loadData();// 获取首页列表
         radioGroupOnCheckChange();//注册国际、国内的选择事件
-
     }
     /**
      * 単程、往返的父容器选择状态的事件监听
@@ -246,7 +245,6 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
     @OnClick({ R.id.back})
     public void onClick(View view) {
         switch (view.getId()) {
-
             case R.id.back:
                 finish();
                 break;
@@ -590,7 +588,6 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
         public GridViewHistory(Context context, String[] data) {
             this.context = context;
             this.data = data;
-
         }
 
 
