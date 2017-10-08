@@ -49,10 +49,9 @@
                 android:id="@+id/check_first"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:button="@null"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/plane_bottom_checkbox_selector"
+                android:button="@drawable/plane_bottom_checkbox_selector"
                 android:clickable="false"
                 android:focusable="false" />
         </LinearLayout>
@@ -104,8 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="10dp"
-                android:button="@null"
-                android:background="@drawable/plane_bottom_checkbox_selector"
+                android:button="@drawable/plane_bottom_checkbox_selector"
                 android:clickable="false"
                 android:focusable="false"
                 />
@@ -157,8 +155,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="10dp"
-                android:button="@null"
-                android:background="@drawable/plane_bottom_checkbox_selector"
+                android:button="@drawable/plane_bottom_checkbox_selector"
                 android:clickable="false"
                 android:focusable="false" />
         </LinearLayout>
@@ -205,10 +202,9 @@
                 android:id="@+id/check_four"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:button="@null"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/plane_bottom_checkbox_selector"
+                android:button="@drawable/plane_bottom_checkbox_selector"
                 android:clickable="false"
                 android:focusable="false"
                 />

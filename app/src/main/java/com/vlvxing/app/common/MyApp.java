@@ -93,7 +93,7 @@ public class MyApp extends Application {
 	public final String PREF_USERNAME = "username";
 	public String message;
 	public String messaget;
-//	public Typeface typeface;
+	//	public Typeface typeface;
 //	public List<EmojiBean> iterator;
 	public boolean RESULT_FROM_VIEW_PHOTOS = false;
 
@@ -115,7 +115,7 @@ public class MyApp extends Application {
 //	}
 
 	public int getIsrecord() {
-				int isrecord = SharedPrefsUtil.getValue(applicationContext, "isrecord", 0);
+		int isrecord = SharedPrefsUtil.getValue(applicationContext, "isrecord", 0);
 		return isrecord;
 	}
 
@@ -179,28 +179,28 @@ public class MyApp extends Application {
 //		File cacheDir = StorageUtils.getOwnCacheDirectory(getApplicationContext(), "imageloader/Cache");
 		File cacheDir = new File(Constants.CACHE_DIR,"imageloader/Cache");
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(applicationContext).memoryCacheExtraOptions(480, 800) // max
-																																		// width,
-																																		// max
-																																		// height，即保存的每个缓存文件的最大长宽
+				// width,
+				// max
+				// height，即保存的每个缓存文件的最大长宽
 				.discCacheExtraOptions(480, 800, null) // Can slow ImageLoader,
-														// use it carefully
-														// (Better don't use
-														// it)/设置缓存的详细信息，最好不要设置这个
+				// use it carefully
+				// (Better don't use
+				// it)/设置缓存的详细信息，最好不要设置这个
 				.threadPoolSize(10)// 线程池内加载的数量
 				.threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory().memoryCache(new UsingFreqLimitedMemoryCache(2 * 1024 * 1024)) // You
-																																								// can
-																																								// pass
-																																								// your
-																																								// own
-																																								// memory
-																																								// cache
-																																								// implementation/你可以通过自己的内存缓存实现
+				// can
+				// pass
+				// your
+				// own
+				// memory
+				// cache
+				// implementation/你可以通过自己的内存缓存实现
 				.memoryCacheSize(2 * 1024 * 1024).discCacheSize(50 * 1024 * 1024).discCacheFileNameGenerator(new Md5FileNameGenerator())// 将保存的时候的URI名称用MD5
-																																		// 加密
+				// 加密
 				.tasksProcessingOrder(QueueProcessingType.LIFO).discCacheFileCount(100) // 缓存的文件数量
 				.discCache(new UnlimitedDiskCache(cacheDir))// 自定义缓存路径
 				.defaultDisplayImageOptions(DisplayImageOptions.createSimple()).imageDownloader(new BaseImageDownloader(applicationContext, 5 * 1000, 30 * 1000)) // connectTimeout
-																																									// s)超时时间
+				// s)超时时间
 				.writeDebugLogs() // Remove for release app
 				.build();// 开始构建
 //		iterator = EmojiGetter.readXML(this);
@@ -356,8 +356,8 @@ public class MyApp extends Application {
 		}
 		return ret;
 	}
-	
-	
+
+
 
 	public void logout() {
 		accounts = am.getAccountsByType(getString(R.string.account_type));
@@ -531,7 +531,7 @@ public class MyApp extends Application {
 
 	/**
 	 * 获取系统初始化文件操作器
-	 * 
+	 *
 	 * @return
 	 */
 	public SharedPreferences getSysInitSharedPreferences() {
@@ -676,12 +676,12 @@ public class MyApp extends Application {
 			@Override
 			public void onSuccess(String deviceToken) {
 				//注册成功会返回device token
-                Log.d("aaa", "MyApp onSuccess: "+deviceToken);
+				Log.d("aaa", "MyApp onSuccess: "+deviceToken);
 			}
 
 			@Override
 			public void onFailure(String s, String s1) {
-                Log.d(s, "MyApp onSuccess: "+s1);
+				Log.d(s, "MyApp onSuccess: "+s1);
 			}
 		});
 	}

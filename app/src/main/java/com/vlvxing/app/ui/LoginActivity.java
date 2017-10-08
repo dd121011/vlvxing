@@ -85,9 +85,9 @@ public class LoginActivity extends BaseActivity implements LoginAndRegisterPrese
     private UMAuthListener umAuthListener = new UMAuthListener() {
         @Override
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
-            Log.d("aaa",data.toString());
+//            Log.d("aaa",data.toString());
             // 获取uid
-//            Toast.makeText(getApplicationContext(), "get 授权", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "get 授权", Toast.LENGTH_SHORT).show();
             String userOpenToken, uid = null,screen_name,imageurl;
             dialog.dismiss();
             if (null != data) {

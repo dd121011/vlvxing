@@ -20,8 +20,7 @@
         <!--标题-->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -142,7 +141,7 @@
         android:layout_weight="1"
         android:background="@color/bg_eaeaea"
         android:divider="#666666"
-        android:dividerHeight="1dp">
+        android:dividerHeight="0.1dp">
 
     </ListView>
     <LinearLayout
@@ -164,36 +163,66 @@
             android:textSize="15sp"
             android:textColor="@color/plane_radiobtn_textcolor_selector"
             android:text="筛选"/>
+        <LinearLayout
+            android:id="@+id/left_check_lin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:gravity="center"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/left_check_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="时间"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                />
 
-        <CheckBox
+            <CheckBox
+                android:id="@+id/left_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:clickable="false"
+                android:layout_gravity="center"
+                android:drawablePadding="50dp"
+                android:button="@drawable/bg_plane_price_checkbox_selector" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/right_check_lin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="8dp"
             android:gravity="center"
-            android:background="@null"
-            android:textSize="15sp"
-            android:drawablePadding="-20dp"
-            android:layout_gravity="center"
-            android:drawableRight="@drawable/bg_plane_price_checkbox_selector"
-            android:textColor="@color/plane_radiobtn_textcolor_selector"
-            android:button="@null"
-            android:text="时间"/>
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:button="@null"
-            android:gravity="center"
-            android:layout_gravity="center"
             android:padding="8dp"
-            android:background="@null"
-            android:textSize="15sp"
-            android:checked="true"
-            android:drawableRight="@drawable/bg_plane_price_checkbox_selector"
-            android:drawablePadding="-20dp"
-            android:textColor="@color/plane_radiobtn_textcolor_selector"
-            android:text="价格最低"/>
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/right_check_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="价格最低"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textColor="@color/plane_radiobtn_textcolor_selector"
+                />
+            <CheckBox
+                android:id="@+id/right_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:button="@drawable/bg_plane_price_checkbox_selector"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:drawablePadding="50dp"
+                android:clickable="false"
+                />
+        </LinearLayout>
+
 
     </LinearLayout>
 </LinearLayout>

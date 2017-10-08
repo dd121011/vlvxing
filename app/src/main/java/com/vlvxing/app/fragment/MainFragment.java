@@ -247,7 +247,13 @@ public class MainFragment extends Fragment{
             public void onItemClick(int position) {
                 SysadModel.DataBean bean = img_list.get(position);
                 String adcontents = bean.getAdcontents();// url
+                System.out.println("信用卡");
+                System.out.println("信用卡adcontents="+adcontents);
                 String adtype = bean.getAdtype();
+                System.out.println("信用卡adtype="+adtype);
+                System.out.println("信用卡");
+
+
 //                if ("1".equals(adtype)) { //跳新闻详情
 ////                    startActivity(new Intent(mcontext, RenZAndPersonInfoActivity.class).putExtra("newid",adcontents));
 //                } else if ("2".equals(adtype)) {

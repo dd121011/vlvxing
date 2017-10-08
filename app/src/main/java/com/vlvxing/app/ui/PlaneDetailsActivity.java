@@ -74,9 +74,7 @@ public class PlaneDetailsActivity extends BaseActivity{
                 intent.putExtra("arriveCity",arriveCity);//到达城市
                 intent.putExtra("date",date);//出发日期
                 startActivity(intent);
-
                 break;
-
 
         }
     }

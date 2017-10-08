@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 
 import com.handongkeji.ui.BaseActivity;
+import com.lidroid.xutils.db.annotation.Check;
 import com.sivin.Banner;
 import com.vlvxing.app.R;
 import com.vlvxing.app.adapter.DialogFourAdapter;
@@ -59,6 +60,17 @@ public class PlaneSearchActivity extends BaseActivity  {
     ImageView ban_back;//返回键
     @Bind(R.id.screenBtn)
     Button screenBtn;//筛选按钮
+
+    @Bind(R.id.left_checkbox)
+    CheckBox leftCheckBox;
+    @Bind(R.id.right_checkbox)
+    CheckBox rightCheckBox;
+    @Bind(R.id.left_check_txt)
+    TextView leftCheckTxt;
+    @Bind(R.id.right_check_txt)
+    TextView rightCheckTxt;
+
+
     private HorizontalCalendar horizontalCalendar;
     private ListView body_list;
     private List<Map<String, String>> mData;
@@ -99,7 +111,8 @@ public class PlaneSearchActivity extends BaseActivity  {
         initFourData();
         //起飞时段 记录了哪些航班
         mapSecond =  new HashMap<String,Boolean>();
-
+        //底部筛选弹出框
+        bottomDialog = new Dialog(this, R.style.BottomDialog);
 //        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
 //        Date d = null;
 //        try {
@@ -183,7 +196,7 @@ public class PlaneSearchActivity extends BaseActivity  {
         bottomDialogFourJiangluoData = getDialogFourJiangluoData();
     }
 
-    @OnClick({R.id.return_lin, R.id.right_txt,R.id.screenBtn})
+    @OnClick({R.id.return_lin, R.id.right_txt,R.id.screenBtn,R.id.left_check_lin,R.id.right_check_lin})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.return_lin:
@@ -194,12 +207,32 @@ public class PlaneSearchActivity extends BaseActivity  {
                 break;
             case R.id.screenBtn:
             //筛选按钮
-                showDialog();
+                if (!bottomDialog.isShowing()){
+                    showDialog();
+                }
                 break;
+            case R.id.left_check_lin:
+                if(leftCheckBox.isChecked()){
+                    leftCheckTxt.setTextColor(Color.parseColor("#666666"));
+                    leftCheckBox.setChecked(false);
+                }else{
+                    leftCheckTxt.setTextColor(Color.parseColor("#ea5413"));
+                    leftCheckBox.setChecked(true);
+                }
+                break;
+            case R.id.right_check_lin:
+                if(rightCheckBox.isChecked()){
+                    rightCheckTxt.setTextColor(Color.parseColor("#666666"));
+                    rightCheckBox.setChecked(false);
+                }else{
+                    rightCheckTxt.setTextColor(Color.parseColor("#ea5413"));
+                    rightCheckBox.setChecked(true);
+                }
+                break;
+
         }
     }
     private void showDialog() {
-        bottomDialog = new Dialog(this, R.style.BottomDialog);
         View contentView = LayoutInflater.from(this).inflate(R.layout.plane_screen_diglog_bottom, null);
         ListView listview = (ListView) contentView.findViewById(R.id.listview);//展示UI容器 body中listview
         ImageView close = (ImageView) contentView.findViewById(R.id.close);//关闭

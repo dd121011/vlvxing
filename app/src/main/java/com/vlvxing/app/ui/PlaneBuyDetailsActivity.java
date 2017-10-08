@@ -45,10 +45,14 @@ public class PlaneBuyDetailsActivity extends BaseActivity{
     TextView headTitleRight;//标题右
     @Bind(R.id.btn_back)
     ImageView ban_back;//返回键
-    @Bind(R.id.img1)
-    ImageView img1;
-    @Bind(R.id.img2)
-    ImageView img2;
+
+
+    @Bind(R.id.check1)
+    CheckBox check1;
+    @Bind(R.id.check2)
+    CheckBox check2;
+
+
     @Bind(R.id.bottom_left_lin)
     LinearLayout bottomLeftLin;//总价linearlayout
     @Bind(R.id.editLin)
@@ -116,18 +120,18 @@ public class PlaneBuyDetailsActivity extends BaseActivity{
     }
 
 
-    @OnClick({R.id.return_lin, R.id.right_txt,R.id.bottom_left_lin})
+    @OnClick({R.id.return_lin, R.id.right_txt,R.id.bottom_left_lin,R.id.pay_rel,R.id.wxpay_rel})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.pay_rel: //支付宝
                 type=1;
-                img1.setVisibility(View.VISIBLE);
-                img2.setVisibility(View.GONE);
+                check1.setChecked(true);
+                check2.setChecked(false);
                 break;
             case R.id.wxpay_rel:  //微信
                 type=2;
-                img1.setVisibility(View.GONE);
-                img2.setVisibility(View.VISIBLE);
+                check2.setChecked(true);
+                check1.setChecked(false);
                 break;
             case R.id.return_lin:
                 finish();

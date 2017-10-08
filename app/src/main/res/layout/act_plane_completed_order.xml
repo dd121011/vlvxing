@@ -14,10 +14,10 @@
     <RadioGroup
         android:id="@+id/radio_group"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:orientation="horizontal"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:background="@color/bg_eaeaea">
         <RadioButton
             android:id="@+id/left_radio_btn"
@@ -26,7 +26,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:button="@null"
-            android:textSize="15sp"
+            android:background="@drawable/plane_order_radiobutton_left_selector"
+            android:textSize="18sp"
             android:checked="true"
             android:textColor="@color/plane_completed_radiobtn_textcolor_selector"
             android:text="改签"/>
@@ -37,7 +38,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:button="@null"
-            android:textSize="15sp"
+            android:textSize="18sp"
+            android:background="@drawable/plane_order_radiobutton_right_selector"
             android:textColor="@color/plane_completed_radiobtn_textcolor_selector"
             android:text="退票"/>
 
@@ -108,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColor="@color/calendar_enable_color"
-                android:textSize="15sp"
+                android:textSize="12sp"
                 android:singleLine="true"
                 android:text="2017-9-14"/>
             <TextView
@@ -116,7 +118,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColor="@color/calendar_enable_color"
-                android:textSize="15sp"
+                android:textSize="12sp"
                 android:singleLine="true"
                 android:text="北京首都机场"
                 android:layout_marginLeft="8dp"/>
@@ -130,7 +132,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorPlane"
-                    android:textSize="15sp"
+                    android:textSize="12sp"
                     android:text="8:30"
                     android:singleLine="true"
                     android:layout_marginLeft="8dp"/>
@@ -138,9 +140,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/calendar_enable_color"
-                    android:textSize="15sp"
                     android:background="@mipmap/go_img"
-                    android:layout_marginLeft="5dp"/>
+                    android:layout_marginLeft="6dp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -154,14 +155,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/calendar_enable_color"
-                    android:textSize="15sp"
+                    android:textSize="12sp"
                     android:text="深圳"
                     android:layout_marginLeft="8dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorPlane"
-                    android:textSize="15sp"
+                    android:textSize="12sp"
                     android:text="13:30"
                     android:layout_marginLeft="3dp"/>
             </LinearLayout>
@@ -273,9 +274,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:button="@null"
-                android:background="@drawable/plane_bottom_checkbox_selector"
-
+                android:button="@drawable/plane_bottom_checkbox_selector"
+                android:layout_marginRight="20dp"
                 />
         </LinearLayout>
     </LinearLayout>

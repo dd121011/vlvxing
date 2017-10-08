@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.handongkeji.handler.RemoteDataHandler;
 import com.handongkeji.modle.ResponseData;
+import com.handongkeji.ui.BrowseActivity;
 import com.handongkeji.utils.AnimateFirstDisplayListener;
 import com.handongkeji.utils.StringUtils;
 import com.handongkeji.widget.RoundImageView;
@@ -83,7 +84,7 @@ public class WoDeFragment extends Fragment {
     private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
     private DisplayImageOptions options;
     private String share_title,share_content, share_url;
-
+    private String credit_card_url;
 
     @Override
     public void onAttach(Activity activity) {
@@ -135,6 +136,7 @@ public class WoDeFragment extends Fragment {
             nologinLin.setVisibility(View.GONE);
             infoLin.setVisibility(View.VISIBLE);
         }
+        credit_card_url = "https://ecentre.spdbccc.com.cn/creditcard/indexActivity.htm?data=P2135341";
     }
 
     private void getUserInfo() {
@@ -182,7 +184,7 @@ public class WoDeFragment extends Fragment {
     }
 
     int count=0;
-    @OnClick({R.id.set_img,R.id.right_img,R.id.info_rel, R.id.login_txt, R.id.regist_txt, R.id.rel1, R.id.rel2, R.id.rel3, R.id.rel4, R.id.rel5})
+    @OnClick({R.id.set_img,R.id.right_img,R.id.info_rel, R.id.login_txt, R.id.regist_txt, R.id.rel1, R.id.rel2, R.id.rel3, R.id.rel4,R.id.credit_card, R.id.rel5})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.set_img:
@@ -238,6 +240,15 @@ public class WoDeFragment extends Fragment {
                     startActivity(new Intent(mcontext, MyCollectActivity.class));
                 }
                 break;
+            case R.id.credit_card:  //白金信用卡申请
+                flag = MyApp.getInstance().isLogin(mcontext);
+                if (flag) {
+                    Intent intent = new Intent(mcontext, BrowseActivity.class);
+                    intent.putExtra("url", credit_card_url);
+                    startActivity(intent);
+                }
+                break;
+
             case R.id.rel5:  //分享
                 //判断是否登录
                  flag = MyApp.getInstance().isLogin(mcontext);

@@ -40,10 +40,11 @@
             android:layout_height="wrap_content"
             android:text="09月15日周五"
             android:textSize="15sp"
-            android:textColor="@color/orangePlane"/>
+            android:textColor="@color/colorPlane"/>
 
     </LinearLayout>
         <LinearLayout
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -170,17 +171,19 @@
                 android:layout_alignBottom="@+id/price_txt"
                 android:layout_alignParentRight="true"
                 android:textColor="@color/white"
-                android:text="预  订"/>
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="预 订"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
+                android:textColor="@color/dlgrey"
                 android:textSize="12sp"
-                android:gravity="center"
+                android:layout_marginLeft="2dp"
                 android:layout_alignLeft="@+id/book"
                 android:layout_alignTop="@+id/details_withdrawal_txt"
-                android:layout_alignBottom="@+id/details_withdrawal_txt"
-                android:layout_alignParentRight="true"
                 android:text="经济舱3.8折"/>
 
 

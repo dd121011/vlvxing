@@ -87,6 +87,7 @@
         android:layout_height="wrap_content"
         android:background="@color/bg_eaeaea">
         <LinearLayout
+            android:id="@+id/left_city_lin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -124,9 +125,11 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/right_city_lin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:paddingTop="10dp"
             android:orientation="vertical"
             android:layout_weight="1">
 

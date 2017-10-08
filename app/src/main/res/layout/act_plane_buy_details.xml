@@ -34,12 +34,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="￥150"
-                android:drawableRight="@mipmap/price_up"
+                android:drawableRight="@mipmap/plane_pay_price_details"
                 android:paddingBottom="15dp"
                 android:paddingTop="15dp"
                 android:drawablePadding="60dp"
                 android:textColor="@color/color_ea5413"
-                android:textSize="16sp" />
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -73,7 +73,11 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/borderstyle_white"
                 android:orientation="vertical">
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/qianhuise"
+                    />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -252,9 +256,12 @@
                         android:gravity="center_horizontal">
                         <Button
                             android:layout_width="wrap_content"
-                            android:layout_height="25dp"
-                            android:background="@color/orangePlane"
+                            android:layout_height="30dp"
+                            android:paddingLeft="20dp"
+                            android:paddingRight="20dp"
+                            android:background="@drawable/orange_btn"
                             android:textColor="@color/white"
+                            android:textSize="12sp"
                             android:text="+新增乘客"/>
                     </LinearLayout>
                     <View
@@ -326,9 +333,8 @@
                         <CheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:button="@null"
                             android:layout_marginRight="10dp"
-                            android:background="@drawable/plane_bottom_checkbox_selector"
+                            android:button="@drawable/plane_bottom_checkbox_selector"
                             />
                     </LinearLayout>
                     <View
@@ -363,13 +369,15 @@
                                 android:paddingTop="15dp"
                                 android:paddingBottom="15dp"
                                 />
-                            <ImageView
-                                android:id="@+id/img1"
+                            <CheckBox
+                                android:id="@+id/check1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@mipmap/pitch_on"
+                                android:button="@drawable/plane_bottom_checkbox_selector"
                                 android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
+                                android:clickable="false"
+                                android:checked="true"
                                 />
                         </RelativeLayout>
                         <RelativeLayout
@@ -391,14 +399,14 @@
                                 android:paddingTop="15dp"
                                 android:paddingBottom="15dp"
                                 />
-                            <ImageView
-                                android:id="@+id/img2"
+                            <CheckBox
+                                android:id="@+id/check2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@mipmap/pitch_on"
+                                android:button="@drawable/plane_bottom_checkbox_selector"
                                 android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
-                                android:visibility="gone"
+                                android:clickable="false"
                                 />
                         </RelativeLayout>
                     </LinearLayout>
@@ -406,14 +414,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/qianhuise"
-                        android:padding="12dp"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:paddingLeft="15dp"
                         android:orientation="horizontal">
                         <CheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:button="@null"
                             android:layout_marginRight="10dp"
-                            android:background="@drawable/plane_bottom_checkbox_selector"
+                            android:button="@drawable/plane_bottom_checkbox_selector"
                             android:checked="true"
                             />
                         <TextView

@@ -41,8 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="10dp"
-            android:button="@null"
-            android:background="@drawable/plane_bottom_checkbox_selector"
+            android:button="@drawable/plane_bottom_checkbox_selector"
             android:clickable="false"
             android:focusable="false" />
 

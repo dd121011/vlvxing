@@ -10,6 +10,10 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -83,6 +87,10 @@ public class PlaneTicketActivity extends BaseActivity{
     TextView cityLefttxt;//出发城市
     @Bind(R.id.city_txt_right)
     TextView cityRighttxt;//到达城市
+    @Bind(R.id.left_city_lin)
+    LinearLayout leftCityLin;//左边
+    @Bind(R.id.right_city_lin)
+    LinearLayout rightCityLin;//左边
     @Bind(R.id.txt_date)
     TextView txtDate;//日期
     @Bind(R.id.txt_day)
@@ -127,14 +135,14 @@ public class PlaneTicketActivity extends BaseActivity{
         ViewGroup.LayoutParams params = publicPager.getLayoutParams();
         params.height = (img_width * 150) / 375; // 750:500
         publicPager.setLayoutParams(params);
-
+        initBanner();
 //        String city = MyApp.getInstance().getCity_name();
 //        if (!StringUtils.isStringNull(city)) {
 //            cityLefttxt.setText(city);
 //        }
 
     }
-    private void a(){
+    private void initBanner(){
         publicPager.setOnBannerItemClickListener(new Banner.OnBannerItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -291,6 +299,12 @@ public class PlaneTicketActivity extends BaseActivity{
                 break;
             case R.id.go_or_come:
                 //切换城市
+                Animation animationLeft = AnimationUtils.loadAnimation(this, R.anim.plane_translate_left);//加载Xml文件中的动画imgShow.startAnimation(scaleAnimation2);
+                leftCityLin.startAnimation(animationLeft);//开始动画
+
+                Animation animationRight = AnimationUtils.loadAnimation(this, R.anim.plane_translate_right);//加载Xml文件中的动画imgShow.startAnimation(scaleAnimation2);
+                rightCityLin.startAnimation(animationRight);//开始动画
+
                 String left = cityLefttxt.getText().toString();
                 String right = cityRighttxt.getText().toString();
                 cityLefttxt.setText(right);
