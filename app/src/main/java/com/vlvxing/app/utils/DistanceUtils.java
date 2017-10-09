@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by Administrator on 2017/6/8 0008.
+ * 根据用户指定的两个坐标点，计算这两个点的实际地理距离
  */
 
 public class DistanceUtils {

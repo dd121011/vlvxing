@@ -1,7 +1,5 @@
 package com.qunar.utils;
 
-import android.util.Log;
-
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -38,7 +36,7 @@ public class Md5Util {
             }
             md5Result = sb.toString();
         } catch (Exception e) {
-            Log.i("Md5Util",e.getMessage());
+//            logger.error(e.getMessage(), e);
         }
         return md5Result;
     }

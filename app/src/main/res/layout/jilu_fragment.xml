@@ -86,10 +86,10 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/borderstyle_whiter"
                     android:layout_marginTop="15dp"
-                    android:paddingBottom="5dp"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:paddingTop="5dp">
+                    android:paddingBottom="6dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:paddingTop="6dp">
 
                     <CheckBox
                         android:id="@+id/tmc_check"

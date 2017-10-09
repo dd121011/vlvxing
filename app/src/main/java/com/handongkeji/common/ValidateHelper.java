@@ -3,6 +3,9 @@ package com.handongkeji.common;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ *  验证工具类
+ */
 public class ValidateHelper {
 
     // 手机号

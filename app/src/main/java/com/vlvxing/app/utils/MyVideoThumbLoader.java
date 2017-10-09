@@ -45,7 +45,6 @@ public class MyVideoThumbLoader {
     public void addVideoThumbToCache(String path, Bitmap bitmap) {
         if (getVideoThumbToCache(path) == null) {
             // 当前地址没有缓存时，就添加
-
             lruCache.put(path, bitmap);
         }
     }

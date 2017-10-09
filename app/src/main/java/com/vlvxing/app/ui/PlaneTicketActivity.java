@@ -37,6 +37,7 @@ import com.handongkeji.ui.BaseActivity;
 
 import com.handongkeji.ui.BrowseActivity;
 import com.handongkeji.utils.StringUtils;
+import com.qunar.service.RequestService;
 import com.sivin.Banner;
 import com.sivin.BannerAdapter;
 import com.vlvxing.app.R;
@@ -113,7 +114,6 @@ public class PlaneTicketActivity extends BaseActivity{
     private String dateFormat = null;
     private int flag = 1;//为1时代表単程 2时往返
     private Dialog vDialog;
-
     @Bind(R.id.plane_pager)
     Banner publicPager;//轮播
     //轮播图数据源
@@ -140,6 +140,7 @@ public class PlaneTicketActivity extends BaseActivity{
 //        if (!StringUtils.isStringNull(city)) {
 //            cityLefttxt.setText(city);
 //        }
+        RequestService.doRequest("flight.national.supply.sl.searchflight","{\"arr\":\"SHA\",\"createTime\":\"1411442340\",\"dpt\":\"PEK\",\"date\":\"2015-12-21\",\"ex_track\":\"youxuan\", \"tag\":\"flight.national.supply.sl.searchflight\",\"token\":\"109cfbc62855bdc711a68c77c3e6bd97\"}\n" + "");
 
     }
     private void initBanner(){

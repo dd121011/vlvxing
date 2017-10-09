@@ -135,7 +135,7 @@ public class DbHelper extends SQLiteOpenHelper {
 	/**
 	 * 执行批量Sql,增删改 启动数据库事务
 	 * 
-	 * @param List
+	 * @param
 	 *            <String> lstr
 	 * @return 返回执行是否成功
 	 */
