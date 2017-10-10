@@ -22,6 +22,7 @@ public class Md5Util {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(data.getBytes("UTF-8"));
             byte b[] = md.digest();
+            System.out.println("去哪儿网 MD5加密之后 :" + b.length);
             int i;
             StringBuffer sb = new StringBuffer("");
             for(int offset = 0; offset < b.length; offset ++){
@@ -34,6 +35,7 @@ public class Md5Util {
                 }
                 sb.append(Integer.toHexString(i));
             }
+            System.out.println("去哪儿网 MD5加密之后并转化32位小写 :" + sb.toString());
             md5Result = sb.toString();
         } catch (Exception e) {
 //            logger.error(e.getMessage(), e);

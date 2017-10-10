@@ -37,6 +37,7 @@ import com.handongkeji.ui.BaseActivity;
 
 import com.handongkeji.ui.BrowseActivity;
 import com.handongkeji.utils.StringUtils;
+import com.qunar.bean.SearchFlightRequest;
 import com.qunar.service.RequestService;
 import com.sivin.Banner;
 import com.sivin.BannerAdapter;
@@ -50,6 +51,9 @@ import com.vlvxing.app.lib.CalendarSelectorActivity;
 import com.vlvxing.app.model.SysadModel;
 import com.vlvxing.app.utils.ToastUtils;
 
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -140,8 +144,14 @@ public class PlaneTicketActivity extends BaseActivity{
 //        if (!StringUtils.isStringNull(city)) {
 //            cityLefttxt.setText(city);
 //        }
-        RequestService.doRequest("flight.national.supply.sl.searchflight","{\"arr\":\"SHA\",\"createTime\":\"1411442340\",\"dpt\":\"PEK\",\"date\":\"2015-12-21\",\"ex_track\":\"youxuan\", \"tag\":\"flight.national.supply.sl.searchflight\",\"token\":\"109cfbc62855bdc711a68c77c3e6bd97\"}\n" + "");
+        SearchFlightRequest searchFlightRequest = new SearchFlightRequest();
+        searchFlightRequest.setArr("SHA");
+        searchFlightRequest.setDpt("PEK");
+        searchFlightRequest.setDate("2017-08-30");
+        searchFlightRequest.setEx_track("youxuan");
 
+        String paramsStr = "{\"arr\":\"SHA\",\"dpt\":\"PEK\",\"date\":\"2017-10-11\",\"ex_track\":\"youxuan\"}";
+        RequestService.doRequest(Constants.QUNAR_SEARCHFLIGHT,paramsStr);
     }
     private void initBanner(){
         publicPager.setOnBannerItemClickListener(new Banner.OnBannerItemClickListener() {
