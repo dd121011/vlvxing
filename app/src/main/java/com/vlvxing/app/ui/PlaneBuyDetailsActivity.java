@@ -2,32 +2,36 @@ package com.vlvxing.app.ui;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.handongkeji.common.ValidateHelper;
 import com.handongkeji.ui.BaseActivity;
+import com.handongkeji.utils.StringUtils;
+import com.handongkeji.widget.NoScrollListView;
+import com.lidroid.xutils.db.annotation.Check;
 import com.vlvxing.app.R;
-import com.vlvxing.app.adapter.DialogFourAdapter;
-import com.vlvxing.app.adapter.DialogThreeAdapter;
+import com.vlvxing.app.model.PlaneUserInfo;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -45,18 +49,25 @@ public class PlaneBuyDetailsActivity extends BaseActivity{
     TextView headTitleRight;//标题右
     @Bind(R.id.btn_back)
     ImageView ban_back;//返回键
-
-
     @Bind(R.id.check1)
     CheckBox check1;
     @Bind(R.id.check2)
     CheckBox check2;
-
-
     @Bind(R.id.bottom_left_lin)
     LinearLayout bottomLeftLin;//总价linearlayout
-    @Bind(R.id.editLin)
+    @Bind(R.id.edit_lin)
     LinearLayout editLin;
+    @Bind(R.id.user_info)
+    NoScrollListView userList;
+    @Bind(R.id.hangyixian)
+    CheckBox hangyixian;//航意险
+    @Bind(R.id.xieyi)
+    CheckBox xieyi;//底部锂电池及危险品乘机须知
+    @Bind(R.id.quicklypay_btn)
+    Button quicklypay;//提交订单
+    @Bind(R.id.ticket_number)
+    TextView ticketNumber;//飞机票剩余票数
+
 //    @Bind(R.id.details_withdrawal_txt)
 //    TextView detailsWithDrawal;//退改详情
     private Context mcontext;
@@ -65,6 +76,8 @@ public class PlaneBuyDetailsActivity extends BaseActivity{
     private String date ;
     private int type=1; //支付方式
     private Dialog bottomDialog;
+    private UserInfoListAdapter adapter;
+    private ArrayList<PlaneUserInfo> userInfoList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,13 +95,29 @@ public class PlaneBuyDetailsActivity extends BaseActivity{
         editLin.setFocusableInTouchMode(true);
         editLin.requestFocus();
 
+        userInfoList = new ArrayList<PlaneUserInfo>();
+        PlaneUserInfo model = new PlaneUserInfo(1,"测试","4107281499402281033");
+        userInfoList.add(model);
+        adapter = new UserInfoListAdapter(mcontext);
+        userList.setAdapter(adapter);
+        xieyi.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    quicklypay.setClickable(true);
+                    quicklypay.setBackgroundColor(Color.parseColor("#ea5413"));
+                }else{
+                    quicklypay.setBackgroundColor(Color.parseColor("#666666"));
+                    quicklypay.setClickable(false);
+                }
+            }
+        });
     }
 
 
     private void showPop(){
         View popupView = LayoutInflater.from(this).inflate(R.layout.act_plane_buy_price_popupwindow_, null);
         PopupWindow window = new PopupWindow(popupView, 400, 600);
-
         // TODO: 2016/5/17 设置背景颜色
 //        window.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#F8F8F8")));
         // TODO: 2016/5/17 设置可以获取焦点
@@ -120,7 +149,7 @@ public class PlaneBuyDetailsActivity extends BaseActivity{
     }
 
 
-    @OnClick({R.id.return_lin, R.id.right_txt,R.id.bottom_left_lin,R.id.pay_rel,R.id.wxpay_rel})
+    @OnClick({R.id.return_lin, R.id.right_txt,R.id.bottom_left_lin,R.id.pay_rel,R.id.wxpay_rel,R.id.add_btn,R.id.quicklypay_btn})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.pay_rel: //支付宝
@@ -150,7 +179,162 @@ public class PlaneBuyDetailsActivity extends BaseActivity{
 //                    showDialog();
 //                }
                 break;
+            case R.id.add_btn:
+                //新增乘客
+               int result =  userInfoList.get(userInfoList.size()-1).getNumber()+1;
+                PlaneUserInfo info = new PlaneUserInfo(result,"","");
+                userInfoList.add(info);
+                adapter.notifyDataSetChanged();
+                break;
+            case R.id.quicklypay_btn:
+                //提交
+                System.out.println("乘客信息:"+userInfoList.size());
+                for(int i = 0;i<userInfoList.size();i++){
+                    System.out.println("乘客信息:"+i+userInfoList.get(i).getName());
+                    System.out.println("乘客信息:"+i+userInfoList.get(i).getCard());
+                }
+                break;
+
+
 
         }
     }
+    /**
+     * 动态添加乘客信息
+     */
+
+    private class UserInfoListAdapter extends BaseAdapter {
+        private Context context;
+        private LayoutInflater inflater;
+//        private ArrayList<PlaneUserInfo> userInfoList;
+        public UserInfoListAdapter(Context context) {
+            super();
+            this.inflater = LayoutInflater.from(context);
+            this.context = context;
+//            this.userInfoList = userInfoList;
+        }
+
+        @Override
+        public int getCount() {
+            return userInfoList.size();
+        }
+        @Override
+        public Object getItem(int arg0) {
+            return userInfoList.get(arg0);
+        }
+
+        @Override
+        public long getItemId(int arg0) {
+            return arg0;
+        }
+
+        @Override
+        public View getView(final int position, View view, ViewGroup arg2) {
+            ViewHolder holder = null;
+            if(view == null){
+                holder = new ViewHolder();
+                view = inflater.inflate(R.layout.act_plane_user_info_listview_item, null);
+                holder.name = (EditText) view.findViewById(R.id.name);
+                holder.idCard = (EditText) view.findViewById(R.id.id_card);
+                holder.delete = (LinearLayout) view.findViewById(R.id.delete_lin);
+                holder.number = (TextView)view.findViewById(R.id.item_number);
+                view.setTag(holder);
+            }else{
+                holder = (ViewHolder) view.getTag();
+            }
+
+            holder.number.setText(userInfoList.get(position).getNumber().toString());
+
+
+            holder.delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (position==0){
+                        Toast.makeText(context, "至少有一位乘客的身份信息才可购票哟", Toast.LENGTH_SHORT).show();
+                    }else{
+                        userInfoList.remove(position);
+                        adapter.notifyDataSetChanged();
+                    }
+
+                }
+            });
+
+            if (holder.name.getTag() instanceof TextWatcher) {
+                holder.name.removeTextChangedListener((TextWatcher) holder.name.getTag());
+            }
+            if (holder.idCard.getTag() instanceof TextWatcher) {
+                holder.idCard.removeTextChangedListener((TextWatcher) holder.idCard.getTag());
+            }
+            //在重构adapter的时候不至于数据错乱
+            if (!userInfoList.get(position).getName().equals("")  &&  !userInfoList.get(position).getCard().equals("")){
+                holder.name.setText(userInfoList.get(position).getName());
+                holder.idCard.setText(userInfoList.get(position).getCard());
+            }else{
+                holder.name.setText("");
+                holder.idCard.setText("");
+            }
+
+
+            //名字验证并存储
+            TextWatcher nameWatcher = new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if (s.toString().equals("")){
+                        //验证不通过，返回""空字符串
+                        userInfoList.get(position).setName("");
+                    }else{
+                        userInfoList.get(position).setName(s.toString());
+                    }
+
+                }
+            };
+            //身份证号码验证并存储
+            TextWatcher idCardWatcher = new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if (!StringUtils.isStringNull(s.toString())){
+                        if (ValidateHelper.isIDCard(s.toString())) {
+//                           //验证通过
+                            userInfoList.get(position).setCard(s.toString()); //用户身份证
+                        }else{
+                            //身份证号码不合法
+                            userInfoList.get(position).setCard("");
+                        }
+                    }
+
+                }
+            };
+            holder.name.addTextChangedListener(nameWatcher);
+            holder.name.setTag(nameWatcher);
+            holder.idCard.addTextChangedListener(idCardWatcher);
+            holder.idCard.setTag(idCardWatcher);
+
+            return view;
+        }
+    }
+
+
+    public final class ViewHolder {
+        public EditText name;
+        public EditText idCard;
+        public LinearLayout delete;
+        public TextView number;
+    }
+
 }

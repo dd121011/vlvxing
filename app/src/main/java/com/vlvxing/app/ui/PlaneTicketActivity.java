@@ -149,9 +149,10 @@ public class PlaneTicketActivity extends BaseActivity{
         searchFlightRequest.setDpt("PEK");
         searchFlightRequest.setDate("2017-08-30");
         searchFlightRequest.setEx_track("youxuan");
-
+        //LYA
         String paramsStr = "{\"arr\":\"SHA\",\"dpt\":\"PEK\",\"date\":\"2017-10-11\",\"ex_track\":\"youxuan\"}";
-        RequestService.doRequest(Constants.QUNAR_SEARCHFLIGHT,paramsStr);
+        String url = RequestService.doRequest(Constants.QUNAR_SEARCHFLIGHT,paramsStr);
+        System.out.println("去哪儿网 url ="+url);
     }
     private void initBanner(){
         publicPager.setOnBannerItemClickListener(new Banner.OnBannerItemClickListener() {

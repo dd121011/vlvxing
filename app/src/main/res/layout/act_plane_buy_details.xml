@@ -43,9 +43,9 @@
 
         </LinearLayout>
 
-        <TextView
+        <Button
             android:layout_weight="1"
-            android:id="@+id/quicklypay_txt"
+            android:id="@+id/quicklypay_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@color/color_ea5413"
@@ -151,7 +151,20 @@
                         android:textColor="@color/colorPlane"
                         android:textSize="15sp"
                         android:layout_marginLeft="10dp"
-                        android:text="仅剩8张成人票"/>
+                        android:text="仅剩"/>
+                    <TextView
+                        android:id="@+id/ticket_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorPlane"
+                        android:textSize="15sp"
+                        android:text="8"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorPlane"
+                        android:textSize="15sp"
+                        android:text="张成人票"/>
                     <View
                         android:layout_width="0dp"
                         android:layout_height="1dp"
@@ -167,94 +180,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-                    <ImageView
-                        android:id="@+id/biaoqian"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@mipmap/biaoqian"
-                        />
-                    <LinearLayout
+                    <com.handongkeji.widget.NoScrollListView
+                        android:id="@+id/user_info"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_height="wrap_content">
 
-                        <LinearLayout
-                            android:layout_weight="1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:textSize="15sp"
-                                android:padding="5dp"
-                                android:layout_height="wrap_content"
-                                android:text="姓名"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:textSize="15sp"
-                                android:layout_marginTop="20dp"
-                                android:padding="5dp"
-                                android:layout_height="wrap_content"
-                                android:text="身份证"/>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:id="@+id/editLin"
-                            android:layout_weight="2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-                            <EditText
-                                android:id="@+id/name"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="15sp"
-                                android:padding="5dp"
-                                android:background="@null"
-                                android:textColorHint="@color/qianhuise"
-                                android:hint="乘客姓名"/>
-                            <EditText
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="15sp"
-                                android:background="@null"
-                                android:padding="5dp"
-                                android:layout_marginTop="20dp"
-                                android:textColorHint="@color/qianhuise"
-                                android:hint="18位身份证号"/>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_weight="1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_gravity="center_vertical">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                />
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@mipmap/jianhao"
-                                android:layout_marginRight="20dp"/>
-                        </LinearLayout>
-                    </LinearLayout>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/qianhuise"
-                        />
+                    </com.handongkeji.widget.NoScrollListView>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
                         android:gravity="center_horizontal">
                         <Button
+                            android:id="@+id/add_btn"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:paddingLeft="20dp"
@@ -264,12 +202,14 @@
                             android:textSize="12sp"
                             android:text="+新增乘客"/>
                     </LinearLayout>
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="5dp"
                         android:background="@color/qianhuise"
                         />
                     <LinearLayout
+                        android:id="@+id/edit_lin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical">
@@ -288,6 +228,7 @@
                             android:layout_marginLeft="10dp"
                             android:layout_weight="1"
                             android:padding="10dp"
+                            android:singleLine="true"
                             android:background="@null"
                             android:hint="用于接受预定信息"
                             android:textColorHint="@color/qianhuise"
@@ -331,9 +272,11 @@
 
                         </LinearLayout>
                         <CheckBox
+                            android:id="@+id/hangyixian"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
+                            android:checked="true"
                             android:button="@drawable/plane_bottom_checkbox_selector"
                             />
                     </LinearLayout>
@@ -419,6 +362,7 @@
                         android:paddingLeft="15dp"
                         android:orientation="horizontal">
                         <CheckBox
+                            android:id="@+id/xieyi"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"

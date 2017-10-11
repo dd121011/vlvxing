@@ -5,6 +5,12 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.ListView;
 
+/**
+ * 项目名称：NoScrollListView
+ * 创建人：Zopahr
+ * 创建时间：2017/10112 14:00
+ * 修改备注：解决scrollview冲突
+ */
 public class NoScrollListView extends ListView{
 
     public NoScrollListView(Context context, AttributeSet attrs){

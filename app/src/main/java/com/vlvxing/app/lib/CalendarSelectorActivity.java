@@ -58,8 +58,8 @@ public class CalendarSelectorActivity extends BaseActivity {
 		listView = (ListView) findViewById(R.id.lv_calendar);
 		ButterKnife.bind(this);
 		headTitle.setText("选择日期");
-		rightTxt.setVisibility(View.VISIBLE);
-		rightTxt.setText("确定");
+		rightTxt.setVisibility(View.GONE);
+//		rightTxt.setText("确定");
 //		rightTxt.setTextColor(getResources().getColor(R.color.color_ea5413));
 		CalendarListAdapter adapter = new CalendarListAdapter(this, daysOfSelect, orderDay);
 		listView.setAdapter(adapter);
