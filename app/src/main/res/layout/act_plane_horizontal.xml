@@ -133,7 +133,7 @@
         app:textSizeDayName="14sp"
         app:textSizeDayNumber="20sp"/>
 
-    <ListView
+    <com.handongkeji.widget.MyListView
         android:id="@+id/body_list"
         android:layout_below="@id/calendarView"
         android:layout_width="match_parent"
@@ -143,7 +143,7 @@
         android:divider="#666666"
         android:dividerHeight="0.1dp">
 
-    </ListView>
+    </com.handongkeji.widget.MyListView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -150,7 +150,7 @@ public class PlaneTicketActivity extends BaseActivity{
         searchFlightRequest.setDate("2017-08-30");
         searchFlightRequest.setEx_track("youxuan");
         //LYA
-        String paramsStr = "{\"arr\":\"SHA\",\"dpt\":\"PEK\",\"date\":\"2017-10-11\",\"ex_track\":\"youxuan\"}";
+        String paramsStr = "{\"arr\":\"SHA\",\"dpt\":\"PEK\",\"date\":\"2017-10-15\",\"ex_track\":\"youxuan\"}";
         String url = RequestService.doRequest(Constants.QUNAR_SEARCHFLIGHT,paramsStr);
         System.out.println("去哪儿网 url ="+url);
     }

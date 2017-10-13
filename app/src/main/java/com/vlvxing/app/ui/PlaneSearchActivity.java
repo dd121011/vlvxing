@@ -25,13 +25,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.gson.Gson;
+import com.handongkeji.handler.RemoteDataHandler;
+import com.handongkeji.modle.ResponseData;
 import com.handongkeji.ui.BaseActivity;
+import com.handongkeji.utils.StringUtils;
+import com.handongkeji.widget.MyListView;
 import com.lidroid.xutils.db.annotation.Check;
 import com.sivin.Banner;
 import com.vlvxing.app.R;
 import com.vlvxing.app.adapter.DialogFourAdapter;
 import com.vlvxing.app.adapter.DialogThreeAdapter;
+import com.vlvxing.app.common.Constants;
+import com.vlvxing.app.model.HotRecomModel;
 import com.vlvxing.app.model.PlaneBottonDialogThreeModel;
+import com.vlvxing.app.utils.ToastUtils;
+
+import org.json.JSONException;
+
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -72,7 +83,11 @@ public class PlaneSearchActivity extends BaseActivity  {
 
 
     private HorizontalCalendar horizontalCalendar;
-    private ListView body_list;
+    private MyListView body_list;
+    private MyAdapter adapter;
+    private boolean isLoadMore;//是否已经在加载更多
+    private int currentPage = 1;
+    private int pageSize = 5;
     private List<Map<String, String>> mData;
     private Context mcontext;
     private String goCity ;
@@ -125,7 +140,7 @@ public class PlaneSearchActivity extends BaseActivity  {
 
         headTitleLeft.setText(goCity);
         headTitleRight.setText(arriveCity);
-        body_list = (ListView) findViewById(R.id.body_list);
+        body_list = (MyListView) findViewById(R.id.body_list);
 
         /** 一个月后结束  1 */
         Calendar endDate = Calendar.getInstance();
@@ -165,7 +180,7 @@ public class PlaneSearchActivity extends BaseActivity  {
 
 
         mData = getListViewData();
-                  MyAdapter adapter = new MyAdapter(this);
+        adapter = new MyAdapter(this);
         body_list.setAdapter(adapter);
 
         body_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -178,7 +193,59 @@ public class PlaneSearchActivity extends BaseActivity  {
                 startActivity(intnet);
             }
         });
+        //上滑加载更多
+        body_list.setLoadDataListener(new MyListView.LoadDataListener() {
+            @Override
+            public void onLoadMore() {
+                if (isLoadMore) return;
+                isLoadMore = true;
+                currentPage++;
+//                initData();
+            }
+        });
     }
+
+    private void initData() {
+        String url = Constants.URL_RECOMMEND;
+        HashMap<String, String> params = new HashMap<>();
+        params.put("currentPage", currentPage + "");
+        params.put("pageSize", pageSize + "");
+        RemoteDataHandler.asyncPost(url, params, mcontext, true, new RemoteDataHandler.Callback() {
+            @Override
+            public void dataLoaded(ResponseData data) throws JSONException {
+                String json = data.getJson();
+                if (StringUtils.isStringNull(json)) {
+                    return;
+                }
+                Gson gson = new Gson();
+                HotRecomModel model = gson.fromJson(json, HotRecomModel.class);
+                String status = model.getStatus();
+                if ("1".equals(status)) {
+                    List<HotRecomModel.DataBean> lines = model.getData();
+                    int len = lines.size();
+                    if (currentPage == 1) {
+                        mData.clear();
+                        body_list.setHasMore(true);
+                    }
+                    if (len < pageSize) {
+                        body_list.setHasMore(false);
+                    }
+
+//                    mData.addAll(lines);
+
+                    adapter.notifyDataSetChanged();
+                    if (isLoadMore) {
+                        isLoadMore = false;
+                        body_list.onLoadComplete(true);
+                    }
+
+                } else {
+                    ToastUtils.showT(mcontext, model.getMessage());
+                }
+            }
+        });
+    }
+
 
     //航空公司list数据绑定
     private void initThreeData(){

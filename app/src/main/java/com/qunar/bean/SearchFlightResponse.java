@@ -7,10 +7,10 @@ import java.util.List;
  */
 public class SearchFlightResponse {
 
-    private int code;
-    private String message;
-    private long createTime;
-    private Result result;
+    private int code;//返回码
+    private String message;//返回信息
+    private long createTime;//时间戳
+    private Result result;//应用返回
 
     public int getCode() {
         return code;
@@ -45,7 +45,7 @@ public class SearchFlightResponse {
     }
 
     public static class Result {
-        private int total;
+        private int total;//航班数
         private List<FlightInfo> flightInfos;
 
         public int getTotal() {
@@ -66,16 +66,16 @@ public class SearchFlightResponse {
     }
 
     public static class FlightInfo {
-        private String dpt;
-        private String arr;
-        private String dptAriport;
-        private String dptTerminal;
-        private String arrAirport;
-        private String arrTerminal;
-        private String dptTime;
-        private String arrTime;
-        private String flightNum;
-        private String barePrice;
+        private String dpt;//出发机场三字码
+        private String arr;//到达机场三字码
+        private String dptAriport;//出发机场
+        private String dptTerminal;//到达机场
+        private String arrAirport;//到达机场
+        private String arrTerminal;//到达航站楼
+        private String dptTime;//出发时间
+        private String arrTime;//到达时间
+        private String flightNum;//航班号
+        private String barePrice;//销售价
 
         public String getDpt() {
             return dpt;
