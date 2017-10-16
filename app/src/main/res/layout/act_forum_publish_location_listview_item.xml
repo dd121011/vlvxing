@@ -1,0 +1,33 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/bg_eaeaea"
+    android:padding="5dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+        <TextView
+            android:id="@+id/title_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/calendar_enable_color"
+            android:background="@color/bg_eaeaea"
+            android:textSize="15sp"
+            android:text="亦庄"/>
+    </LinearLayout>
+
+        <TextView
+            android:id="@+id/txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/qianhuise"
+            android:background="@color/calendar_enable_color"
+            android:textSize="12sp"
+            android:paddingLeft="10dp"
+            android:text="通州区经海七路北口尖子班"/>
+</LinearLayout>

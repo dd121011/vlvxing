@@ -660,7 +660,7 @@ public class PlaneSearchActivity extends BaseActivity  {
         return list;
     }
 
-//机票列表的数据源适配器
+    //机票列表的数据源适配器
     class MyAdapter extends BaseAdapter {
         private LayoutInflater mInflater;
 

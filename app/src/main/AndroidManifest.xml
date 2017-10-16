@@ -550,6 +550,18 @@
             android:screenOrientation="portrait"
             />
 
+        <!--发表心情-->
+        <activity
+            android:name=".ui.ForumPublishActivity"
+            android:screenOrientation="portrait"
+            />
+
+        <!--发表心情 定位城市-->
+        <activity
+            android:name=".ui.ForumPublishLocaitonActivity"
+            android:screenOrientation="portrait"
+            />
+
     </application>
 
 </manifest>
