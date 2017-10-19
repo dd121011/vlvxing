@@ -1,1 +1,1 @@
-include ':app', ':PushSDK', ':banner', ':horizontalcalendar'
+include ':app', ':PushSDK', ':banner', ':horizontalcalendar', ':photopicker'

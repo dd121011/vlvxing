@@ -65,7 +65,7 @@ public class PlaneOrderActivity extends BaseActivity {
         mData.add(hs);
         mData.add(hs);
 
-        final PlaneOrderAdapter adapter = new PlaneOrderAdapter(this, mData);
+        PlaneOrderAdapter adapter = new PlaneOrderAdapter(this, mData);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         recyclerView.setOnItemClickListener(new SlideRecyclerView.OnItemClickListener() {

@@ -2,6 +2,8 @@
 <resources>
 
 
+    <color name="photopicker_background">#181819</color>
+
     <!-- 日历购票相关 -->
     <color name="calendar_disable_color">#DDDDDD</color>
     <color name="qianhuise">#cccccc</color>

@@ -43,15 +43,7 @@
             android:background="@color/qianhuise"
             android:textColorHint="@color/calendar_enable_color"
             android:hint="说点什么吧..."/>
-        <GridView
-            android:id="@+id/grid_view"
-            android:layout_below="@+id/edit_txt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:horizontalSpacing="2dp"
-            android:padding="5dp"
-            android:numColumns="3"
-            android:verticalSpacing="2dp" />
+
     </RelativeLayout>
     <View
         android:layout_width="match_parent"

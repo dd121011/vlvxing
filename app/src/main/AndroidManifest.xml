@@ -561,6 +561,29 @@
             android:name=".ui.ForumPublishLocaitonActivity"
             android:screenOrientation="portrait"
             />
+        <!--发表心情 选择图片-->
+        <activity
+            android:name="com.lidong.photopicker.PhotoPickerActivity"
+            android:theme="@style/PhotoPickerTheme"
+            android:configChanges="orientation|screenSize"/>
+
+        <activity android:name="com.lidong.photopicker.PhotoPreviewActivity"
+            android:theme="@style/PhotoPickerTheme"/>
+        <!--我的消息-->
+        <activity
+            android:name=".ui.ForumPublishMyMessageActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--评论我的-->
+        <activity
+            android:name=".ui.ForumPublishMyCommentActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--关注提醒-->
+        <activity
+            android:name=".ui.ForumPublishMyReminderActivity"
+            android:screenOrientation="portrait"
+            />
 
     </application>
 

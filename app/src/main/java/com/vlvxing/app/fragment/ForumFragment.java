@@ -37,6 +37,7 @@ import com.vlvxing.app.adapter.ImageGridViewAdapter;
 import com.vlvxing.app.common.Constants;
 import com.vlvxing.app.common.MyApp;
 import com.vlvxing.app.ui.ForumPublishActivity;
+import com.vlvxing.app.ui.ForumPublishMyMessageActivity;
 import com.vlvxing.app.ui.PlaneSearchActivity;
 import com.vlvxing.app.utils.ToastUtils;
 
@@ -144,7 +145,7 @@ public class ForumFragment extends Fragment {
             }
         });
     }
-    @OnClick({R.id.add_experience})
+    @OnClick({R.id.add_experience,R.id.nomsg_img})
     public void onClick(View view){
         switch(view.getId()){
             case R.id.add_experience:
@@ -152,6 +153,11 @@ public class ForumFragment extends Fragment {
                     showDialog();
                 }
                 //添加心得
+                break;
+            case R.id.nomsg_img:
+                //我的消息
+                Intent intent = new Intent(context, ForumPublishMyMessageActivity.class);
+                startActivity(intent);
                 break;
         }
     }

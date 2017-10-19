@@ -91,6 +91,7 @@ dependencies {
     compile project(':banner')
     compile 'com.lzy.widget:imagepicker:+'
     compile 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.2.5'
+
     //横向日历购买车票
     compile project(':horizontalcalendar')
 
@@ -104,6 +105,6 @@ dependencies {
     compile 'com.android.support:support-v4:25.3.0'
     testCompile 'junit:junit:4.12'*/
 
-
+    compile project(':photopicker')
 
 }
