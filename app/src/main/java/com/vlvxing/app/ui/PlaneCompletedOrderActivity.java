@@ -89,7 +89,10 @@ public class PlaneCompletedOrderActivity extends BaseActivity{
 //        layoutParams.height = (int)(getResources().getDisplayMetrics().heightPixels * 0.8);
         contentView.setLayoutParams(layoutParams);
         dialog.getWindow().setGravity(Gravity.CENTER);
-        dialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
+        //设置点击外部空白处可以关闭Activity
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setCancelable(true);
+//        dialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
         dialog.show();
 
         //确定退票

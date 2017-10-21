@@ -1,15 +1,22 @@
 package com.vlvxing.app.ui;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -30,12 +37,16 @@ import com.handongkeji.widget.NoScrollListView;
 import com.lidroid.xutils.db.annotation.Check;
 import com.vlvxing.app.R;
 import com.vlvxing.app.model.PlaneUserInfo;
+import com.vlvxing.app.utils.AnimationUtil;
+import com.vlvxing.app.utils.ViewUtils;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static android.R.attr.fromYDelta;
 
 /**
  * 购买详情 添加用户身份信息 提交订单
@@ -67,7 +78,8 @@ public class PlaneBuyDetailsActivity extends BaseActivity{
     Button quicklypay;//提交订单
     @Bind(R.id.ticket_number)
     TextView ticketNumber;//飞机票剩余票数
-
+    @Bind(R.id.pay_lin)
+    LinearLayout payLin;//支付
 //    @Bind(R.id.details_withdrawal_txt)
 //    TextView detailsWithDrawal;//退改详情
     private Context mcontext;
@@ -78,6 +90,10 @@ public class PlaneBuyDetailsActivity extends BaseActivity{
     private Dialog bottomDialog;
     private UserInfoListAdapter adapter;
     private ArrayList<PlaneUserInfo> userInfoList;
+    private PopupWindow mPopupWindow;
+    private boolean isPopWindowShowing = false;
+    private View mGrayLayout;
+    private int fromYDelta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +110,7 @@ public class PlaneBuyDetailsActivity extends BaseActivity{
         editLin.setFocusable(true);
         editLin.setFocusableInTouchMode(true);
         editLin.requestFocus();
-
+        mGrayLayout = (View)findViewById(R.id.gray_layout) ;
         userInfoList = new ArrayList<PlaneUserInfo>();
         PlaneUserInfo model = new PlaneUserInfo(1,"测试","4107281499402281033");
         userInfoList.add(model);
@@ -109,9 +125,21 @@ public class PlaneBuyDetailsActivity extends BaseActivity{
                 }else{
                     quicklypay.setBackgroundColor(Color.parseColor("#666666"));
                     quicklypay.setClickable(false);
+
                 }
             }
         });
+    }
+    private void showPopupWindow(){
+        final View contentView= LayoutInflater.from(mcontext).inflate(R.layout.act_plane_buy_price_popupwindow_,null);
+//        TextView t1= (TextView) contentView.findViewById(R.id.text1);
+        mPopupWindow = new PopupWindow(contentView, LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+        mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+        //将这两个属性设置为false，使点击popupwindow外面其他地方不会消失
+        mPopupWindow.setOutsideTouchable(true);
+        mPopupWindow.setFocusable(true);
+        mGrayLayout.setVisibility(View.VISIBLE);
+
     }
 
 
@@ -131,24 +159,95 @@ public class PlaneBuyDetailsActivity extends BaseActivity{
     }
 
     private void showDialog() {
-        bottomDialog = new Dialog(this, R.style.BottomDialog);
-        View contentView = LayoutInflater.from(this).inflate(R.layout.act_plane_buy_price_popupwindow_, null);
-//        ListView listview = (ListView) contentView.findViewById(R.id.listview);//展示UI容器 body中listview
-//        ImageView close = (ImageView) contentView.findViewById(R.id.close);//关闭
+        Dialog bottomDialog = new Dialog(this, R.style.BottomDialog);
 
+        View contentView = LayoutInflater.from(this).inflate(R.layout.act_plane_buy_price_popupwindow_, null);
         bottomDialog.setContentView(contentView);
+
         ViewGroup.LayoutParams layoutParams = contentView.getLayoutParams();
-        layoutParams.width = getResources().getDisplayMetrics().widthPixels;
+        layoutParams.width = (getResources().getDisplayMetrics().widthPixels);
 //        layoutParams.height = (int)(getResources().getDisplayMetrics().heightPixels * 0.8);
         contentView.setLayoutParams(layoutParams);
+//        bottomDialog.getWindow().getAttributes().y = 80;
         bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
-        bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
-        bottomDialog.setCanceledOnTouchOutside(true);
-        bottomDialog.show();
 
+        LinearLayout bottomLeftLin = (LinearLayout)contentView.findViewById(R.id.bottom_left_lin);
+        //设置点击外部空白处可以关闭Activity
+
+        bottomDialog.setCanceledOnTouchOutside(true);
+        bottomDialog.setCancelable(true);
+//        bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
+        bottomDialog.show();
+        bottomLeftLin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomDialog.dismiss();
+            }
+        });
+
+    }
+    private void showPopwindow(){
+        // 用于PopupWindow的View
+//        View popupView  = LayoutInflater.from(mcontext).inflate(R.layout.act_plane_buy_price_popupwindow_, null, false);
+//        PopupWindow mPopupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
+
+//        View view = LayoutInflater.from(context).inflate(R.layout.order_price_detail, null);
+//
+//        // 设置可以获得焦点
+//        mPopupWindow.setFocusable(true);
+//        // 设置弹窗内可点击
+//        mPopupWindow.setTouchable(true);
+//        // 设置弹窗外可点击
+//        mPopupWindow.setOutsideTouchable(true);
+//        mPopupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+//        mPopupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+////        mPopupWindow.setAnimationStyle(R.style.popup_animation);
+//        setContentView(popupView);
+//        //获取自身的长宽高
+//        view.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+//        popupHeight = view.getMeasuredHeight();
+//        popupWidth = view.getMeasuredWidth();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//        int width = getResources().getDisplayMetrics().widthPixels;
+////        int height = getResources().getDisplayMetrics().heightPixels;
+//        // 创建PopupWindow对象，其中：
+//        // 第一个参数是用于PopupWindow中的View，第二个参数是PopupWindow的宽度，
+//        // 第三个参数是PopupWindow的高度，第四个参数指定PopupWindow能否获得焦点
+//        PopupWindow window=new PopupWindow(contentView, width, 300);
+//        // 设置PopupWindow的背景
+//        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//
+//        window.setBackgroundDrawable(new BitmapDrawable());
+//        window.setFocusable(true);// 点击空白处时，隐藏掉pop窗口
+//        // 设置PopupWindow是否能响应外部点击事件
+//        window.setOutsideTouchable(true);
+//        // 设置PopupWindow是否能响应点击事件
+//        window.setTouchable(true);
+//        // 显示PopupWindow，其中：
+//        // 第一个参数是PopupWindow的锚点，第二和第三个参数分别是PopupWindow相对锚点的x、y偏移
+//        window.showAsDropDown(payLin, 0, 0);
+//        // 或者也可以调用此方法显示PopupWindow，其中：
+//        // 第一个参数是PopupWindow的父View，第二个参数是PopupWindow相对父View的位置，
+//        // 第三和第四个参数分别是PopupWindow相对父View的x、y偏移
+//        // window.showAtLocation(parent, gravity, x, y);
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @OnClick({R.id.return_lin, R.id.right_txt,R.id.bottom_left_lin,R.id.pay_rel,R.id.wxpay_rel,R.id.add_btn,R.id.quicklypay_btn})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -170,7 +269,9 @@ public class PlaneBuyDetailsActivity extends BaseActivity{
                 break;
             case R.id.bottom_left_lin:
 //                Toast.makeText(mcontext, "点击了", Toast.LENGTH_SHORT).show();
+//                showPopupWindow();
                 showDialog();
+//                showPopwindow();
                 //预订
 //                showPop();
 //                if(bottomDialog.isShowing()){
@@ -194,11 +295,9 @@ public class PlaneBuyDetailsActivity extends BaseActivity{
                     System.out.println("乘客信息:"+i+userInfoList.get(i).getCard());
                 }
                 break;
-
-
-
         }
     }
+
     /**
      * 动态添加乘客信息
      */
@@ -293,7 +392,6 @@ public class PlaneBuyDetailsActivity extends BaseActivity{
                     }else{
                         userInfoList.get(position).setName(s.toString());
                     }
-
                 }
             };
             //身份证号码验证并存储
