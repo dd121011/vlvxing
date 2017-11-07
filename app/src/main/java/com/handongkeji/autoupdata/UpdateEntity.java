@@ -29,6 +29,7 @@ public class UpdateEntity {
 		}else{
 			this.versionCode = 0;
 		}
+//        System.out.println("更新,当前版本号"+code);
         this.versionName = jsonObject.getString("versionName");
         this.isForceUpdate = jsonObject.getString("isForceUpdate");
         this.downUrl = jsonObject.getString("downUrl");

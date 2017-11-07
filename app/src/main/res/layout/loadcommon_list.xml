@@ -18,7 +18,9 @@
             android:animateLayoutChanges="true"
             android:animationCache="true"
             android:divider="@color/transparent"
-            android:footerDividersEnabled="false"></com.handongkeji.widget.MyListView>
+            android:footerDividersEnabled="false">
+
+        </com.handongkeji.widget.MyListView>
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <include layout="@layout/common_no_data" />

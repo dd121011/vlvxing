@@ -121,7 +121,10 @@ public class HttpHelper {
 		String result = null;
 		HttpGet get = new HttpGet(url);
 		HttpResponse response = httpClient.execute(get);
+		System.out.println("飞机get方法中response:"+response.getStatusLine().getStatusCode());
+		System.out.println("飞机get方法中HttpStatus.SC_OK:"+HttpStatus.SC_OK);
 		if (HttpStatus.SC_OK == response.getStatusLine().getStatusCode()) {
+			System.out.println("飞机get方法中进入到if");
 			result = EntityUtils.toString(response.getEntity());
 		}
 		return result;
@@ -130,8 +133,11 @@ public class HttpHelper {
 		String result = null;
 		HttpGet get = new HttpGet(url);
 		HttpResponse response = httpClient.execute(get);
+		System.out.println("飞机get方法中response:"+response.getStatusLine().getStatusCode());
+		System.out.println("飞机get方法中HttpStatus.SC_OK:"+HttpStatus.SC_OK);
 		if (HttpStatus.SC_OK == response.getStatusLine().getStatusCode()) {
 			result = EntityUtils.toString(response.getEntity(),"UTF-8");
+			System.out.println("飞机get方法中HttpStatus.result:"+result);
 		}
 		return result;
 	}

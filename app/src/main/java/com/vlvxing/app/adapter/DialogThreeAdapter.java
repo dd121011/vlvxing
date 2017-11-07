@@ -29,6 +29,7 @@ public  class DialogThreeAdapter extends BaseAdapter {
     private int mCurrentItem=0;
     private HashMap<Integer,Boolean> lCurrentItem ;
     private boolean isClick = false;
+
     public DialogThreeAdapter(Context context, List<PlaneBottonDialogThreeModel>  bottomDialogThreeData,HashMap<Integer,Boolean> lCurrentItem) {
         this.context = context;
         this.bottomDialogThreeData = bottomDialogThreeData;

@@ -10,9 +10,10 @@
         android:orientation="horizontal"
         android:gravity="center">
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:gravity="center"
         android:padding="10dp"
         android:orientation="vertical">
         <TextView
@@ -30,23 +31,26 @@
             android:text="首都T1"/>
     </LinearLayout>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:gravity="center"
         android:orientation="vertical">
         <TextView
             android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableBottom="@color/grey"
+            android:gravity="center"
             android:text="3小时25分钟" />
 
     </LinearLayout>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:padding="10dp"
+        android:gravity="center"
         android:orientation="vertical">
         <TextView
             android:id="@+id/arriveTime"
@@ -63,17 +67,24 @@
             android:text="保安T3"/>
     </LinearLayout>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:gravity="center"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPlane"
+            android:textSize="18sp"
+            android:text="￥"/>
         <TextView
             android:id="@+id/price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPlane"
-            android:textSize="20sp"
-            android:text="￥1754"/>
+            android:textSize="18sp"
+            android:text="1754"/>
 
     </LinearLayout>
     </LinearLayout>

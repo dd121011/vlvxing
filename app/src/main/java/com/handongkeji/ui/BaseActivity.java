@@ -32,6 +32,7 @@ public class BaseActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         dialog = new MyProcessDialog(this);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        //统计应用启动数据
 		PushAgent.getInstance(this).onAppStart();
         ActivityManager.getInstance().addActivity(getClass().getSimpleName(), this);
         myApp = (MyApp) getApplication();

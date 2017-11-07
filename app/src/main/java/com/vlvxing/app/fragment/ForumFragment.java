@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,8 @@ import android.widget.Toast;
 import com.handongkeji.handler.RemoteDataHandler;
 import com.handongkeji.modle.ResponseData;
 import com.handongkeji.utils.StringUtils;
+import com.handongkeji.widget.MyGridView;
+import com.handongkeji.widget.MyListView;
 import com.qunar.service.RequestService;
 
 import com.vlvxing.app.R;
@@ -39,6 +42,7 @@ import com.vlvxing.app.common.MyApp;
 import com.vlvxing.app.ui.ForumPublishActivity;
 import com.vlvxing.app.ui.ForumPublishMyMessageActivity;
 import com.vlvxing.app.ui.PlaneSearchActivity;
+import com.vlvxing.app.ui.TopicDetailsActivity;
 import com.vlvxing.app.utils.ToastUtils;
 
 
@@ -78,8 +82,19 @@ public class ForumFragment extends Fragment {
     @Bind(R.id.three_img)
     ImageView threeImg;
     private Context context;
-    @Bind(R.id.forum_listview)
-    ListView forumListview;
+    @Bind(R.id.list_view)
+    MyListView forumListview;
+    @Bind(R.id.common_swiperefresh)
+    SwipeRefreshLayout swipeRefresh;
+
+    private SwipeRefreshLayout.OnRefreshListener onRefreshListener;
+    private boolean isRefreshing = true;
+    private boolean isLoadMore;
+    private int currentPage = 1;
+    private int pageSize = 5;
+
+
+
     @Bind(R.id.num_txt)
     TextView numTxt;
     @Bind(R.id.havemsg_rel)
@@ -88,7 +103,7 @@ public class ForumFragment extends Fragment {
     ImageView nomsgImg;
     private Dialog checkedDialog;
     private List<HashMap<String,Object>> list;
-    @Nullable
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.forum_fragment, container, false);
@@ -103,8 +118,10 @@ public class ForumFragment extends Fragment {
 //      getInfo(url, null);
         checkedDialog = new Dialog(context, R.style.BottomDialog);
         list = getListViewData();
-        ForumAdapter adapter = new ForumAdapter(context);
-        forumListview.setAdapter(adapter);
+
+
+        initView();
+        setOnItemClickListener();
 //        if (!StringUtils.isStringNull(userpic)) { // 加载图片
 //            ImageLoader
 //                    .getInstance().displayImage(userpic,
@@ -116,6 +133,62 @@ public class ForumFragment extends Fragment {
         initTopRadioButtonChecked();
         return view;
     }
+
+
+    private void initView(){
+        ForumAdapter adapter = new ForumAdapter(context);
+        forumListview.setAdapter(adapter);
+
+        onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (isRefreshing) return;
+                isRefreshing = true;
+                currentPage = 1;
+                swipeRefresh.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        getListViewData();
+                    }
+                }, 1000);
+            }
+        };
+
+        swipeRefresh.setOnRefreshListener(onRefreshListener);
+        swipeRefresh.setColorSchemeResources(R.color.color_ea5413);
+
+        forumListview.setLoadDataListener(new MyListView.LoadDataListener() {
+            @Override
+            public void onLoadMore() {
+                if (isLoadMore) return;
+                isLoadMore = true;
+                currentPage++;
+                getListViewData();
+            }
+        });
+        onRefresh();
+    }
+
+    private void onRefresh() {
+        swipeRefresh.setRefreshing(true);
+        onRefreshListener.onRefresh();
+    }
+
+
+    private void setOnItemClickListener(){
+        forumListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getActivity(), "item被点击了", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), TopicDetailsActivity.class);
+                startActivity(intent);
+
+            }
+        });
+    }
+
+
+
     //顶部导航  新鲜、关注、附近
     private void initTopRadioButtonChecked(){
         topRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -222,7 +295,7 @@ public class ForumFragment extends Fragment {
 
     //机场落地 起飞机场 的数据源
     private List<HashMap<String,Object>> getListViewData() {
-        List<HashMap<String,Object>> list  = new ArrayList<HashMap<String,Object>>();
+        list  = new ArrayList<HashMap<String,Object>>();
         HashMap<String,Object> map = new HashMap<>();
         LinkedList<Integer> pictures = new LinkedList<>();
         pictures.add(R.drawable.loading);
@@ -271,7 +344,7 @@ public class ForumFragment extends Fragment {
             if (convertView == null) {
                 holder = new ViewHolder();
                 convertView = mInflater.inflate(R.layout.forum_img_gridview, null);
-                holder.gridView = (GridView) convertView.findViewById(R.id.img_group);
+                holder.gridView = (MyGridView) convertView.findViewById(R.id.img_group);
                 holder.headImg = (ImageView)convertView.findViewById(R.id.head_img);
                 convertView.setTag(holder);
             } else {
@@ -286,7 +359,12 @@ public class ForumFragment extends Fragment {
             //绑定自定义的adapter
             ImageGridViewAdapter imgadapter = new ImageGridViewAdapter(context,pictures);
             holder.gridView.setAdapter(imgadapter);
-
+            holder.gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Toast.makeText(getActivity(), "grid item被点击了", Toast.LENGTH_SHORT).show();
+                }
+            });
             return convertView;
         }
     }

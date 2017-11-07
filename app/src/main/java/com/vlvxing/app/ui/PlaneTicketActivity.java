@@ -49,6 +49,7 @@ import com.vlvxing.app.common.Constants;
 import com.vlvxing.app.common.MyApp;
 import com.vlvxing.app.lib.CalendarSelectorActivity;
 import com.vlvxing.app.model.SysadModel;
+import com.vlvxing.app.utils.SharedPrefsUtil;
 import com.vlvxing.app.utils.ToastUtils;
 
 
@@ -73,7 +74,7 @@ import butterknife.OnClick;
  */
 
 public class PlaneTicketActivity extends BaseActivity{
-
+    public static final String PLANE_HISTORY_CITY = "plane_history_city";
     @Bind(R.id.head_title)
     TextView headTitle;//标题
     @Bind(R.id.btn_back)
@@ -144,15 +145,6 @@ public class PlaneTicketActivity extends BaseActivity{
 //        if (!StringUtils.isStringNull(city)) {
 //            cityLefttxt.setText(city);
 //        }
-        SearchFlightRequest searchFlightRequest = new SearchFlightRequest();
-        searchFlightRequest.setArr("SHA");
-        searchFlightRequest.setDpt("PEK");
-        searchFlightRequest.setDate("2017-08-30");
-        searchFlightRequest.setEx_track("youxuan");
-        //LYA
-        String paramsStr = "{\"arr\":\"SHA\",\"dpt\":\"PEK\",\"date\":\"2017-10-15\",\"ex_track\":\"youxuan\"}";
-        String url = RequestService.doRequest(Constants.QUNAR_SEARCHFLIGHT,paramsStr);
-        System.out.println("去哪儿网 url ="+url);
     }
     private void initBanner(){
         publicPager.setOnBannerItemClickListener(new Banner.OnBannerItemClickListener() {
@@ -269,7 +261,7 @@ public class PlaneTicketActivity extends BaseActivity{
         super.onResume();
     }
 
-    @OnClick({R.id.return_lin,R.id.city_txt_left,R.id.city_txt_right,R.id.txt_date,R.id.search,R.id.go_or_come,R.id.bottom_left_btn,R.id.bottom_right_btn})
+    @OnClick({R.id.return_lin,R.id.city_txt_left,R.id.city_txt_right,R.id.search,R.id.go_or_come,R.id.bottom_left_btn,R.id.bottom_right_btn,R.id.date_lin})
     public void onClick(View view){
         switch(view.getId()){
             case R.id.return_lin:
@@ -287,12 +279,14 @@ public class PlaneTicketActivity extends BaseActivity{
                 cityArrive.putExtra("type", 2);
                 startActivityForResult(cityArrive, 2);//到达城市选择
                 break;
-            case R.id.txt_date:
+            case R.id.date_lin:
+                //购票日期选择
                 Intent i = new Intent(mcontext, CalendarSelectorActivity.class);
-                i.putExtra(CalendarSelectorActivity.DAYS_OF_SELECT, 60);
+                i.putExtra(CalendarSelectorActivity.DAYS_OF_SELECT, 120);
                 i.putExtra(CalendarSelectorActivity.ORDER_DAY, dateFormat);
                 startActivityForResult(i, 3);//日历展示页面
                 break;
+
             case R.id.search:
                 String goCity = cityLefttxt.getText().toString();
                 String arriveCity = cityRighttxt.getText().toString();
@@ -356,7 +350,7 @@ public class PlaneTicketActivity extends BaseActivity{
             if (data!=null){
             //日期选择
                 dateFormat = data.getStringExtra(CalendarSelectorActivity.ORDER_DAY).replaceAll("#", "-");
-                Toast.makeText(mcontext, " dateFormat!"+dateFormat, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mcontext, " dateFormat!"+dateFormat, Toast.LENGTH_SHORT).show();
             String orderInfo = data.getStringExtra(CalendarSelectorActivity.ORDER_DAY);
                 if(orderInfo!=null){
                     String[] all = orderInfo.split("#");
@@ -386,6 +380,7 @@ public class PlaneTicketActivity extends BaseActivity{
             String cityName = data.getStringExtra("name");
 //            String locationId = data.getStringExtra("locationId");
             cityLefttxt.setText(cityName);
+                SharedPrefsUtil.putValue(mcontext,PLANE_HISTORY_CITY,cityName);
             }
         }else if(requestCode == 2 && resultCode == RESULT_OK){
             //到达城市
@@ -393,6 +388,7 @@ public class PlaneTicketActivity extends BaseActivity{
             String cityName = data.getStringExtra("name");
 //            String locationId = data.getStringExtra("locationId");
             cityRighttxt.setText(cityName);
+                SharedPrefsUtil.putValue(mcontext,PLANE_HISTORY_CITY,cityName);
             }
         }
     }

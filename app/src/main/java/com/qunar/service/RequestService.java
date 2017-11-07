@@ -53,7 +53,7 @@ public class RequestService {
         String sign = getSign(tag, params, createTime);
         paramMap.put("sign", sign);
         paramMap.put("createTime", createTime);
-        paramMap.put("token", Constants.QUNAR__TOKEN);
+        paramMap.put("token", Constants.QUNAR_TOKEN);
         paramMap.put("tag", tag);
         paramMap.put("params", URLEncoder.encode(params, "utf-8"));
 //        paramMap.put("debug", "true");
@@ -71,10 +71,10 @@ public class RequestService {
     public static String getSign(String tag, String params, String createTime) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         List<String> requestParams = new ArrayList<String>();
         requestParams.add("createTime=" + createTime);
-        requestParams.add("key=" + Constants.QUNAR__KEY);
+        requestParams.add("key=" + Constants.QUNAR_KEY);
         requestParams.add("params=" + params);
         requestParams.add("tag=" + tag);
-        requestParams.add("token=" + Constants.QUNAR__TOKEN);
+        requestParams.add("token=" + Constants.QUNAR_TOKEN);
         Collections.sort(requestParams);
         String beforeMd5Str = linkStr(requestParams);
         String sign = Md5Util.encode(beforeMd5Str);

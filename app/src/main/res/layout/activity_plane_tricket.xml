@@ -152,6 +152,7 @@
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/date_lin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -162,6 +163,8 @@
             android:layout_height="wrap_content"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
+            android:clickable="false"
+            android:focusable="false"
             android:background="@color/bg_eaeaea">
             <TextView
                 android:id="@+id/txt_date"
@@ -169,6 +172,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:textColor="@color/black"
+                android:clickable="false"
                 android:paddingLeft="5dp"
                 android:text="9月14日"/>
             <TextView
@@ -177,6 +181,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:textSize="12sp"
+                android:clickable="false"
                 android:textColor="@color/text_color_75"
                 android:text="今天"/>
         </LinearLayout>
@@ -240,15 +245,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="5dp"
         android:background="@color/bg_eaeaea"
-        android:layout_gravity="center"
-        android:paddingBottom="5dp">
-
+        android:layout_gravity="center">
         <Button
             android:id="@+id/bottom_left_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:layout_weight="1"
             android:gravity="center"
             android:button="@null"
@@ -261,11 +265,14 @@
         <View
             android:layout_width="1dp"
             android:layout_height="40dp"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:background="@color/qianhuise"/>
         <Button
             android:id="@+id/bottom_right_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:layout_weight="1"
             android:gravity="center"
             android:button="@null"

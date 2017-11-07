@@ -16,18 +16,20 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * 购买飞机票筛选按钮对应的弹出框中 航空公司对应列表的适配器
+ * 购买飞机票筛选按钮对应的弹出框中 机场落地对应列表的适配器
  */
 
 public  class DialogFourAdapter extends BaseAdapter {
     private Context context;
     private List<PlaneBottonDialogThreeModel> bottomDialogThreeData;//填充数据
+    private HashMap<Integer,Boolean> lCurrentItem ;
     // 用来控制CheckBox的选中状况
-    private int mCurrentItem=0;
+    private int mCurrentItem = 0;
     private boolean isClick = false;
-    public DialogFourAdapter(Context context, List<PlaneBottonDialogThreeModel>  bottomDialogThreeData) {
+    public DialogFourAdapter(Context context, List<PlaneBottonDialogThreeModel>  bottomDialogThreeData,HashMap<Integer,Boolean> lCurrentItem) {
         this.context = context;
         this.bottomDialogThreeData = bottomDialogThreeData;
+        this.lCurrentItem = lCurrentItem;
     }
 
     @Override
@@ -67,8 +69,19 @@ public  class DialogFourAdapter extends BaseAdapter {
         viewHolder.title.setText(bottomDialogThreeData.get(position).getTitle());
         viewHolder.price.setText(bottomDialogThreeData.get(position).getPrice());
 
+//        if (mCurrentItem == position && isClick){
+//            viewHolder.title.setTextColor(Color.parseColor("#ff6600"));
+//            viewHolder.price.setTextColor(Color.parseColor("#ff6600"));
+//            viewHolder.mark.setTextColor(Color.parseColor("#ff6600"));
+//            viewHolder.check.setChecked(true);
+//        }else{
+//            viewHolder.title.setTextColor(Color.parseColor("#000000"));
+//            viewHolder.price.setTextColor(Color.parseColor("#000000"));
+//            viewHolder.mark.setTextColor(Color.parseColor("#000000"));
+//            viewHolder.check.setChecked(false);
+//        }
 
-        if (mCurrentItem==position&&isClick){
+        if (lCurrentItem.get(position)){
             viewHolder.title.setTextColor(Color.parseColor("#ff6600"));
             viewHolder.price.setTextColor(Color.parseColor("#ff6600"));
             viewHolder.mark.setTextColor(Color.parseColor("#ff6600"));
@@ -79,6 +92,8 @@ public  class DialogFourAdapter extends BaseAdapter {
             viewHolder.mark.setTextColor(Color.parseColor("#000000"));
             viewHolder.check.setChecked(false);
         }
+
+
 
 //        if(lCurrentItem.get(position)){
 //        viewHolder.title.setTextColor(Color.parseColor("#ff6600"));
@@ -96,7 +111,7 @@ public  class DialogFourAdapter extends BaseAdapter {
 
 
     public void setCurrentItem(int currentItem){
-        this.mCurrentItem=currentItem;
+        this.mCurrentItem = currentItem;
     }
 
     public void setClick(boolean click){

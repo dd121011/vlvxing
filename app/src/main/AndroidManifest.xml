@@ -207,7 +207,7 @@
             android:screenOrientation="portrait" />
         <!-- 新浪微博 -->
         <activity
-            android:name=".wxapi.WBShareActivity"
+            android:name=".WBShareActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -584,6 +584,17 @@
             android:name=".ui.ForumPublishMyReminderActivity"
             android:screenOrientation="portrait"
             />
+        <!--话题详情-->
+        <activity
+            android:name=".ui.TopicDetailsActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--层主话题详情-->
+        <activity
+            android:name=".ui.TopicLayerDetailsActivity"
+            android:screenOrientation="portrait"
+            />
+
 
     </application>
 

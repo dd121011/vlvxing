@@ -75,6 +75,8 @@ public class CheckVersion {
 
             @Override
             public void onFailure(HttpException error, String msg) {
+//                System.out.println("更新失败，请检查网络"+error.getMessage());
+//                System.out.println("更新失败，请检查网络"+msg);
                 if (mIsEnforceCheck)
                     Toast.makeText(mContext, "更新失败，请检查网络", Toast.LENGTH_SHORT).show();
             }

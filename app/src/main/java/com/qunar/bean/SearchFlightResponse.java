@@ -1,6 +1,7 @@
 package com.qunar.bean;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by wjjunjjun.wang on 2017/7/26.
@@ -63,19 +64,119 @@ public class SearchFlightResponse {
         public void setFlightInfos(List<FlightInfo> flightInfos) {
             this.flightInfos = flightInfos;
         }
+
+        public Set<String> airlineSet;//航空公司
+        private Set<String> dptAirportSet;//起飞机场
+        private Set<String> arrAirportSet;//落地机场
+
+
+        public Set<String> getDptAirportSet() {
+            return dptAirportSet;
+        }
+
+        public void setDptAirportSet(Set<String> dptAirportSet) {
+            this.dptAirportSet = dptAirportSet;
+        }
+
+        public Set<String> getArrAirportSet() {
+            return arrAirportSet;
+        }
+
+        public void setArrAirportSet(Set<String> arrAirportSet) {
+            this.arrAirportSet = arrAirportSet;
+        }
+
+        public Set<String> getAirlineSet() {
+            return airlineSet;
+        }
+
+        public void setAirlineSet(Set<String> airlineSet) {
+            this.airlineSet = airlineSet;
+        }
     }
 
     public static class FlightInfo {
         private String dpt;//出发机场三字码
         private String arr;//到达机场三字码
-        private String dptAriport;//出发机场
-        private String dptTerminal;//到达机场
+        private String dptAirport;//出发机场
         private String arrAirport;//到达机场
+        private String dptTerminal;//到达机场
         private String arrTerminal;//到达航站楼
         private String dptTime;//出发时间
         private String arrTime;//到达时间
         private String flightNum;//航班号
         private String barePrice;//销售价
+        private String flightTimes;//飞行时间
+        private String carrier;//航司
+        private String flightTypeFullName;//机型全名
+        private String arf;//机建
+        private String tof;//燃油
+        private String airlineName;//航空公司
+
+        public String getAirlineName() {
+            return airlineName;
+        }
+
+        public void setAirlineName(String airlineName) {
+            this.airlineName = airlineName;
+        }
+
+        public String getArrAirport() {
+            return arrAirport;
+        }
+
+        public void setArrAirport(String arrAirport) {
+            this.arrAirport = arrAirport;
+        }
+
+        public String getArf() {
+            return arf;
+        }
+
+        public void setArf(String arf) {
+            this.arf = arf;
+        }
+
+        public String getTof() {
+            return tof;
+        }
+
+        public void setTof(String tof) {
+            this.tof = tof;
+        }
+
+        public String getDptAirport() {
+            return dptAirport;
+        }
+
+        public void setDptAirport(String dptAirport) {
+            this.dptAirport = dptAirport;
+        }
+
+        public String getFlightTypeFullName() {
+            return flightTypeFullName;
+        }
+
+        public void setFlightTypeFullName(String flightTypeFullName) {
+            this.flightTypeFullName = flightTypeFullName;
+        }
+
+        public String getCarrier() {
+            return carrier;
+        }
+
+        public void setCarrier(String carrier) {
+            this.carrier = carrier;
+        }
+
+
+        public String getFlightTimes() {
+            return flightTimes;
+        }
+
+        public void setFlightTimes(String flightTimes) {
+            this.flightTimes = flightTimes;
+        }
 
         public String getDpt() {
             return dpt;
@@ -93,13 +194,6 @@ public class SearchFlightResponse {
             this.arr = arr;
         }
 
-        public String getDptAriport() {
-            return dptAriport;
-        }
-
-        public void setDptAriport(String dptAriport) {
-            this.dptAriport = dptAriport;
-        }
 
         public String getDptTerminal() {
             return dptTerminal;
@@ -109,13 +203,7 @@ public class SearchFlightResponse {
             this.dptTerminal = dptTerminal;
         }
 
-        public String getArrAirport() {
-            return arrAirport;
-        }
 
-        public void setArrAirport(String arrAirport) {
-            this.arrAirport = arrAirport;
-        }
 
         public String getArrTerminal() {
             return arrTerminal;

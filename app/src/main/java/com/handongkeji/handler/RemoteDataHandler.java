@@ -26,6 +26,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -47,8 +48,8 @@ public class RemoteDataHandler {
 	// private static final String _URL = "url";
 	// 线程池
 //	 private ExecutorService pool = Executors.newCachedThreadPool();
+	//LinkedBlockingQueue 链表实现的阻塞队列(线程安全)
 	public static ThreadPoolExecutor THREADPOOL = new ThreadPoolExecutor(0, 100, 30L, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
-
 	private RemoteDataHandler() {
 	}
 
@@ -63,7 +64,6 @@ public class RemoteDataHandler {
 	}
 
 	public interface StringCallback {
-
 		public void dataLoaded(String str);
 	}
 
@@ -83,7 +83,6 @@ public class RemoteDataHandler {
 				data.setJson((String) msg.obj);
 				data.setResult(msg.getData().getString(_RESULT));
 				data.setCount(msg.getData().getLong(_COUNT));
-
 				try {
 					callback.dataLoaded(data);
 				} catch (JSONException e) {
@@ -664,6 +663,74 @@ public class RemoteDataHandler {
 	}
 
 	/**
+	 *
+	 * @Description 异步的Get请求
+	 * @Create On 2015-12-9上午9:49:07
+	 * @Site http://www.handongkeji.com
+	 * @author chaiqs
+	 * @param url
+	 *            请求地址
+	 * @param params
+	 *            请求参数
+	 * @param context
+	 *            上下文对象
+	 *            是否缓存 true or false
+	 * @param callback
+	 *            回调
+	 * @Copyrights 2015-12-9 handongkeji All rights reserved.
+	 */
+	public static void asyncPlaneGet(final String url, final HashMap<String, Object> params, final Context context, final Callback callback) {
+		String pkey = "";
+		if(params!=null){
+			for (String key : params.keySet()) {
+				pkey+=key+"="+params.get(key)+"&";
+			}
+		}
+		final String ukey = url+"?"+pkey;
+		final Handler handler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				ResponseData data = new ResponseData();
+//				data.setCode(msg.getData().getInt(_CODE));
+				data.setJson((String) msg.obj);
+//				data.setCode(msg.what);
+//				System.out.print("飞机msg.what"+msg.what);
+//				data.setResult(msg.getData().getString(_RESULT));
+//				data.setCount(msg.getData().getLong(_COUNT));
+				System.out.println("飞机handleMessagedata"+data.getJson());
+				try {
+					callback.dataLoaded(data);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+		THREADPOOL.execute(new Runnable() {
+			@Override
+			public void run() {
+				Message msg = handler.obtainMessage(HttpStatus.SC_OK);
+				try {
+
+					String json = HttpHelper.get2(ukey);
+						if (json != null) {
+							json = json.replaceAll("\\x0a|\\x0d|", "");
+//							json = json.replaceAll("null","\"\"");
+							msg.obj = json;
+							// 在此处添加缓存
+						}
+					handler.sendMessage(msg);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+			}
+		});
+	}
+
+
+
+
+	/**
 	 * 
 	 * @Description 异步的POST请求
 	 * @Create On 2015-12-9上午9:49:07
@@ -697,7 +764,6 @@ public class RemoteDataHandler {
 				data.setHasMore(msg.getData().getBoolean(_HASMORE));
 				// 如果是选择缓存，则从缓存中读取json数据并返回 TODO
 				if (cache) {
-
 					String json = ConfigCacheUtil.getUrlCache(ukey, ConfigCacheUtil.ConfigCacheModel.CONFIG_CACHE_MODEL_SO_SHORT);
 					if (!"".equals(json) && json != null) {
 						data.setJson(json);

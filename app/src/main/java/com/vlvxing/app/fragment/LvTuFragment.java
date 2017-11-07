@@ -120,7 +120,6 @@ public class LvTuFragment extends Fragment implements BDLocationListener{
     private int count = 0;
     private String year;
     float zoomLevel;
-
     private String share_title, share_url;
     private boolean isFirst = true;
     private Overlay maker_overlay;

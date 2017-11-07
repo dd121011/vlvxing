@@ -162,8 +162,8 @@ public class MyApp extends Application {
 		PlatformConfig.setQQZone("1106153781","53AkGv7rAsG5OMli");
 
 		Constants.init(this);
-		// JPushInterface.setDebugMode(true); // 设置开启日志,发布时请关闭日志
-		// JPushInterface.init(this); // 初始化 JPush
+//		 JPushInterface.setDebugMode(true); // 设置开启日志,发布时请关闭日志
+//		 JPushInterface.init(this); // 初始化 JPush
 		sysInitSharedPreferences = getSharedPreferences(Constants.SYSTEM_INIT_FILE_NAME, MODE_PRIVATE);
 		am = AccountManager.get(this);
 		DisplayMetrics dm = SystemHelper.getScreenInfo(this);
@@ -598,6 +598,7 @@ public class MyApp extends Application {
 			@Override
 			public void dealWithCustomMessage(final Context context, final UMessage msg) {
 
+				Toast.makeText(context, "友盟推送 dealWithCustomMessage", Toast.LENGTH_SHORT).show();
 //                handler.post(new Runnable() {
 //
 //                    @Override
@@ -622,6 +623,7 @@ public class MyApp extends Application {
 			 * */
 			@Override
 			public Notification getNotification(Context context, UMessage msg) {
+				Toast.makeText(context, "友盟推送 getNotification"+"UMessage="+msg, Toast.LENGTH_SHORT).show();
 				switch (msg.builder_id) {
 //                    case 1:
 //                        Notification.Builder builder = new Notification.Builder(context);
@@ -657,7 +659,6 @@ public class MyApp extends Application {
 		UmengNotificationClickHandler notificationClickHandler = new UmengNotificationClickHandler() {
 			@Override
 			public void dealWithCustomAction(Context context, UMessage msg) {
-
 			}
 
 			@Override

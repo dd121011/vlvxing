@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.text.Editable;
@@ -37,6 +38,10 @@ import com.handongkeji.widget.MyGridView;
 import com.vlvxing.app.R;
 import com.vlvxing.app.common.Constants;
 import com.vlvxing.app.common.MyApp;
+import com.vlvxing.app.model.plane.PlaneOrderBean;
+import com.vlvxing.app.ui.PlaneTicketActivity;
+import com.vlvxing.app.ui.SelectActivity;
+import com.vlvxing.app.utils.SharedPrefsUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -94,7 +99,7 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
     private LinearLayout listViewHeader;
     private Context mcontext;
     LayoutInflater inflater;
-    private String historyCityName [] ={"广 州","北 京","上 海"};
+    private String historyCityName [] = {""};
     private String hotCityName [] ={"北 京","上 海","广 州","深 圳"};
     private String historyCityResult = "";
     private String hotCityResult = "";
@@ -103,6 +108,9 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plane_selestor_city);
         ButterKnife.bind(this);
+
+        historyCityName[0] = SharedPrefsUtil.getValue(this,PlaneTicketActivity.PLANE_HISTORY_CITY, "");
+
         //设置第一次进入界面不弹出软键盘
         serchLin.setFocusable(true);
         serchLin.setFocusableInTouchMode(true);
@@ -137,6 +145,11 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
     private void init() {
         View headerView = getLayoutInflater().inflate(R.layout.plane_listview_header, null);
         GridView historyCity = (MyGridView) headerView.findViewById(R.id.history_city);
+        TextView history_txt  = (TextView)headerView.findViewById(R.id.history_txt);
+        if(historyCityName[0].equals("")){
+            historyCity.setVisibility(View.GONE);
+            history_txt.setVisibility(View.GONE);
+        }
         GridView hotCity = (MyGridView) headerView.findViewById(R.id.hot_city);
         GridViewHistory historyAdapter =new GridViewHistory(mcontext,historyCityName);
         historyCity.setAdapter(historyAdapter);
@@ -295,13 +308,15 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
                         @Override
                         public void onClick(View v) {
                             if (type == 1) {
-                                intent.putExtra("areaname", areaname);
+//                                intent.putExtra("areaname", areaname);
+                                intent.putExtra("name", areaname);
                                 intent.putExtra("areaid", areaid);
                                 setResult(RESULT_OK, intent);
                                 finish();
                             }
                             if(type == 2){
-                                intent.putExtra("areaname", areaname);
+//                                intent.putExtra("areaname", areaname);
+                                intent.putExtra("name", areaname);
                                 intent.putExtra("areaid", areaid);
                                 setResult(RESULT_OK, intent);
                                 finish();

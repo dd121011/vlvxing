@@ -1,0 +1,186 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/bg_eaeaea"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:id="@+id/head_lin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp">
+
+        <ImageView
+            android:id="@+id/return_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/forunm_back_left" />
+
+        <TextView
+            android:id="@+id/head_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:text="话题详情"
+            android:textColor="@color/color_333333"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/right_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/topic_details_more_img"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/line_bottom"
+        android:layout_below="@+id/head_lin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/title_bottom_line"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_above="@+id/edit_lin"
+        android:layout_below="@+id/line_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include layout="@layout/loadcommon_list" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/share_rel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/head_lin"
+        android:visibility="gone"
+        >
+        <include layout="@layout/topic_details_dialog"/>
+    </RelativeLayout>
+    <!--只回复文字的布局-->
+    <RelativeLayout
+        android:id="@+id/edit_lin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="2dp"
+        android:background="@color/calendar_enable_color">
+        <ImageView
+            android:id="@+id/open_pic"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:src="@color/orange"/>
+        <Button
+            android:id="@+id/btn_send"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:background="@null"
+            android:textColor="@color/white"
+            android:text="发表" />
+
+        <EditText
+            android:id="@+id/et_sendmessage"
+            android:layout_toRightOf="@+id/open_pic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="10dp"
+            android:layout_toLeftOf="@id/btn_send"
+            android:background="@drawable/borderstyle_whiter"
+            android:hint="你想说点什么"
+            android:textColorHint="@color/qianhuise"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+    <!--回复图文的布局-->
+    <LinearLayout
+        android:id="@+id/addimg_lay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        android:background="@color/bg_eaeaea"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:id="@+id/edit_lin_img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:padding="2dp"
+            android:background="@color/calendar_enable_color">
+            <ImageView
+                android:id="@+id/open_pic_img"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:src="@color/orange"/>
+            <Button
+                android:id="@+id/btn_send_img"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:background="@null"
+                android:textColor="@color/white"
+                android:text="发表" />
+
+            <EditText
+                android:id="@+id/et_sendmessage_img"
+                android:layout_toRightOf="@+id/open_pic_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:padding="10dp"
+                android:layout_toLeftOf="@id/btn_send_img"
+                android:background="@drawable/borderstyle_whiter"
+                android:hint="你想说点什么"
+                android:textColorHint="@color/qianhuise"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_below="@+id/edit_lin"
+            android:layout_alignParentBottom="true"
+            android:padding="20dp"
+            android:layout_height="wrap_content">
+            <!--<ImageView-->
+                <!--android:layout_width="60dp"-->
+                <!--android:layout_height="150dp"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:src="@mipmap/gridview_addpic"-->
+                <!--/>-->
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/id_recyclerview_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_centerVertical="true"
+                android:background="#FF0000"
+                android:scrollbars="none"
+                >
+
+            </android.support.v7.widget.RecyclerView>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

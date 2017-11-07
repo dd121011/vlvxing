@@ -86,33 +86,33 @@ public class SystemMessageActivity extends BaseActivity {
         initData();
 
         onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                if (isRefreshing) return;
-                isRefreshing = true;
-                currentPage = 1;
-                swipeRefresh.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        initData();
-                    }
-                }, 1000);
-            }
-        };
+        @Override
+        public void onRefresh() {
+            if (isRefreshing) return;
+            isRefreshing = true;
+            currentPage = 1;
+            swipeRefresh.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    initData();
+                }
+            }, 1000);
+        }
+    };
         swipeRefresh.setOnRefreshListener(onRefreshListener);
         swipeRefresh.setColorSchemeResources(R.color.color_ea5413);
 
         listView.setLoadDataListener(new MyListView.LoadDataListener() {
-            @Override
-            public void onLoadMore() {
-                if (isLoadMore) return;
-                isLoadMore = true;
-                currentPage++;
-                initData();
-            }
-        });
-        onRefresh();
-    }
+        @Override
+        public void onLoadMore() {
+            if (isLoadMore) return;
+            isLoadMore = true;
+            currentPage++;
+            initData();
+        }
+    });
+    onRefresh();
+}
 
     private void onRefresh() {
         swipeRefresh.setRefreshing(true);

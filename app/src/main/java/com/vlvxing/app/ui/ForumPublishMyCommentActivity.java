@@ -1,15 +1,11 @@
 package com.vlvxing.app.ui;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.handongkeji.ui.BaseActivity;
-import com.qunar.view.SlideRecyclerView;
 import com.vlvxing.app.R;
 import com.vlvxing.app.adapter.ForumPublishMyCommentAdapter;
 import com.vlvxing.app.widget.ForumRecyclerView;

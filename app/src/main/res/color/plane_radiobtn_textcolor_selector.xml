@@ -3,4 +3,8 @@
     <item android:state_checked="true" android:color="@color/color_ea5413"/>
     <!-- not selected -->
     <item android:state_checked="false" android:color="@color/calendar_enable_color"/>
+    <!--<item android:color="@color/calendar_enable_color"/>-->
+    <!-- 没有焦点时的背景图片 -->
+    <!--<item android:state_window_focused="false"-->
+        <!--android:color="@color/color" />-->
 </selector>

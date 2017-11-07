@@ -1,9 +1,11 @@
 package com.qunar.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by wjjunjjun.wang on 2017/7/26.
  */
-public class Vendor {
+public class Vendor implements Serializable {
 
     private String businessExt;
     private int vppr;

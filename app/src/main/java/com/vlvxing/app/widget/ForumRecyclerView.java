@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.Scroller;
 import android.widget.TextView;
 
-import com.qunar.adapter.PlaneOrderAdapter;
 import com.vlvxing.app.R;
 import com.vlvxing.app.adapter.ForumPublishMyCommentAdapter;
 

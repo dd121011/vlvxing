@@ -1,4 +1,4 @@
-package com.vlvxing.app.wxapi;
+package com.vlvxing.app;
 
 import com.umeng.socialize.media.WBShareCallBackActivity;
 

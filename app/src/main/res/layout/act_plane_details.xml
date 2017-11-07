@@ -26,16 +26,19 @@
         android:orientation="horizontal"
         android:padding="10dp">
          <TextView
+             android:id="@+id/com_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="海南航空HU7707"
              android:textSize="15sp"
              android:textColor="@color/colorPlane"/>
+        <!--android:text="海南航空HU7707"-->
+
         <View
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_weight="1"/>
         <TextView
+            android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="09月15日周五"
@@ -62,18 +65,22 @@
         android:layout_weight="1"
         android:orientation="vertical">
         <TextView
+            android:id="@+id/b_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="22sp"
             android:textColor="@color/white"
-            android:text="22 : 40"/>
+            />
+        <!--android:text="22 : 40"-->
         <TextView
+            android:id="@+id/dep_airport"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/bg_huiC8C8C8"
             android:textSize="15sp"
             android:layout_marginTop="20dp"
-            android:text="首都机场"/>
+            />
+        <!--android:text="首都机场"-->
 
       </LinearLayout>
             <LinearLayout
@@ -82,12 +89,14 @@
                 android:orientation="vertical"
                 android:layout_height="wrap_content">
                 <TextView
+                    android:id="@+id/flight_times"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/bg_huiC8C8C8"
                     android:textSize="12sp"
                     android:gravity="center_horizontal"
-                    android:text="2小时10分钟"/>
+                    />
+                <!--android:text="2小时10分钟"-->
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.1dp"
@@ -101,20 +110,24 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
                 <TextView
+                    android:id="@+id/e_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="22sp"
                     android:gravity="right"
                     android:textColor="@color/white"
-                    android:text="00  : 50"/>
+                    />
+                <!--android:text="00  : 50"-->
                 <TextView
+                    android:id="@+id/arr_airport"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/bg_huiC8C8C8"
                     android:textSize="15sp"
                     android:gravity="right"
                     android:layout_marginTop="20dp"
-                    android:text="保安机场T3"/>
+                    />
+                <!--android:text="保安机场T3"-->
 
             </LinearLayout>
 
@@ -123,13 +136,49 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_corner_down"
+            android:gravity="center"
             android:paddingBottom="40dp">
-            <TextView
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="@color/bg_huiC8C8C8"
-                android:text="空客319(中)准点率66%五餐食"/>
+                android:layout_gravity="center">
+                <TextView
+                    android:id="@+id/plane_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/bg_huiC8C8C8"
+                    />
+                <!--android:text="空客319(中)"-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:text="准点率"
+                    android:textColor="@color/bg_huiC8C8C8"
+                    />
+                <TextView
+                    android:id="@+id/correct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/bg_huiC8C8C8"
+                    />
+                <!--android:text="66%"-->
+                <TextView
+                    android:id="@+id/meal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/bg_huiC8C8C8"
+                    android:text="无餐食"
+                    />
+                <!---->
+            </LinearLayout>
+
+
         </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -146,7 +195,7 @@
                 android:layout_alignParentLeft="true"
                 android:textColor="@color/colorPlane"
                 android:textSize="25sp"
-                android:text="￥ 455"/>
+                android:text=""/>
             <TextView
                 android:id="@+id/details_withdrawal_txt"
                 android:layout_width="wrap_content"
@@ -156,6 +205,7 @@
                 android:layout_alignParentLeft="true"
                 android:drawableLeft="@mipmap/backinfo"
                 android:textSize="12sp"
+                android:visibility="invisible"
                 android:drawablePadding="8dp"
                 android:layout_marginTop="20dp"
                 android:text="退改47元起"/>
@@ -183,6 +233,7 @@
                 android:textSize="12sp"
                 android:layout_marginLeft="2dp"
                 android:layout_alignLeft="@+id/book"
+                android:visibility="invisible"
                 android:layout_alignTop="@+id/details_withdrawal_txt"
                 android:text="经济舱3.8折"/>
 

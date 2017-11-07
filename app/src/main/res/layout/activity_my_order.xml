@@ -73,6 +73,6 @@
         app:tabTextAppearance="@style/tab_textsize"
         app:tabTextColor="@color/color_444444" />
 
-    <include layout="@layout/loadcommon_list"/>
+    <include layout="@layout/loadcommon_list" />
 
 </LinearLayout>

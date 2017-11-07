@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:background="@color/bg_eaeaea"
+    android:orientation="vertical">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/qianhuise"/>
+    <LinearLayout
+        android:paddingLeft="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/bg_eaeaea"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/head_img"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="centerCrop"
+            android:layout_toLeftOf="@+id/img"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:src="@mipmap/touxiang_moren" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_eaeaea"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/number_txt"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:text="2楼"
+                android:textSize="10sp"
+                android:textColor="@color/white"
+                android:background="@mipmap/gailou"/>
+            <TextView
+                android:id="@+id/name_txt"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/orange"
+                android:text="层主"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/date_txt"
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@color/calendar_enable_color"
+            android:text="2017-9-18"/>
+
+        <TextView
+            android:id="@+id/time_txt"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@color/calendar_enable_color"
+            android:text="10:00"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
+        <Button
+            android:layout_width="40dp"
+            android:layout_height="35dp"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="center_vertical"
+            android:background="@mipmap/topic_reply" />
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/body_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:paddingLeft="5dp"
+        android:paddingBottom="5dp"
+        android:text="我们这的黑网吧一个小时两块钱"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/qianhuise"
+        android:layout_margin="10dp">
+        <LinearLayout
+            android:id="@+id/first_lin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/first_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/orange"
+                android:text="路人甲:"/>
+            <TextView
+                android:id="@+id/first_body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/calendar_enable_color"
+                android:text="小伙伴们,给大家安利一个好用的APP:V旅行,旅游出行好帮手"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/second_lin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/second_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/orange"
+                android:text="路人乙:"/>
+            <TextView
+                android:id="@+id/second_body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/calendar_enable_color"
+                android:text="明年去成都玩,大家约起来..."/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/more_lin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/orange"
+                android:text="更多"/>
+            <TextView
+                android:id="@+id/more_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/orange"
+                android:text="1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/orange"
+                android:text="条回复"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

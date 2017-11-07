@@ -25,6 +25,7 @@ public class SharedPrefsUtil {
         sp.putString(key, value);
         sp.commit();
     }
+
     public static int getValue(Context context, String key, int defValue) {
         SharedPreferences sp =  context.getSharedPreferences(SETTING, Context.MODE_PRIVATE);
         int value = sp.getInt(key, defValue);
