@@ -86,7 +86,6 @@ public class CheckVersion {
 
     private static void loadOnlineData(String json) {
 
-
         try {
             UpdateEntity updateEntity = new UpdateEntity(json);
             if (updateEntity == null) {
@@ -167,7 +166,6 @@ public class CheckVersion {
         if (file.exists()) {
             file.delete();
         }
-
         Intent intent = new Intent(mContext, UpdataService.class);
         intent.putExtra("downUrl", mUpdateEntity.downUrl);
         intent.putExtra("targetSDPath", filePath + "/" + fileName);

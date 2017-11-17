@@ -26,7 +26,8 @@ public final class Constants {
     public static final String QUNAR_KEY = "0748cebf8cf346cf64070333c7fed08f";   //从开发者平台获取
     public static final String QUNAR_TOKEN = "109cfbc62855bdc711a68c77c3e6bd97"; //从开发者平台获取
 //    public static final String QUNAR_BASE_URL = "http://qae.qunar.com/api/router?";
-    public static final String QUNAR_BASE_URL = "http://192.168.1.111:80/";
+    public static final String QUNAR_BASE_URL = "http://app.mtvlx.cn/demo/";
+
     public static final String QUNAR_SEARCHFLIGHT = "flight.national.supply.sl.searchflight";//航班搜索接口
     /**
      * 系统初始化配置文件名
@@ -49,6 +50,7 @@ public final class Constants {
      * 微信支付Appkey
      */
     public static final String APP_KEY = "88888888888888888888888888888888";
+
     /**
      * QQ ID
      */
@@ -62,6 +64,7 @@ public final class Constants {
      */
     public static final String WX_ID = "wxd3cb391989fe67f1";
     public static final String WX_KEY = "88888888888888888888888888888888";
+//    public static final String WX_KEY = "226c687e3cf3f69ed0ee44a54cc1aef8";
     /**
      * 微信 KEY
      */
@@ -180,12 +183,13 @@ public final class Constants {
      * 应用上下文完整路径
      *
      */
+    public static final String URL_PLANE_PATH = "http://app.mtvlx.cn/demo/";
 //	public static final String URL_CONTEXTPATH = PROTOCOL + HOST2 + PORT;
 //	public static final String URL_CONTEXTPATH = "http://192.168.1.68/lvyoushejiao/";
     public static final String URL_CONTEXTPATH = "http://app.mtvlx.cn/lvyoushejiao/";  //客户的
 //    public static final String URL_CONTEXTPATH = "http://192.168.1.21/lvyoushejiao/";
     /**
-     * 应用图片完整路径
+     * 应用图片完整路径c
      */
     public static final String URL_CONTEXTPATH_PIC = PROTOCOL + HOST2 + PORT2;
     /**
@@ -438,6 +442,16 @@ public final class Constants {
      * 订单支付状态--支付宝
      */
     public static final String URL_ORDER_STATUS = URL_CONTEXTPATH+"aliPay/orderstatus.json";
+
+    /**
+     * Zophar 支付宝回调
+     */
+//    public static final String URL_PLANE_ALIPAY = URL_PLANE_PATH+"aliPay/flyforderstatus";
+    /**
+     * Zophar 机票状态
+     */
+    public static final String URL_PLANE_ORDER_STATUS = URL_PLANE_PATH+"aliPay/flyforderstatus";
+
     /**
      * 微信下单
      */

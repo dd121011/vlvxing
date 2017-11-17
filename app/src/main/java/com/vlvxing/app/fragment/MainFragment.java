@@ -413,6 +413,11 @@ public class MainFragment extends Fragment{
             startActivity(intent);
         } else {
             url = "http://url.cn/49r5tyf";
+            //判断是否登录
+            boolean flag = MyApp.getInstance().isLogin(mcontext);
+            if (!flag) {
+                return;
+            }
             startActivity(new Intent(mcontext, PlaneTicketActivity.class));
         }
 //        Uri uri = Uri.parse(url);

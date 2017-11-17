@@ -85,6 +85,13 @@ public class PlaneDetailsActivity extends BaseActivity{
     private String com;
     private String code;
     private String bTime;
+    private String vendorStr;
+
+    private String depCode;
+    private String arrCode;
+    private String carrier;
+    private String dateResult;
+    private String weekResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,13 +131,16 @@ public class PlaneDetailsActivity extends BaseActivity{
                 intent.putExtra("goCity",goCity);//出发城市
                 intent.putExtra("arriveCity",arriveCity);//到达城市
                 intent.putExtra("date",date);//出发日期
-                intent.putExtra("com",com);//航班号
-                intent.putExtra("code",code);//航司
-                intent.putExtra("bTime","bTime");//起飞时间
-                Bundle bundle = new Bundle();
-//                bundle.putSerializable("vendor",vendor);
-//                intent.putExtras(bundle);
-//                startActivity(intent);
+                intent.putExtra("com",com);//航办公司
+                intent.putExtra("code",code);//航班号
+                intent.putExtra("bTime",bTime);//起飞时间
+                intent.putExtra("depCode",depCode);
+                intent.putExtra("arrCode",arrCode);
+                intent.putExtra("carrier",carrier);
+                intent.putExtra("vendorStr",vendorStr);
+                intent.putExtra("dateResult",dateResult);
+                intent.putExtra("weekResult",weekResult);
+                startActivity(intent);
                 break;
 
         }
@@ -144,7 +154,6 @@ public class PlaneDetailsActivity extends BaseActivity{
         params.put("date",date);
         params.put("ex_track","youxuan");
         params.put("flightNum",flightNum);
-
         showDialog("加载中...");
         RemoteDataHandler.asyncPlaneGet(url+"searchQuote",params,mcontext,new RemoteDataHandler.Callback() {
             @Override
@@ -158,19 +167,28 @@ public class PlaneDetailsActivity extends BaseActivity{
                 System.out.println("机票接口详情 json:"+json);
                 Gson gson = new Gson();
                 PlaneDetailsResult model = gson.fromJson(json,PlaneDetailsResult.class);
+
+
                 int status = model.getStatus();
                 if(status==1){
 
                     //-1是空  -2是错误的
                     SearchQuoteResponse response = model.getData();
+
+                    vendorStr = response.getVendorStr();//booking需要传的卖方信息
+
                     SearchQuoteResponse.Result result = response.getResult();
                     if(result==null){
                         ToastUtils.show(mcontext, "航班信息异常");
                             return;
                     }
+
                     com = result.getCom();//航班公司
                     code = result.getCode();//航班号
                     com_code.setText(com+code);
+                    depCode = result.getDepCode();
+                    arrCode = result.getArrCode();
+                    carrier = result.getCarrier();
 
                     String depAirport = result.getDepAirport();//出发机场
                     dep_airport.setText(depAirport);
@@ -196,10 +214,10 @@ public class PlaneDetailsActivity extends BaseActivity{
                     plane_style.setText(planeStyle);//机型
                     flight_times.setText(flightTimes);//飞行时间
                     String dateStr = result.getDate();
-                    String weekStr = DataUtils.getWeek(dateStr);
+                    weekResult = DataUtils.getWeek(dateStr);
                     String dateArr[] = dateStr.split("-");
-                    date_txt.setText(dateArr[1]+"月"+dateArr[2]+"日"+weekStr);
-
+                    dateResult = dateArr[1]+"月"+dateArr[2]+"日";
+                    date_txt.setText(dateResult+weekResult);
                     List<Vendor> vendors = result.getVendors();
                     System.out.println("机票接口详情  vendors"+vendors.size());
                     if(vendors.size()>0){

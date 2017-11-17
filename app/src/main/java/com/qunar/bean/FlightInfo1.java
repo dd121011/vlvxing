@@ -23,8 +23,8 @@ public class FlightInfo1  {
 	  private boolean codeShare; 
 	  private String childCabin; 
 	  private String babyCabin; 
-	  private String tof; 
-	  private String arf; 
+	  private int tof;
+	  private int arf;
 	  private String ctof; 
 	  private String actFlightNum; 
 	  private String cbcn; 
@@ -152,16 +152,16 @@ public class FlightInfo1  {
 		this.childCabin = childCabin;
 	}
 
-	public String getTof() {
+	public int getTof() {
 		return tof;
 	}
-	public void setTof(String tof) {
+	public void setTof(int tof) {
 		this.tof = tof;
 	}
-	public String getArf() {
+	public int getArf() {
 		return arf;
 	}
-	public void setArf(String arf) {
+	public void setArf(int arf) {
 		this.arf = arf;
 	}
 	public String getCtof() {

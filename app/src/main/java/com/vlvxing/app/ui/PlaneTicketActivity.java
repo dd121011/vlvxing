@@ -292,7 +292,7 @@ public class PlaneTicketActivity extends BaseActivity{
                 String arriveCity = cityRighttxt.getText().toString();
 //                String date = txtDate.getText().toString();
 
-                if (goCity != null && arriveCity != null && dateFormat != null){
+                if (goCity != null && !goCity.equals("") && arriveCity != null && !arriveCity.equals("")&& dateFormat != null && !dateFormat.equals("")){
                 Intent searchIntent = new Intent(mcontext, PlaneSearchActivity.class);
                 searchIntent.putExtra("goCity", goCity);
                 searchIntent.putExtra("arriveCity", arriveCity);
@@ -364,20 +364,10 @@ public class PlaneTicketActivity extends BaseActivity{
                     txtDay.setVisibility(View.INVISIBLE);
                 }
             }
-			 //*****注意*****
-			// 如需转换为Calendar
-			// 正确转换方法（因为2月没有30天）：
-//			String[] info = orderInfo.split("#");
-//			Calendar c = Calendar.getInstance();
-//			c.set(Integer.valueOf(info[0]), Integer.valueOf(info[1]) - 1, Integer.valueOf(info[2]));
-			// 错误转换方法：
-//			c.set(Integer.valueOf(info[0]), Integer.valueOf(info[1]), Integer.valueOf(info[2]));
-//			c.add(Calendar.MONTH, -1);
-
         }else if(requestCode == 1 && resultCode == RESULT_OK){
             //出发城市
             if (data!=null){
-            String cityName = data.getStringExtra("name");
+            String cityName = data.getStringExtra("name").toString().trim();
 //            String locationId = data.getStringExtra("locationId");
             cityLefttxt.setText(cityName);
                 SharedPrefsUtil.putValue(mcontext,PLANE_HISTORY_CITY,cityName);
@@ -385,7 +375,7 @@ public class PlaneTicketActivity extends BaseActivity{
         }else if(requestCode == 2 && resultCode == RESULT_OK){
             //到达城市
             if (data!=null){
-            String cityName = data.getStringExtra("name");
+            String cityName = data.getStringExtra("name").toString().trim();
 //            String locationId = data.getStringExtra("locationId");
             cityRighttxt.setText(cityName);
                 SharedPrefsUtil.putValue(mcontext,PLANE_HISTORY_CITY,cityName);

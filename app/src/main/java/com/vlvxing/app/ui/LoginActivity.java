@@ -83,8 +83,16 @@ public class LoginActivity extends BaseActivity implements LoginAndRegisterPrese
 
 
     private UMAuthListener umAuthListener = new UMAuthListener() {
+
+        /**
+         * @desc 授权成功的回调
+         * @param platform 平台名称
+         * @param action 行为序号，开发者用不上
+         * @param data 用户资料返回
+         */
         @Override
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
+            System.out.println("友盟 platform:"+platform+",action:"+action+",data:"+data);
 //            Log.d("aaa",data.toString());
             // 获取uid
             Toast.makeText(getApplicationContext(), "get 授权", Toast.LENGTH_SHORT).show();
@@ -113,15 +121,28 @@ public class LoginActivity extends BaseActivity implements LoginAndRegisterPrese
             }
         }
 
+        /**
+         * @desc 授权失败的回调
+         * @param platform 平台名称
+         * @param action 行为序号，开发者用不上
+         * @param t 错误原因
+         */
         @Override
         public void onError(SHARE_MEDIA platform, int action, Throwable t) {
             dialog.dismiss();
             Log.d("aaa", "Faile");
-//            Toast.makeText(getApplicationContext(), "get fail", Toast.LENGTH_SHORT).show();
+            System.out.println("友盟 onError get fail+t:"+t.getMessage());
+            Toast.makeText(getApplicationContext(), "get fail", Toast.LENGTH_SHORT).show();
         }
 
+        /**
+         * @desc 授权取消的回调
+         * @param platform 平台名称
+         * @param action 行为序号，开发者用不上
+         */
         @Override
         public void onCancel(SHARE_MEDIA platform, int action) {
+            System.out.println("友盟 onCancel  platform:"+platform+",action:"+action);
             dialog.dismiss();
             Log.d("aaa", "cancel");
 //            Toast.makeText(getApplicationContext(), "get cancel", Toast.LENGTH_SHORT).show();

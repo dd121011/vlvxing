@@ -11,6 +11,15 @@ public class BookingResponseParam {
 	private String message;
 	private long createTime;
 	private Result result;
+	private String bookingResult;
+
+	public String getBookingResult() {
+		return bookingResult;
+	}
+
+	public void setBookingResult(String bookingResult) {
+		this.bookingResult = bookingResult;
+	}
 
 	public int getCode() {
 		return code;
@@ -56,7 +65,8 @@ public class BookingResponseParam {
 			  private TgqShowData tgqShowData; 
 			  private String ticketTime; 
 			  private BookingIns bookingIns;
-			  private ExpressInfo expressInfo; 
+			  private ExpressInfo expressInfo;
+
 
 			  public String getBookingStatus(){
 			  	return bookingStatus; 

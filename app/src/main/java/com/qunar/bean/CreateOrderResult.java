@@ -1,9 +1,12 @@
 package com.qunar.bean;
 
+import java.io.Serializable;
+import java.util.List;
+
 /**
  * Created by wjjunjjun.wang on 2017/8/4.
  */
-public class CreateOrderResult {
+public class CreateOrderResult implements Serializable{
 
     private int id;
     private int noPayAmount;
@@ -40,5 +43,18 @@ public class CreateOrderResult {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+
+    @Override
+    public String toString() {
+        return "CreateOrderResult{" +
+                "id=" + id +
+                ", noPayAmount=" + noPayAmount +
+                ", orderNo='" + orderNo + '\'' +
+                ", status=" + status +
+                ", errorDesc='"  + '\'' +
+                ", dishonest="  +
+                '}';
     }
 }

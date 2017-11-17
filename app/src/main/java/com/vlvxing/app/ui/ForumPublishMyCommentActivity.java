@@ -30,6 +30,7 @@ public class ForumPublishMyCommentActivity extends BaseActivity {
 
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_forum_publish_my_comment);

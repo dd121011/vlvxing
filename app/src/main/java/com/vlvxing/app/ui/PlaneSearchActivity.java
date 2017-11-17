@@ -89,7 +89,7 @@ public class PlaneSearchActivity extends BaseActivity {
     TextView rightCheckTxt;
 
     private HorizontalCalendar horizontalCalendar;
-    private MyListView body_list;
+    private ListView body_list;
     private MyAdapter adapter;
     private boolean isLoadMore;//是否已经在加载更多
     private int currentPage = 1;
@@ -129,16 +129,13 @@ public class PlaneSearchActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_plane_horizontal);
+        ButterKnife.bind(this);
         goCity = getIntent().getStringExtra("goCity").trim();//出发城市
         arriveCity = getIntent().getStringExtra("arriveCity").trim();//到达城市
         date = getIntent().getStringExtra("date").trim();//出发日期
-
         arrToString();
-        ButterKnife.bind(this);
         mcontext = this;
         params = new HashMap<>();//查询航班条件参数
-
-
         //底部筛选弹出框
         bottomDialog = new Dialog(this, R.style.BottomDialog);
         //获取上个页面,用户选择的日期,并转换成日历对象,设置横向日历默认选中的日期
@@ -154,7 +151,7 @@ public class PlaneSearchActivity extends BaseActivity {
 
         headTitleLeft.setText(goCity);
         headTitleRight.setText(arriveCity);
-        body_list = (MyListView) findViewById(R.id.body_list);
+        body_list = (ListView) findViewById(R.id.body_list);
         body_list.setVisibility(View.INVISIBLE);//默认机票列表不显示
         /** 一个月后结束  1 */
         Calendar endDate = Calendar.getInstance();
@@ -221,19 +218,8 @@ public class PlaneSearchActivity extends BaseActivity {
                 startActivity(intnet);
             }
         });
-        //上滑加载更多
-        body_list.setLoadDataListener(new MyListView.LoadDataListener() {
-            @Override
-            public void onLoadMore() {
-                if (isLoadMore) return;
-                isLoadMore = true;
-                currentPage++;
-//                initData();
-            }
-        });
+
         setOnChecked();//底部导航栏 时间,价格排序
-
-
 
     }
     //时间,价格排序

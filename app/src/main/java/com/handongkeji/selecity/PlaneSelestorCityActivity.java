@@ -100,7 +100,7 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
     private Context mcontext;
     LayoutInflater inflater;
     private String historyCityName [] = {""};
-    private String hotCityName [] ={"北 京","上 海","广 州","深 圳"};
+    private String hotCityName [] ={"北京","上海","广州","深圳"};
     private String historyCityResult = "";
     private String hotCityResult = "";
     @Override
@@ -165,7 +165,6 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
                 int selectorPosition = position;
                 historyCityResult = historyCityName[selectorPosition];
 
-                if (type == 1) {
 //                        myApp.setCity_name(name);
 //                        myApp.setAreaid(locationId);
                     intent.putExtra("name", historyCityResult.trim());
@@ -173,14 +172,7 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
                     setResult(RESULT_OK, intent);
                     finish();
 //                        startActivity(new Intent(mContext, MainActivity.class));
-                } else if(type == 2){
-//                        intent.putExtra("areaname", name);
-//                        intent.putExtra("areaid", locationId);
-                    intent.putExtra("name", historyCityResult.trim());
-                    intent.putExtra("locationId", "");
-                    setResult(RESULT_OK, intent);
-                    finish();
-                }
+
 //                Toast.makeText(mcontext, "历史城市"+selectorPosition, Toast.LENGTH_SHORT).show();
             }
         });
@@ -194,7 +186,6 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
 
                 hotCityResult    = hotCityName[selectorPosition];
 
-                if (type == 1) {
 //                        myApp.setCity_name(name);
 //                        myApp.setAreaid(locationId);
                     intent.putExtra("name", hotCityResult.trim());
@@ -202,14 +193,6 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
                     setResult(RESULT_OK, intent);
                     finish();
 //                        startActivity(new Intent(mContext, MainActivity.class));
-                } else if(type == 2){
-//                        intent.putExtra("areaname", name);
-//                        intent.putExtra("areaid", locationId);
-                    intent.putExtra("name", hotCityResult.trim());
-                    intent.putExtra("locationId", "");
-                    setResult(RESULT_OK, intent);
-                    finish();
-                }
 
 
 //                Toast.makeText(mcontext, "热门城市"+selectorPosition, Toast.LENGTH_SHORT).show();
@@ -307,20 +290,12 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
                     holder.title.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (type == 1) {
 //                                intent.putExtra("areaname", areaname);
                                 intent.putExtra("name", areaname);
                                 intent.putExtra("areaid", areaid);
                                 setResult(RESULT_OK, intent);
                                 finish();
-                            }
-                            if(type == 2){
-//                                intent.putExtra("areaname", areaname);
-                                intent.putExtra("name", areaname);
-                                intent.putExtra("areaid", areaid);
-                                setResult(RESULT_OK, intent);
-                                finish();
-                            }
+
                         }
                     });
                 } catch (JSONException e) {
@@ -530,7 +505,6 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
 
                 @Override
                 public void onClick(View v) {
-                    if (type == 1) {
 //                        myApp.setCity_name(name);
 //                        myApp.setAreaid(locationId);
                         intent.putExtra("name", name);
@@ -538,14 +512,6 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
                         setResult(RESULT_OK, intent);
                         finish();
 //                        startActivity(new Intent(mContext, MainActivity.class));
-                    } else if(type == 2){
-//                        intent.putExtra("areaname", name);
-//                        intent.putExtra("areaid", locationId);
-                        intent.putExtra("name", name);
-                        intent.putExtra("locationId", locationId);
-                        setResult(RESULT_OK, intent);
-                        finish();
-                    }
                 }
             });
             return view;

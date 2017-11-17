@@ -35,7 +35,7 @@
             android:textSize="15sp"
             android:gravity="center"
             android:textColor="@color/black"
-            android:text="天 津"/>
+            android:text="天津"/>
     </LinearLayout>
 
 

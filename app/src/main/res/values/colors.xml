@@ -4,7 +4,7 @@
 
     <color name="photopicker_background">#181819</color>
 
-    <!-- 日历购票相关 -->
+    <!-- 日历购票相关 从上往下颜色从浅到深 -->
     <color name="calendar_disable_color">#DDDDDD</color>
     <color name="qianhuise">#cccccc</color>
     <color name="calendar_enable_color">#666666</color>

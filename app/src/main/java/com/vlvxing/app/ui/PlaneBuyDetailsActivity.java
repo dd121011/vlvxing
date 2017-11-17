@@ -3,6 +3,7 @@ package com.vlvxing.app.ui;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +41,7 @@ import com.handongkeji.utils.StringUtils;
 import com.handongkeji.widget.NoScrollListView;
 import com.lidroid.xutils.db.annotation.Check;
 import com.qunar.bean.BookingResponseParam;
+import com.qunar.bean.CreateOrderResult;
 import com.qunar.bean.ExpressInfo;
 import com.qunar.bean.ExtInfo;
 import com.qunar.bean.FlightInfo1;
@@ -47,11 +50,13 @@ import com.qunar.bean.SearchQuoteResponse;
 import com.qunar.bean.TgqPointCharge;
 import com.qunar.bean.TgqShowData;
 import com.qunar.bean.Vendor;
+import com.qunar.model.CreateOrderData;
 import com.qunar.model.PlaneBookResult;
 import com.qunar.model.PlaneDetailsResult;
 import com.vlvxing.app.R;
 import com.vlvxing.app.common.Constants;
 import com.vlvxing.app.common.IsInstallApp;
+import com.vlvxing.app.common.MyApp;
 import com.vlvxing.app.common.PayDialog;
 import com.vlvxing.app.model.PlaneUserInfo;
 import com.vlvxing.app.model.UserInfo;
@@ -66,8 +71,10 @@ import com.vlvxing.app.utils.ViewUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.simple.eventbus.EventBus;
+import org.simple.eventbus.Subscriber;
 import org.w3c.dom.Text;
 
+import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -128,6 +135,16 @@ public class PlaneBuyDetailsActivity extends BaseActivity {
     TextView price_txt;//票价
     @Bind(R.id.fuel_price)
     TextView fuelPrice;//机建+燃油
+    @Bind(R.id.baoxiaopingzheng)
+    CheckBox baoxiaopingzheng;//报销凭证
+    @Bind(R.id.baoxiao_name_edit)
+    EditText baoxiao_name_edit;//报销人
+    @Bind(R.id.baoxiao_phone_edit)
+    EditText baoxiao_phone_edit;//报销人
+    @Bind(R.id.baoxiao_adress_edit)
+    EditText baoxiao_adress_edit;//报销人
+    @Bind(R.id.baoxiao_lin_body)
+    LinearLayout baoxiao_lin_body;//报销linearlayout
 
     //    @Bind(R.id.details_withdrawal_txt)
 //    TextView detailsWithDrawal;//退改详情
@@ -135,7 +152,8 @@ public class PlaneBuyDetailsActivity extends BaseActivity {
     private String goCity;
     private String arriveCity;
     private String date;
-    private int type,payWay;//支付方式
+    private int type;//支付方式
+    private int payWay = 1;
     private Dialog bottomDialog;
     private UserInfoListAdapter adapter;
     private ArrayList<PlaneUserInfo> userInfoList;
@@ -145,14 +163,35 @@ public class PlaneBuyDetailsActivity extends BaseActivity {
     private int fromYDelta;
     private String price, pname, imgUrl, id;
     private String tradeNo, orderId, totalPrice="0.01", commodityName = "V旅行", commodityMessage = "支付";
-    private int p = 100 ;//机票单价+机建+燃油费,从上个页面传递过来的(购票必选)
-    private int j = 50;//机建+燃油费
+    private int p = 0 ;//机票单价+机建+燃油费,从上个页面传递过来的(购票必选)
+    private int j = 0;//机建+燃油费
     private int num = 1;//购票数量,从用户添加的乘客来统计
-    private int h = 30;//航意险单价
+    private int h = 0;//航意险单价
+    private int y = 20;//报销需要的邮费
     private Vendor vendor;
     private String com;//航班号
     private String code;//航司
     private String bTime;//起飞时间
+    private String vendorStr;
+    private String depCode;
+    private String arrCode;
+    private String carrier;
+    private String dateResult;
+    private String weekResult;
+
+
+    //生单接口传值
+    //必传
+    private String bookingResult;//预定结果
+    private String contact = "";//联系人姓名
+    private String cardNo = "'";//证件号
+    private String contactMob;//电话
+    //选传 选择报销则需传以下字段
+    private String attnName;//收件人姓名
+    private String attnPhone;//收件人电话
+    private String attnAddress;//收件人地址
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -160,35 +199,94 @@ public class PlaneBuyDetailsActivity extends BaseActivity {
         ButterKnife.bind(this);
         mcontext = this;
         EventBus.getDefault().register(this);
+
         goCity = getIntent().getStringExtra("goCity");//出发城市
         arriveCity = getIntent().getStringExtra("arriveCity");//到达城市
         date = getIntent().getStringExtra("date");//出发日期
-//        vendor = getIntent().getParcelableExtra("vendor");
+        vendor = (Vendor)getIntent().getSerializableExtra("vendor");
         com = getIntent().getStringExtra("com");//航班号
         code = getIntent().getStringExtra("code");//航司
+        bTime = getIntent().getStringExtra("bTime");
+        vendorStr = getIntent().getStringExtra("vendorStr");
+        depCode = getIntent().getStringExtra("depCode");
+        arrCode = getIntent().getStringExtra("arrCode");
+        carrier = getIntent().getStringExtra("carrier");
+        dateResult = getIntent().getStringExtra("dateResult");
+        weekResult = getIntent().getStringExtra("weekResult");
         headTitleLeft.setText(goCity);
         headTitleRight.setText(arriveCity);
-        price_txt.setText(p+"");//
-        totalTxt.setText(p+j+h+"");//票价+(机建+燃油费)+航意险
-        fuelPrice.setText(j+"");//机建+燃油费
+
         //设置第一次进入界面不弹出软键盘
         editLin.setFocusable(true);
         editLin.setFocusableInTouchMode(true);
         editLin.requestFocus();
         mGrayLayout = (View) findViewById(R.id.gray_layout);
         userInfoList = new ArrayList<PlaneUserInfo>();
-        PlaneUserInfo model = new PlaneUserInfo(1, "测试", "4107281499402281033");
+        PlaneUserInfo model = new PlaneUserInfo(1, "任辰琳", "410328198907259391");
         userInfoList.add(model);
         adapter = new UserInfoListAdapter(mcontext);
         userList.setAdapter(adapter);
         //监听锂电池乘机须知 监听
         setOnCheckChange();
+        setOnEditTextChangeLinstener();
         setHangyixianOnCheckChange();
         initData();
     }
 
+    private void setOnEditTextChangeLinstener(){
+        //报销人
+        baoxiao_name_edit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                attnName = baoxiao_name_edit.getText().toString();
+            }
+        });
+        //报销手机号
+        baoxiao_phone_edit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                attnPhone = baoxiao_phone_edit.getText().toString();
+
+            }
+        });
+        //报销手机号
+        baoxiao_adress_edit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                attnAddress = baoxiao_adress_edit.getText().toString();
+            }
+        });
+    }
     private void setOnCheckChange(){
+        //协议条款
         xieyi.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -200,6 +298,22 @@ public class PlaneBuyDetailsActivity extends BaseActivity {
                     quicklypay.setClickable(false);
 
                 }
+            }
+        });
+        //报销凭证
+        baoxiaopingzheng.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                totalTxt.getText();
+                if(b){
+                    baoxiao_lin_body.setVisibility(View.VISIBLE);
+                    int price = (p+j+h)*num+y;
+                    totalTxt.setText(String.valueOf(price));
+                }else{
+                    baoxiao_lin_body.setVisibility(View.GONE);
+                    totalTxt.setText(String.valueOf((p+j+h)*num));
+                }
+
             }
         });
     }
@@ -217,8 +331,6 @@ public class PlaneBuyDetailsActivity extends BaseActivity {
             }
         });
 
-
-
     }
 
 
@@ -229,9 +341,7 @@ public class PlaneBuyDetailsActivity extends BaseActivity {
 
         ViewGroup.LayoutParams layoutParams = contentView.getLayoutParams();
         layoutParams.width = (getResources().getDisplayMetrics().widthPixels);
-//        layoutParams.height = (int)(getResources().getDisplayMetrics().heightPixels * 0.8);
         contentView.setLayoutParams(layoutParams);
-//        bottomDialog.getWindow().getAttributes().y = 80;
         bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
         TextView firstPrice = (TextView)contentView.findViewById(R.id.b_first_price);//票价
         TextView secondPrice = (TextView)contentView.findViewById(R.id.b_second_price);//燃油
@@ -240,6 +350,13 @@ public class PlaneBuyDetailsActivity extends BaseActivity {
         TextView firstNumber = (TextView)contentView.findViewById(R.id.b_first_number);
         TextView secondNumber = (TextView)contentView.findViewById(R.id.b_second_number);
         TextView threeNumber = (TextView)contentView.findViewById(R.id.b_three_number);
+
+        LinearLayout baoxiao_lin = (LinearLayout)contentView.findViewById(R.id.baoxiao_lin);
+        if(baoxiaopingzheng.isChecked()){
+            baoxiao_lin.setVisibility(View.VISIBLE);
+        }else{
+            baoxiao_lin.setVisibility(View.GONE);
+        }
 
         TextView total_txt = (TextView)contentView.findViewById(R.id.total_txt);//总金额
         firstPrice.setText(p+"");
@@ -270,43 +387,37 @@ public class PlaneBuyDetailsActivity extends BaseActivity {
     }
 
     private void checkParams(){
-        String phones = phoneEdt.getText().toString().trim();
-//        String address = addressEdt.getText().toString().trim();
-//        String name = nameEdt.getText().toString().trim();
-//        String num = numEdt.getText().toString().trim(); //身份证号
-//        String number = numberTxt.getText().toString().trim();
-//        String content = contentEdt.getText().toString().trim();
-//        if (StringUtils.isStringNull(name)) {
-//            ToastUtils.show(this, "请输入姓名!");
-//            return;
-//        }
-        if (StringUtils.isStringNull(phones)) {
-            ToastUtils.show(this, "请输入电话!");
+//        contactMob = phoneEdt.getText().toString().trim();
+        contactMob = "18734679105";
+        if (StringUtils.isStringNull(contactMob)) {
+            ToastUtils.show(this, "请输入联系电话电话!");
             return;
         }
-        if (!ValidateHelper.isPhoneNumberValid(phones)) {
-            Toast.makeText(this, "请输入正确的手机号!", Toast.LENGTH_SHORT).show();
+        if (!ValidateHelper.isPhoneNumberValid(contactMob)) {
+            ToastUtils.show(this, "请输入正确的手机号!");
             return;
         }
-//        if (StringUtils.isStringNull(address)) {
-//            ToastUtils.show(this, "请输入地址!");
-//            return;
-//        }
-//        if (StringUtils.isStringNull(num)) {
-//            ToastUtils.show(this, "请输入身份证号!");
-//            return;
-//        }
-//        if (!ValidateHelper.isIDCard(num)) {
-//            Toast.makeText(this, "请输入正确的身份证号!", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
+        if(baoxiaopingzheng.isChecked()){
+            if(attnName.equals("")) {
+                ToastUtils.show(this, "请填写正确的收件人姓名!");
+                return;
+            }
+            if(attnPhone.equals("")) {
+                ToastUtils.show(this, "请填写正确的收件人手机号码!");
+                return;
+            }
+            if(attnAddress.equals("")){
+                //报销人信息填写完整
+                ToastUtils.show(this, "请填写详细的收件人地址!");
+                return;
+            }
+        }
 
         //把填写的用户信息保存到本地
 //        List<UserInfo> list = CacheUserData.getRecentSubList();
 //      if (list.size() <= 0) {
 //        saveUserInfo(name,phones,address,num);
 //      }
-        String total = totalTxt.getText().toString().trim();
 
     }
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -348,88 +459,26 @@ public class PlaneBuyDetailsActivity extends BaseActivity {
                 break;
             case R.id.quicklypay_btn:
                 //提交订单
-
-                checkParams();//验证手机号是否正确
+                checkParams();//验证除乘客信息之外的信息 是否正确
                 //需要遍历userInfoList 取得每个乘客的信息
+                contact = "";
+                cardNo = "";
                 for (int i = 0; i < userInfoList.size(); i++) {
-                    System.out.println("乘客信息:" + i + userInfoList.get(i).getName());
-                    System.out.println("乘客信息:" + i + userInfoList.get(i).getCard());
+                    String name = userInfoList.get(i).getName().toString().trim();
+                    String card = userInfoList.get(i).getCard().toString().trim();
+                    if(!name.equals("") && !card.equals("")){
+                        contact += name+",";
+                        cardNo +=  card+",";
+                    }
                 }
-                userInfoList.size();
-//                clickSubmit();
-                payMoney();
+                System.out.println("接口乘客信息姓名:"+contact);
+                System.out.println("接口乘客信息身份证号:"+cardNo);
+                createOrderData();
+//                payMoney();
                 break;
         }
     }
 
-    private void clickSubmit() {
-        String name = userInfoList.get(0).getName().toString().trim();
-        String phone = phoneEdt.getText().toString().trim();
-        String num = userInfoList.get(0).getCard().toString().trim(); //身份证号
-        String total = totalTxt.getText().toString().trim();
-        String number =num.toString().trim();
-//        String content = contentEdt.getText().toString().trim();
-//        if (StringUtils.isStringNull(name)) {
-//            ToastUtils.show(this, "请输入姓名!");
-//            return;
-//        }
-//        if (StringUtils.isStringNull(phone)) {
-//            ToastUtils.show(this, "请输入电话!");
-//            return;
-//        }
-//        if (!ValidateHelper.isPhoneNumberValid(phone)) {
-//            Toast.makeText(this, "请输入正确的手机号!", Toast.LENGTH_SHORT).show();
-//        }
-//        if (StringUtils.isStringNull(address)) {
-//            ToastUtils.show(this, "请输入地址!");
-//            return;
-//        }
-//        if (StringUtils.isStringNull(num)) {
-//            ToastUtils.show(this, "请输入身份证号!");
-//            return;
-//        }
-//        if (!ValidateHelper.isIDCard(num)) {
-//            Toast.makeText(this, "请输入正确的身份证号!", Toast.LENGTH_SHORT).show();
-//        }
-        showDialog("提交中...");
-        String url = Constants.URL_SAVEORDER;
-        HashMap<String, String> params = new HashMap<>();
-        params.put("token", myApp.getUserTicket());
-        params.put("travelProductId", id);
-        params.put("orderName",pname);
-        params.put("orderAllPrice", total);
-        params.put("orderCount", number);
-        params.put("orderPrice", p+"");
-        params.put("orderUserName", name);
-        params.put("orderUserPhone", phone);
-        params.put("orderUserId", num);
-//        params.put("orderUserMessage", content);
-        params.put("orderPic", imgUrl);
-        RemoteDataHandler.asyncTokenPost(url, this, false, params, new RemoteDataHandler.Callback() {
-            @Override
-            public void dataLoaded(ResponseData data) throws JSONException {
-                String json = data.getJson();
-                if (StringUtils.isStringNull(json)) {
-                    return;
-                }
-                JSONObject obj = new JSONObject(json);
-                String status = obj.getString("status");
-                String message = obj.getString("message");
-                if (status.equals("1")) {
-//                    ToastUtils.show(WriteOrderActivity.this, "提交成功!");
-                    JSONObject object=obj.getJSONObject("data");
-                    orderId= object.getString("orderid");
-//                    totalPrice=object.getString("orderallprice");
-                    tradeNo=object.getString("systemtradeno");
-                    payMoney();
-                } else {
-                    ToastUtils.show(mcontext, message);
-                }
-                dismissDialog();
-            }
-        });
-
-    }
 
 
     /**
@@ -611,6 +660,7 @@ public class PlaneBuyDetailsActivity extends BaseActivity {
                 "###################.###########");
         String totalMoney = decimalFormat.format(price);//变成整数类型
         Toast.makeText(this, "totalMoney"+totalMoney, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "payWay"+payWay, Toast.LENGTH_SHORT).show();
 //        int payMethod = dialog.getPayMethod();
         switch (payWay) {
             case 1:   //  支付宝支付
@@ -632,26 +682,29 @@ public class PlaneBuyDetailsActivity extends BaseActivity {
         //机票列表的数据源
         String url = Constants.QUNAR_BASE_URL;
         HashMap<String,Object> params = new HashMap<>();
-        params.put("dptCity",goCity);
-        params.put("arrCity",arriveCity);
+        params.put("depCode",depCode);
+        params.put("arrCode",arrCode);
         params.put("date",date);
         params.put("code",code);//航司
-        params.put("carrier",com);//航班号
+        params.put("carrier",carrier);//航班号
         params.put("btime",bTime);//起飞时间
-        params.put("businessExt",vendor.getBusinessExt());
-        params.put("barePrice",vendor.getBarePrice());
-        params.put("vppr",vendor.getVppr());
-        params.put("price",vendor.getPrice());
-        params.put("basePrice",vendor.getBasePrice());
-        params.put("domain",vendor.getDomain());
-        params.put("policyType",vendor.getPolicyType());
-        params.put("policyId",vendor.getPolicyId());
-        params.put("prtag",vendor.getPrtag());
-        params.put("cabin",vendor.getCabin());
-        params.put("wrapperId",vendor.getWrapperId());
+        params.put("vendorStr",URLEncoder.encode(vendorStr));
+
+
+//        params.put("businessExt",vendor.getBusinessExt());
+//        params.put("barePrice",vendor.getBarePrice());
+//        params.put("vppr",vendor.getVppr());
+//        params.put("price",vendor.getPrice());
+//        params.put("basePrice",vendor.getBasePrice());
+//        params.put("domain",vendor.getDomain());
+//        params.put("policyType",vendor.getPolicyType());
+//        params.put("policyId",vendor.getPolicyId());
+//        params.put("prtag",vendor.getPrtag());
+//        params.put("cabin",vendor.getCabin());
+//        params.put("wrapperId",vendor.getWrapperId());
 
         showDialog("加载中...");
-        RemoteDataHandler.asyncPlaneGet(url+"searchQuote",params,mcontext,new RemoteDataHandler.Callback() {
+        RemoteDataHandler.asyncPlaneGet(url+"booking",params,mcontext,new RemoteDataHandler.Callback() {
             @Override
             public void dataLoaded(ResponseData data) throws JSONException {
                 System.out.println("booking接口 data:"+data);
@@ -666,87 +719,54 @@ public class PlaneBuyDetailsActivity extends BaseActivity {
                 int status = model.getStatus();
                 if(status==1){
 
+                    BookingResponseParam response = model.getData();
                     //-1是空  -2是错误的
-                    BookingResponseParam response = (BookingResponseParam)model.getData();
+//                    if (model.getData() instanceof BookingResponseParam){
+//                        response = (BookingResponseParam)model.getData();
+//                    }
                     BookingResponseParam.Result result = response.getResult();
                     if(result==null){
                         ToastUtils.show(mcontext, "查不到该航班");
+                        dismissDialog();
                         return;
                     }
-
+                    bookingResult = response.getBookingResult();
                     List<FlightInfo1> flightInfos = result.getFlightInfo();//航班信息
-
                     PriceInfo priceInfo = result.getPriceInfo();//报价信息
                     ExtInfo extInfo = result.getExtInfo();//扩展信息
+                    if(extInfo==null){
+                        ToastUtils.show(mcontext, "该航班价格信息获取失败");
+                        dismissDialog();
+                        return;
+                    }
                     ExpressInfo expressInfo = result.getExpressInfo();//报销凭证信息
                     TgqShowData tgqShowData = result.getTgqShowData();//退改签展示信息
+                    p = Integer.parseInt(extInfo.getPrice());
 
-
-                    FlightInfo1 flightInfo = flightInfos.get(0);
-                    String tof = flightInfo.getTof();//燃油
-                    String arf = flightInfo.getArf();//机建
-
-
-                    String barePrice = priceInfo.getBarePrice();//裸票价
+                    int tof = 0;
+                    int arf = 0;
+                    if(flightInfos.size()>0){
+                        FlightInfo1 flightInfo = flightInfos.get(0);
+                        tof = flightInfo.getTof();//燃油
+                        arf = flightInfo.getArf();//机建
+                        j = tof+arf;
+                    }
 
                     //退改签信息展示
                     List<TgqPointCharge> tgqPointCharges = tgqShowData.getTgqPointCharges();
-                    TgqPointCharge tgqPointCharge = tgqPointCharges.get(0);
-                    int time = tgqPointCharge.getTime();//起飞前 hour 小时之前
-                    String timeText = tgqPointCharge.getTimeText();//起飞前 hour 小时之前
-                    int changeFee = tgqPointCharge.getChangeFee();//退票
-                    int returnFee = tgqPointCharge.getReturnFee();//改期费
-                    System.out.println("booking接口 json:解析正常");
-//                    String com = result.getCom();//航班公司
-//                    String code = result.getCode();//航班号
-//                    com_code.setText(com+code);
-//
-//                    String depAirport = result.getDepAirport();//出发机场
-//                    dep_airport.setText(depAirport);
-//
-//                    String arrAirport = result.getArrAirport();//到达机场
-//                    arr_airport.setText(arrAirport);
-//
-//                    String correctStr = result.getCorrect();//准点率
-//                    correct.setText(correctStr);
-//
-//                    String bTime = result.getBtime();//出发时间
-//                    b_time.setText(bTime);
-//                    String eTime = result.getEtime();//到达时间
-//                    e_time.setText(eTime);
-//
-//                    String mealStr = result.getMeal();//true表示有餐食
-//                    if (mealStr.equals("true")){
-//                        meal.setText("有餐食");
-//                    }else{
-//                        meal.setText("无餐食");
-//                    }
-//
-//                    plane_style.setText(planeStyle);//机型
-//                    flight_times.setText(flightTimes);//飞行时间
-//                    String dateStr = result.getDate();
-//                    String weekStr = DataUtils.getWeek(dateStr);
-//                    String dateArr[] = dateStr.split("-");
-//                    date_txt.setText(dateArr[1]+"月"+dateArr[2]+"日"+weekStr);
-//
-//                    List<Vendor> vendors = result.getVendors();
-//                    if(vendors.size()>0){
-//                        String barePrice = vendors.get(0).getBarePrice()+"";//销售特价
-//                        String vppr =  vendors.get(0).getVppr()+"";//票面价
-//                        System.out.println("价格销售特价"+barePrice);
-//                        System.out.println("价格票面价"+vppr);
-//
-//                        price_txt.setText("￥ "+barePrice);
-////                        body_list.setVisibility(View.VISIBLE);
-////                        mData.clear();
-////                        mData.addAll(info);
-////                        adapter.notifyDataSetChanged();
-//                    }else{
-////                        body_list.setVisibility(View.INVISIBLE);
-////                        mData.clear();
-////                        adapter.notifyDataSetChanged();
-//                        ToastUtils.show(mcontext, "航班信息异常");
-//                    }
+                    if(tgqPointCharges.size()>0){
+                        TgqPointCharge tgqPointCharge = tgqPointCharges.get(0);
+                        int time = tgqPointCharge.getTime();//起飞前 hour 小时之前
+                        String timeText = tgqPointCharge.getTimeText();//起飞前 hour 小时之前
+                        int changeFee = tgqPointCharge.getChangeFee();//退票
+                        int returnFee = tgqPointCharge.getReturnFee();//改期费
+
+                        date_txt.setText(dateResult);//月份
+                        month_txt.setText(weekResult);//周几?
+                        price_txt.setText(p+"");//裸票价
+                        fuelPrice.setText(j+"");//机建燃油
+                        totalTxt.setText(p+j+h+"");//票价+(机建+燃油费)+航意险
+                    }
 
                 }else{
                     ToastUtils.show(mcontext, model.getMessage());
@@ -755,6 +775,75 @@ public class PlaneBuyDetailsActivity extends BaseActivity {
 
             }
         });
+    }
+    private void createOrderData() {
+        //机票列表的数据源
+        String url = Constants.QUNAR_BASE_URL;
+        HashMap<String,String> params = new HashMap<>();
+        params.put("contact",contact);
+        params.put("contactMob",contactMob);
+        params.put("cardNo",cardNo);
+        params.put("bookingResult",bookingResult);
+        params.put("userid",MyApp.getInstance().getUserId());
+        if(baoxiaopingzheng.isChecked()){
+            params.put("attnName",attnName);//收件人姓名
+            params.put("attnPhone",attnPhone);//收件人电话
+            params.put("attnAddress",attnAddress);//收件人地址
+        }
+
+        showDialog("加载中...");
+        RemoteDataHandler.asyncPlanePost(url+"createOrder",params,mcontext,new RemoteDataHandler.Callback() {
+            @Override
+            public void dataLoaded(ResponseData data) throws JSONException {
+                System.out.println("生单接口 data:"+data);
+                String json = data.getJson();
+                if (StringUtils.isStringNull(json)) {
+                    dismissDialog();
+                    return;
+                }
+
+                System.out.println("生单接口 json:"+json);
+//                Gson gson = new Gson();
+//                CreateOrderData model = gson.fromJson(json,CreateOrderData.class);
+
+                JSONObject object = new JSONObject(json);
+                int status = object.getInt("status");
+                System.out.println("支付 生单tstatus"+status);
+                if(status==1){
+                    JSONObject jsonData = object.getJSONObject("data");
+
+                    int orderStatus = jsonData.getInt("code");//为0是成功
+
+                    System.out.println("支付 生单orderStatus"+orderStatus);
+
+
+                        if(orderStatus == 0){
+                            JSONObject result = jsonData.getJSONObject("result");
+                            tradeNo = result.getString("orderNo");
+                            System.out.println("支付 生单tradeNo"+tradeNo);
+                            int noPayAmount = result.getInt("noPayAmount");//待支付金额
+                            System.out.println("支付 生单getNoPayAmount"+noPayAmount);
+                            orderId = result.getInt("id")+"";
+                            System.out.println("支付 生单 orderId"+orderId);
+                            payMoney();
+//                            Intent intent = new Intent(mcontext,PlaneOrderActivity.class);
+//                            Bundle bundle = new Bundle();
+//                            bundle.putSerializable("result",result);
+//                            intent.putExtras(bundle);
+//                            startActivity(intent);
+//                        finish();
+                        }
+                }else{
+                    ToastUtils.showT(mcontext,object.getString("message"));
+                }
+                dismissDialog();
+            }
+        });
+    }
+    @Subscriber(tag = "changeMyPlaneOrders")
+    public void changeMyPlaneOrders(int t){
+        this.finish();
+        startActivity(new Intent(this,PlaneOrderActivity.class));
     }
 
 }

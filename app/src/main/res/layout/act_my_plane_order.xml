@@ -13,22 +13,18 @@
     <include layout="@layout/plane_head"/>
 
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/common_swiperefresh"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <com.handongkeji.widget.MyListView
+        <ListView
             android:id="@+id/list_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:divider="@color/d7"
             android:dividerHeight="0.5dp"
-            android:footerDividersEnabled="false"
-            ></com.handongkeji.widget.MyListView>
-    </android.support.v4.widget.SwipeRefreshLayout>
+            android:footerDividersEnabled="false">
 
-    <include layout="@layout/common_no_data" />
+        </ListView>
+
+
 
 
 </LinearLayout>

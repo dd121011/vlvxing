@@ -51,87 +51,88 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/orangePlane"
-            android:paddingTop="40dp"
-            android:paddingLeft="5dp"
-            android:paddingBottom="40dp"
-            android:paddingRight="5dp">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/b_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="22sp"
-            android:textColor="@color/white"
-            />
-        <!--android:text="22 : 40"-->
-        <TextView
-            android:id="@+id/dep_airport"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/bg_huiC8C8C8"
-            android:textSize="15sp"
-            android:layout_marginTop="20dp"
-            />
-        <!--android:text="首都机场"-->
 
-      </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/flight_times"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/bg_huiC8C8C8"
-                    android:textSize="12sp"
-                    android:gravity="center_horizontal"
-                    />
-                <!--android:text="2小时10分钟"-->
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.1dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/bg_huiC8C8C8"
-                    />
-            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/e_time"
+                android:background="@color/orangePlane"
+                android:paddingBottom="40dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="40dp">
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="22sp"
-                    android:gravity="right"
-                    android:textColor="@color/white"
-                    />
-                <!--android:text="00  : 50"-->
-                <TextView
-                    android:id="@+id/arr_airport"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/b_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="22sp" />
+                    <!--android:text="22 : 40"-->
+                    <TextView
+                        android:id="@+id/dep_airport"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:textColor="@color/bg_huiC8C8C8"
+                        android:textSize="15sp" />
+                    <!--android:text="首都机场"-->
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/flight_times"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:textColor="@color/bg_huiC8C8C8"
+                        android:textSize="12sp" />
+                    <!--android:text="2小时10分钟"-->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.1dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/bg_huiC8C8C8" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/bg_huiC8C8C8"
-                    android:textSize="15sp"
-                    android:gravity="right"
-                    android:layout_marginTop="20dp"
-                    />
-                <!--android:text="保安机场T3"-->
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/e_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:textColor="@color/white"
+                        android:textSize="22sp" />
+                    <!--android:text="00  : 50"-->
+                    <TextView
+                        android:id="@+id/arr_airport"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:gravity="right"
+                        android:textColor="@color/bg_huiC8C8C8"
+                        android:textSize="15sp" />
+                    <!--android:text="保安机场T3"-->
+
+                </LinearLayout>
 
             </LinearLayout>
-
-        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

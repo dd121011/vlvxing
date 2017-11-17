@@ -549,6 +549,25 @@
             android:name=".ui.PlaneBuyDetailsActivity"
             android:screenOrientation="portrait"
             />
+        <!--机票改签-->
+        <activity android:name=".ui.PlaneChangeTicketActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--机票退票-->
+        <activity android:name=".ui.PlaneRefundTicketActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--机票退票完成页面-->
+        <activity
+            android:name=".ui.PlaneRefundSuccessActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--机票改签说明-->
+        <activity
+            android:name=".ui.PlaneChangeInfoActivity"
+            android:screenOrientation="portrait"
+            />
+
 
         <!--发表心情-->
         <activity
@@ -594,6 +613,7 @@
             android:name=".ui.TopicLayerDetailsActivity"
             android:screenOrientation="portrait"
             />
+
 
 
     </application>

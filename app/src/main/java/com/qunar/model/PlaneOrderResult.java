@@ -1,28 +1,21 @@
 package com.qunar.model;
 
 import com.qunar.bean.BookingResponseParam;
-import com.qunar.bean.SearchQuoteResponse;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 机票booking详情返回数据
  * @author hjgang
  */
-public class PlaneBookResult implements Serializable{
+public class PlaneOrderResult implements Serializable{
   public static final long serialVersionUID = 46601L;
   private Integer status;
   private String message;
   private Object content;
   private String type;
-  private BookingResponseParam data;
-  public BookingResponseParam getData() {
-    return data;
-  }
-
-  public void setData(BookingResponseParam data) {
-    this.data = data;
-  }
+  private List<FlyOrder> data;
 
   public static long getSerialVersionUID() {
     return serialVersionUID;
@@ -44,8 +37,6 @@ public class PlaneBookResult implements Serializable{
     this.message = message;
   }
 
-
-
   public Object getContent() {
     return content;
   }
@@ -60,5 +51,13 @@ public class PlaneBookResult implements Serializable{
 
   public void setType(String type) {
     this.type = type;
+  }
+
+  public List<FlyOrder> getData() {
+    return data;
+  }
+
+  public void setData(List<FlyOrder> data) {
+    this.data = data;
   }
 }

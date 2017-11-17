@@ -687,17 +687,19 @@ public class RemoteDataHandler {
 			}
 		}
 		final String ukey = url+"?"+pkey;
+		System.out.println("booking  pkey "+ pkey);
 		final Handler handler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
 				ResponseData data = new ResponseData();
 //				data.setCode(msg.getData().getInt(_CODE));
 				data.setJson((String) msg.obj);
+				System.out.println("booking  data "+ data.getJson());
 //				data.setCode(msg.what);
 //				System.out.print("飞机msg.what"+msg.what);
 //				data.setResult(msg.getData().getString(_RESULT));
 //				data.setCount(msg.getData().getLong(_COUNT));
-				System.out.println("飞机handleMessagedata"+data.getJson());
+
 				try {
 					callback.dataLoaded(data);
 				} catch (JSONException e) {
@@ -710,8 +712,9 @@ public class RemoteDataHandler {
 			public void run() {
 				Message msg = handler.obtainMessage(HttpStatus.SC_OK);
 				try {
-
+					System.out.println("booking  ukey "+ ukey);
 					String json = HttpHelper.get2(ukey);
+					System.out.println("booking  json "+ json);
 						if (json != null) {
 							json = json.replaceAll("\\x0a|\\x0d|", "");
 //							json = json.replaceAll("null","\"\"");
@@ -726,7 +729,66 @@ public class RemoteDataHandler {
 			}
 		});
 	}
+	/**
+	 *
+	 * @Description 异步的Get请求
+	 * @Create On 2015-12-9上午9:49:07
+	 * @Site http://www.handongkeji.com
+	 * @author chaiqs
+	 * @param url
+	 *            请求地址
+	 * @param params
+	 *            请求参数
+	 * @param context
+	 *            上下文对象
+	 *            是否缓存 true or false
+	 * @param callback
+	 *            回调
+	 * @Copyrights 2015-12-9 handongkeji All rights reserved.
+	 */
+	public static void asyncPlanePost(final String url, final HashMap<String, String> params, final Context context, final Callback callback) {
+		String pkey = "";
+		if(params!=null){
+			for (String key : params.keySet()) {
+				pkey+=key+"="+params.get(key)+"&";
+			}
+		}
+		final String ukey = url+"?"+pkey;
+		System.out.println("生单接口  url+pkey: "+ pkey);
+		final Handler handler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				ResponseData data = new ResponseData();
+				data.setJson((String) msg.obj);
+				System.out.println("生单接口  handler data "+ data.getJson());
+				try {
+					callback.dataLoaded(data);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+		THREADPOOL.execute(new Runnable() {
+			@Override
+			public void run() {
+				Message msg = handler.obtainMessage(HttpStatus.SC_OK);
+				try {
+					String json = HttpHelper.post(url, params);
+					System.out.println("booking  json "+ json);
+					if (json != null) {
+						json = json.replaceAll("\\x0a|\\x0d|", "");
+//							json = json.replaceAll("null","\"\"");
+						msg.obj = json;
+						// 在此处添加缓存
+					}
+					handler.sendMessage(msg);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 
+			}
+		});
+	}
 
 
 

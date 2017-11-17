@@ -11,6 +11,15 @@ public class SearchQuoteResponse {
     private String message;//返回信息
     private long createTime;//时间戳
     private Result result;
+    private String vendorStr;
+
+    public String getVendorStr() {
+        return vendorStr;
+    }
+
+    public void setVendorStr(String vendorStr) {
+        this.vendorStr = vendorStr;
+    }
 
     public String getMessage() {
         return message;
@@ -52,6 +61,7 @@ public class SearchQuoteResponse {
         private String code;//航班号
         private String carrier;//航司
         private String btime;//出发时间
+
         private String etime;//到达时间
         private String com;//航班公司
         private String depAirport;//出发机场

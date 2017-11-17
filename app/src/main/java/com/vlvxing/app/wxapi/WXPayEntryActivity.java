@@ -69,6 +69,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 //				GetServerStatus();
 				EventBus.getDefault().post(0, "changeMyorders"); //跳转到我的订单
 				EventBus.getDefault().post(0, "changeMyorder"); //跳转到我的订单
+
 			} else if(resp.errCode == -1){// 支付失败
 				flg = 1;
 				finish();

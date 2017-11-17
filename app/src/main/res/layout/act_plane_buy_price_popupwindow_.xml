@@ -123,6 +123,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="10dp"
+        android:visibility="gone"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:paddingLeft="20dp"
@@ -167,6 +168,57 @@
             android:layout_marginRight="10dp"
             android:text="1"/>
     </LinearLayout>
+        <LinearLayout
+            android:id="@+id/baoxiao_lin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:paddingTop="5dp"
+            android:visibility="gone"
+            android:paddingBottom="5dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                android:text="报销运费"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                android:text="￥"/>
+            <TextView
+                android:id="@+id/b_four_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                android:text="20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                android:layout_marginLeft="20dp"
+                android:text="×"/>
+            <TextView
+                android:id="@+id/b_four_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                android:layout_marginRight="10dp"
+                android:text="1"/>
+        </LinearLayout>
         <LinearLayout
             android:id="@+id/pay_lin"
             android:layout_width="match_parent"
