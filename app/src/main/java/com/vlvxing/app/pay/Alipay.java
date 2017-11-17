@@ -75,6 +75,7 @@ public class Alipay {
     private Handler mHandler = new Handler() {
 
         public void handleMessage(Message msg) {
+            System.out.println("支付 -------handleMessage-----what----:"+msg.what);
             switch (msg.what) {
                 case 110:
                     // 支付成功要跳回我的订单
@@ -82,37 +83,25 @@ public class Alipay {
                     EventBus.getDefault().post(0, "changeMyorders"); //跳转到我的订单
                     EventBus.getDefault().post(0, "changeMyorder"); //跳转到我的订单
 //                    EventBus.getDefault().post(0, Activity_AuctionDetail.TAG_PAYBZJCOMPLETE);
-                     break;
+                    break;
                 case 111:
                     // 循环结束没成功也要跳回我的账户
                     Toast.makeText(mActivity, "服务器延迟，支付订单正在处理中", Toast.LENGTH_SHORT).show();
-//                    EventBus.getDefault().post(0, "paySuccesstomyorder");
-//                    EventBus.getDefault().post(3, OrderPayActivity.TAG_ONFINISH);
                     break;
                 case SDK_PAY_FLAG: {
-//                    dialog.setMsg("正在完成支付...");
-//                    dialog.show();
-
                     PayResult payResult = new PayResult((String) msg.obj);
-
                     // 支付宝返回此次支付结果及加签，建议对支付宝签名信息拿签约时支付宝提供的公钥做验签
                     String resultInfo = payResult.getResult();
-
                     String resultStatus = payResult.getResultStatus();
-
-                    // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
-                    if (TextUtils.equals(resultStatus, "9000")) {
+                    if (TextUtils.equals(resultStatus, "9000")) {// 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
 //                        EventBus.getDefault().post(0, "changeMyorder"); //跳转到我的订单
                         RemoteDataHandler.THREADPOOL.execute(() -> GetServerStatus());//zophar 验证支付是否成功,成功则进入case 110;
 
-                    } else {
-                        // 判断resultStatus 为非“9000”则代表可能支付失败
-                        // “8000”代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
+                    } else {// “8000”代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
                         if (TextUtils.equals(resultStatus, "8000")) {
                             Toast.makeText(mActivity, "支付结果确认中", Toast.LENGTH_SHORT).show();
                         } else {
-                            // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
-                            Toast.makeText(mActivity, "支付已取消!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mActivity, "支付已取消!", Toast.LENGTH_SHORT).show();// 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
                         }
                         EventBus.getDefault().post(0, "paySuccesstomyorder");
                     }
@@ -129,23 +118,17 @@ public class Alipay {
                     // 支付成功要跳回我的机票订单
                     Toast.makeText(mActivity, "支付成功", Toast.LENGTH_SHORT).show();
                     EventBus.getDefault().post(0, "changeMyPlaneOrders"); //跳转到我的机票订单
-//                    EventBus.getDefault().post(0, "changeMyPlaneOrder"); //跳转到我的机票订单
-//                    EventBus.getDefault().post(0, Activity_AuctionDetail.TAG_PAYBZJCOMPLETE);
                     break;
                 case 211:
                     // 循环结束没成功也要跳回我的账户
                     Toast.makeText(mActivity, "服务器延迟，支付订单正在处理中", Toast.LENGTH_SHORT).show();
-//                    EventBus.getDefault().post(0, "paySuccesstomyorder");
-//                    EventBus.getDefault().post(3, OrderPayActivity.TAG_ONFINISH);
                     break;
                 case SDK_PLANE_PAY_FLAG: {
-//                    dialog.setMsg("正在完成支付...");
-//                    dialog.show();
+
+                    System.out.println("支付 -------SDK_PLANE_PAY_FLAG---------:"+SDK_PLANE_PAY_FLAG);
 
                     PayResult payResult = new PayResult((String) msg.obj);
-
-                    // 支付宝返回此次支付结果及加签，建议对支付宝签名信息拿签约时支付宝提供的公钥做验签
-                    String resultInfo = payResult.getResult();
+                    String resultInfo = payResult.getResult();// 支付宝返回此次支付结果及加签，建议对支付宝签名信息拿签约时支付宝提供的公钥做验签
 
                     System.out.println("支付 resultInfo"+resultInfo);
 
@@ -155,7 +138,7 @@ public class Alipay {
                     // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
                     if (TextUtils.equals(resultStatus, "9000")) {
                         System.out.println("支付 9000");
-//                        EventBus.getDefault().post(0, "changeMyorder"); //跳转到我的订单
+                       EventBus.getDefault().post(0, "changeMyPlaneOrders"); //跳转到我的机票订单
                         RemoteDataHandler.THREADPOOL.execute(() -> GetPlaneOrderServerStatus());//zophar 验证支付是否成功,成功则进入case 210;
 
                     } else {
@@ -183,6 +166,7 @@ public class Alipay {
 
                 default:
                     break;
+
             }
         };
     };
@@ -195,29 +179,29 @@ public class Alipay {
         try {
             json = HttpHelper.post(url, params);
             JSONObject obj = new JSONObject(json);
-                String status = obj.getString("status");
-                String message = obj.getString("message");
-              JSONObject object=obj.getJSONObject("data");
+            String status = obj.getString("status");
+            String message = obj.getString("message");
+            JSONObject object=obj.getJSONObject("data");
             String orderstatus=object.getString("orderstatus");
-                if (orderstatus.equals("1")) {  //已支付
-                    Message msg = new Message();
-                    msg.what = 110;
-                    mHandler.sendMessage(msg);
-                } else {
-                    try {
-                        Thread.sleep(200);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    if (getCount < 20) {
-                        getCount++;
-                        GetServerStatus();
-                    } else {
-                        Message msg = new Message();
-                        msg.what = 111;
-                        mHandler.sendMessage(msg);
-                    }
+            if (orderstatus.equals("1")) {  //已支付
+                Message msg = new Message();
+                msg.what = 110;
+                mHandler.sendMessage(msg);
+            } else {
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
+                if (getCount < 20) {
+                    getCount++;
+                    GetServerStatus();
+                } else {
+                    Message msg = new Message();
+                    msg.what = 111;
+                    mHandler.sendMessage(msg);
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
@@ -230,7 +214,7 @@ public class Alipay {
         String url = Constants.URL_PLANE_ORDER_STATUS;
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("orderid", orderid);
-        System.out.println("支付 orderid"+orderid);
+        System.out.println("支付 GetPlaneOrderServerStatus  orderid"+orderid);
         String json;
         try {
             json = HttpHelper.post(url, params);
@@ -318,11 +302,11 @@ public class Alipay {
     }
 
     public void getPlaneOrderInfo(String trade_no, String price, String orderId, String commodityName, String commodityMessage){
-        System.out.println("支付 trade_no: "+trade_no);
-        System.out.println("支付 price : "+price);
-        System.out.println("支付 orderId:  "+orderId);
-        System.out.println("支付 commodityName : "+commodityName);
-        System.out.println("支付 commodityMessage : "+commodityMessage);
+
+        System.out.println("支付 trade_no:"+trade_no);
+        System.out.println("支付  price:"+price);
+        System.out.println("支付  orderId:"+orderId);
+        System.out.println("支付  commodityName:"+commodityName);
         if (!this.check()){
             return ;
         }
@@ -369,13 +353,13 @@ public class Alipay {
     }
 
     public void planePay(String payInfo){
-        System.out.print("支付planePay  payInfo"+payInfo);
+        System.out.println("支付planePay  payInfo"+payInfo);
         PayTask payTask = new PayTask(mActivity);
         String result = payTask.pay(payInfo, true);
         Message msg = new Message();
         msg.what = SDK_PLANE_PAY_FLAG;
         msg.obj = result;
-        System.out.print("支付 what  "+SDK_PLANE_PAY_FLAG);
+        System.out.println("支付 what  "+SDK_PLANE_PAY_FLAG);
         mHandler.sendMessage(msg);
     }
 
@@ -446,3 +430,5 @@ public class Alipay {
         return "sign=" + encodedSign;
     }
 }
+
+

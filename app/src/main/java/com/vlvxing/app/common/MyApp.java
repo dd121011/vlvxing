@@ -23,6 +23,7 @@ import android.os.Environment;
 import android.os.Vibrator;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
+import android.util.Config;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -155,12 +156,13 @@ public class MyApp extends Application {
 		locationService = new LocationService(getApplicationContext());
 		mVibrator =(Vibrator)getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
 		SDKInitializer.initialize(getApplicationContext());
-		UMShareAPI.get(this);
-
+		UMShareAPI.get(this);//初始化SDK
+        //微信
 		PlatformConfig.setWeixin("wxd3cb391989fe67f1", "226c687e3cf3f69ed0ee44a54cc1aef8");
-		PlatformConfig.setSinaWeibo("557320894", "61d277edc31ad735fce0e1f93502f8f8");
-		PlatformConfig.setQQZone("1106153781","53AkGv7rAsG5OMli");
-
+		//新浪微博
+        PlatformConfig.setSinaWeibo("557320894", "61d277edc31ad735fce0e1f93502f8f8");
+		//QQ
+        PlatformConfig.setQQZone("1106153781","53AkGv7rAsG5OMli");
 		Constants.init(this);
 //		 JPushInterface.setDebugMode(true); // 设置开启日志,发布时请关闭日志
 //		 JPushInterface.init(this); // 初始化 JPush

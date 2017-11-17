@@ -222,7 +222,7 @@ public class PlaneBuyDetailsActivity extends BaseActivity {
         editLin.requestFocus();
         mGrayLayout = (View) findViewById(R.id.gray_layout);
         userInfoList = new ArrayList<PlaneUserInfo>();
-        PlaneUserInfo model = new PlaneUserInfo(1, "任辰琳", "410328198907259391");
+        PlaneUserInfo model = new PlaneUserInfo(1, "", "");
         userInfoList.add(model);
         adapter = new UserInfoListAdapter(mcontext);
         userList.setAdapter(adapter);
@@ -387,8 +387,8 @@ public class PlaneBuyDetailsActivity extends BaseActivity {
     }
 
     private void checkParams(){
-//        contactMob = phoneEdt.getText().toString().trim();
-        contactMob = "18734679105";
+        contactMob = phoneEdt.getText().toString().trim();
+//        contactMob = "18734679105";
         if (StringUtils.isStringNull(contactMob)) {
             ToastUtils.show(this, "请输入联系电话电话!");
             return;
@@ -665,7 +665,7 @@ public class PlaneBuyDetailsActivity extends BaseActivity {
         switch (payWay) {
             case 1:   //  支付宝支付
                 Alipay alipay = new Alipay(this);
-                alipay.getOrderInfo(tradeNo, totalMoney, orderId, commodityName, commodityMessage);
+                alipay.getPlaneOrderInfo(tradeNo, totalMoney, orderId, commodityName, commodityMessage);
                 break;
             case 2:          //  微信支付
                 if (!IsInstallApp.isInstall(this, "com.tencent.mm")) {
@@ -808,23 +808,16 @@ public class PlaneBuyDetailsActivity extends BaseActivity {
 
                 JSONObject object = new JSONObject(json);
                 int status = object.getInt("status");
-                System.out.println("支付 生单tstatus"+status);
                 if(status==1){
                     JSONObject jsonData = object.getJSONObject("data");
 
                     int orderStatus = jsonData.getInt("code");//为0是成功
 
-                    System.out.println("支付 生单orderStatus"+orderStatus);
-
-
                         if(orderStatus == 0){
                             JSONObject result = jsonData.getJSONObject("result");
                             tradeNo = result.getString("orderNo");
-                            System.out.println("支付 生单tradeNo"+tradeNo);
                             int noPayAmount = result.getInt("noPayAmount");//待支付金额
-                            System.out.println("支付 生单getNoPayAmount"+noPayAmount);
                             orderId = result.getInt("id")+"";
-                            System.out.println("支付 生单 orderId"+orderId);
                             payMoney();
 //                            Intent intent = new Intent(mcontext,PlaneOrderActivity.class);
 //                            Bundle bundle = new Bundle();
