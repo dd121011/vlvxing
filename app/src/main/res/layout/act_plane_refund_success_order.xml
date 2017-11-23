@@ -21,12 +21,13 @@
             android:layout_height="wrap_content"
             android:textColor="@color/one_f"
             android:textSize="20sp"
-            android:text="恭喜您!您已退票成功,请牢记业务号:"/>
+            android:text="恭喜您!您已退票成功,退款将于1-7个工作日原路返回给您!"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPlane"
             android:textSize="20sp"
+            android:visibility="gone"
             android:layout_marginTop="20dp"
             android:text="12345678"/>
 

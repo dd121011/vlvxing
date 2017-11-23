@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 已完成订单详情
+ * 退票完成页面
  */
 
 public class PlaneRefundSuccessActivity extends BaseActivity{

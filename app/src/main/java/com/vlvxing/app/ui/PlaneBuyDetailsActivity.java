@@ -471,8 +471,8 @@ public class PlaneBuyDetailsActivity extends BaseActivity {
                         cardNo +=  card+",";
                     }
                 }
-                System.out.println("接口乘客信息姓名:"+contact);
-                System.out.println("接口乘客信息身份证号:"+cardNo);
+//                System.out.println("接口乘客信息姓名:"+contact);
+//                System.out.println("接口乘客信息身份证号:"+cardNo);
                 createOrderData();
 //                payMoney();
                 break;
@@ -707,13 +707,13 @@ public class PlaneBuyDetailsActivity extends BaseActivity {
         RemoteDataHandler.asyncPlaneGet(url+"booking",params,mcontext,new RemoteDataHandler.Callback() {
             @Override
             public void dataLoaded(ResponseData data) throws JSONException {
-                System.out.println("booking接口 data:"+data);
+//                System.out.println("booking接口 data:"+data);
                 String json = data.getJson();
                 if (StringUtils.isStringNull(json)) {
                     dismissDialog();
                     return;
                 }
-                System.out.println("booking接口 json:"+json);
+//                System.out.println("booking接口 json:"+json);
                 Gson gson = new Gson();
                 PlaneBookResult model = gson.fromJson(json,PlaneBookResult.class);
                 int status = model.getStatus();
@@ -795,17 +795,14 @@ public class PlaneBuyDetailsActivity extends BaseActivity {
         RemoteDataHandler.asyncPlanePost(url+"createOrder",params,mcontext,new RemoteDataHandler.Callback() {
             @Override
             public void dataLoaded(ResponseData data) throws JSONException {
-                System.out.println("生单接口 data:"+data);
+//                System.out.println("生单接口 data:"+data);
                 String json = data.getJson();
                 if (StringUtils.isStringNull(json)) {
                     dismissDialog();
                     return;
                 }
 
-                System.out.println("生单接口 json:"+json);
-//                Gson gson = new Gson();
-//                CreateOrderData model = gson.fromJson(json,CreateOrderData.class);
-
+//                System.out.println("生单接口 json:"+json);
                 JSONObject object = new JSONObject(json);
                 int status = object.getInt("status");
                 if(status==1){
@@ -816,15 +813,10 @@ public class PlaneBuyDetailsActivity extends BaseActivity {
                         if(orderStatus == 0){
                             JSONObject result = jsonData.getJSONObject("result");
                             tradeNo = result.getString("orderNo");
-                            int noPayAmount = result.getInt("noPayAmount");//待支付金额
+                            totalPrice = String.valueOf(result.getInt("noPayAmount"));//待支付金额
                             orderId = result.getInt("id")+"";
                             payMoney();
-//                            Intent intent = new Intent(mcontext,PlaneOrderActivity.class);
-//                            Bundle bundle = new Bundle();
-//                            bundle.putSerializable("result",result);
-//                            intent.putExtras(bundle);
-//                            startActivity(intent);
-//                        finish();
+
                         }
                 }else{
                     ToastUtils.showT(mcontext,object.getString("message"));

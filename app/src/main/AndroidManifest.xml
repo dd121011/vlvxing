@@ -519,6 +519,19 @@
             android:name=".ui.PlaneSearchActivity"
             android:screenOrientation="portrait"
             />
+
+        <!--横向日期选择页面并展示改签列表列表-->
+        <activity
+            android:name=".ui.PlaneChangeSearchActivity"
+            android:screenOrientation="portrait"
+            />
+
+        <!--横向日期选择页面并展示改签列表列表-->
+        <activity
+            android:name=".ui.PlaneChangeDetailsActivity"
+            android:screenOrientation="portrait"
+            />
+
         <!--机票选择城市-->
         <activity
             android:name="com.handongkeji.selecity.PlaneSelestorCityActivity"

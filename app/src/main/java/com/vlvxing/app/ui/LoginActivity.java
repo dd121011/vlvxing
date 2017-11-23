@@ -63,6 +63,7 @@ public class LoginActivity extends BaseActivity implements LoginAndRegisterPrese
     private final static int MES_LOGINERROR = 0;
     private final static int MESS_SUCCESSLOGIN = 1;
     private final static int MESS_FAILLOING = 2;
+
     private UMShareAPI mShareAPI = null;                         //第三方的分享
     private SHARE_MEDIA platform = null;
 
@@ -85,9 +86,8 @@ public class LoginActivity extends BaseActivity implements LoginAndRegisterPrese
     private UMAuthListener umAuthListener = new UMAuthListener() {
         @Override
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
-//            Log.d("aaa",data.toString());
-            // 获取uid
-            Toast.makeText(getApplicationContext(), "get 授权", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), "授权成功", Toast.LENGTH_SHORT).show();
+            System.out.println("第三方登陆 onComplete platform:"+platform+",action:"+action+",data:"+data);
             String userOpenToken, uid = null,screen_name,imageurl;
             dialog.dismiss();
             if (null != data) {
@@ -109,22 +109,22 @@ public class LoginActivity extends BaseActivity implements LoginAndRegisterPrese
                 }
                 loginByOpen(TYPE_THIRELOGIN, uid, userOpenToken,screen_name,imageurl);
             } else {
-                Toast.makeText(LoginActivity.this, "get fail", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "暂无法使用该登录方式", Toast.LENGTH_SHORT).show();
             }
         }
 
         @Override
         public void onError(SHARE_MEDIA platform, int action, Throwable t) {
             dialog.dismiss();
-            Log.d("aaa", "Faile");
-//            Toast.makeText(getApplicationContext(), "get fail", Toast.LENGTH_SHORT).show();
+//            Log.d("aaa", "Faile");
+            Toast.makeText(getApplicationContext(), "get fail", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onCancel(SHARE_MEDIA platform, int action) {
             dialog.dismiss();
-            Log.d("aaa", "cancel");
-//            Toast.makeText(getApplicationContext(), "get cancel", Toast.LENGTH_SHORT).show();
+//            Log.d("aaa", "cancel");
+            Toast.makeText(getApplicationContext(), "get cancel", Toast.LENGTH_SHORT).show();
         }
 
     };
@@ -211,7 +211,6 @@ public class LoginActivity extends BaseActivity implements LoginAndRegisterPrese
             }
         });
     }
-
     private boolean checkPhoneNum(String phoneNum) {
         boolean result = ValidateHelper.isPhoneNumberValid(phoneNum);
         if (!result)

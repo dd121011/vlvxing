@@ -57,10 +57,10 @@ public class CheckVersion {
     public static void update(Context context, final boolean isEnforceCheck) {
         mContext = context;
         mIsEnforceCheck = isEnforceCheck;
-        mAppVersionCode = getVersionCode(mContext);
+        mAppVersionCode = getVersionCode(mContext);//获得apk版本号
 
         if (TextUtils.isEmpty(checkUrl)) {
-            Log.d(TAG, "url不能为空，请设置url");
+            System.out.println(TAG+"url不能为空，请设置url");
             return;
         }
 
@@ -69,23 +69,19 @@ public class CheckVersion {
 
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.d(TAG, "onSuccess: " + responseInfo.result);
                 loadOnlineData(responseInfo.result);
             }
 
             @Override
             public void onFailure(HttpException error, String msg) {
-//                System.out.println("更新失败，请检查网络"+error.getMessage());
-//                System.out.println("更新失败，请检查网络"+msg);
                 if (mIsEnforceCheck)
-                    Toast.makeText(mContext, "更新失败，请检查网络", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "网络信息获取失败，请重试", Toast.LENGTH_SHORT).show();
             }
         });
 
     }
 
     private static void loadOnlineData(String json) {
-
         try {
             UpdateEntity updateEntity = new UpdateEntity(json);
             if (updateEntity == null) {
@@ -94,7 +90,6 @@ public class CheckVersion {
                 return;
             }
             mUpdateEntity = updateEntity;
-
             if (mAppVersionCode < mUpdateEntity.versionCode) {
                 //启动更新
                 AlertUpdate();
@@ -113,9 +108,9 @@ public class CheckVersion {
 
     private static void AlertUpdate() {
 
-        final Dialog dialog = new Dialog(mContext);
+        final Dialog dialog = new Dialog(mContext,R.style.UpdateDialog);
         Window window = dialog.getWindow();
-        window.setLayout((int) (MyApp.getScreenWidth() * 0.8), LayoutParams.WRAP_CONTENT);
+        window.setLayout((int) (MyApp.getScreenWidth()*0.8), LayoutParams.WRAP_CONTENT);
         window.setBackgroundDrawable(new ColorDrawable(0x00ffffff));
         dialog.setContentView(R.layout.umeng_update_dialog);
         TextView tv = (TextView) dialog.findViewById(R.id.umeng_update_content);
@@ -130,7 +125,6 @@ public class CheckVersion {
             }
         });
         dialog.findViewById(R.id.umeng_update_id_ok).setOnClickListener(new OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 updateApp();

@@ -160,17 +160,25 @@ public class PlaneOrderActivity extends BaseActivity {
             holder.hangbanhao.setText(bean.getFlightnum());//航班号
             holder.price.setText(bean.getNopayamount()+"");//支付金额
 
-
-
             holder.layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //行单击
-                    Intent intent = new Intent(mcontext,PlaneCompletedOrderActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("orderInfo",bean);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
+                    int status = bean.getStatus();
+                    //订单状态码
+                    if(status == 0){//未完成订单,暂时跳转付款页面
+                        tradeNo = bean.getOrderno();
+                        orderId = bean.getOrderid();
+                        totalPrice = bean.getNopayamount()+"";
+                        payMoney();
+                    }else if(status == 1 || status == -1){//已完成,跳转已完成订单 状态为-1时,该票已经改签过一次了,这张票失效
+                        Intent intent = new Intent(mcontext,PlaneCompletedOrderActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("orderInfo",bean);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
+
                 }
             });
 

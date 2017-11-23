@@ -7,10 +7,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.handongkeji.selecity.PlaneSelestorCityActivity;
 import com.handongkeji.ui.BaseActivity;
 import com.qunar.model.FlyOrder;
+import com.qunar.model.PlaneRefundSerachResult;
 import com.vlvxing.app.R;
 import com.vlvxing.app.lib.CalendarSelectorActivity;
 import com.vlvxing.app.utils.DataUtils;
@@ -38,16 +40,12 @@ public class PlaneChangeTicketActivity extends BaseActivity{
     TextView date_txt;//日期
     @Bind(R.id.city_txt)
     TextView city_txt;//城市
-
     @Bind(R.id.city_lin)
     RelativeLayout cityLin;
     @Bind(R.id.date_lin)
     RelativeLayout dateLin;
-
-
     @Bind(R.id.month_txt)
     TextView month_txt;//周几
-
     private FlyOrder orderInfo = new FlyOrder();
     private Context mcontext;
     private String dateFormat = null;
@@ -57,7 +55,6 @@ public class PlaneChangeTicketActivity extends BaseActivity{
         setContentView(R.layout.act_plane_change_ticket);
         ButterKnife.bind(this);
         mcontext = this;
-        getNowDate();
         orderInfo = (FlyOrder) getIntent().getSerializableExtra("orderInfo");
         if(orderInfo!=null){
             initData();
@@ -75,19 +72,7 @@ public class PlaneChangeTicketActivity extends BaseActivity{
         month_txt.setText(DataUtils.getWeek(orderInfo.getDeptdate()));
 
     }
-    //获取当前日期
-    private String getNowDate(){
-        Calendar c = Calendar.getInstance();//
-        int mYear = c.get(Calendar.YEAR); // 获取当前年份
-        int mMonth = c.get(Calendar.MONTH) + 1;// 获取当前月份
-        int mDay = c.get(Calendar.DAY_OF_MONTH);// 获取当日期
-//        mWay = c.get(Calendar.DAY_OF_WEEK);// 获取当前日期的星期
-//        mHour = c.get(Calendar.HOUR_OF_DAY);//时
-//        mMinute = c.get(Calendar.MINUTE);//分
-        String date = mMonth+"月"+mDay+"日";
-        dateFormat = mYear+"-"+mMonth+"-"+mDay;
-        return date;
-    }
+
 
     @OnClick({R.id.return_lin, R.id.change_btn,R.id.city_lin,R.id.date_lin,R.id.change_info_lin})
     public void onClick(View view) {
@@ -97,14 +82,21 @@ public class PlaneChangeTicketActivity extends BaseActivity{
                 break;
             case R.id.change_btn:
                 //确认改签
+                Intent searchIntent = new Intent(mcontext,PlaneChangeSearchActivity.class);
+                searchIntent.putExtra("orderNo", orderInfo.getOrderno());
+                if(dateFormat==null){
+                    searchIntent.putExtra("changeDate", orderInfo.getDeptdate());
+                }else{
+                    searchIntent.putExtra("changeDate", dateFormat);
+                }
 
-
+//                startActivityForResult(searchIntent, 4);//横向日期选择并展示车票列表
+                startActivity(searchIntent);//横向日期选择并展示改签车票列表
                 break;
             case R.id.change_info_lin:
                 //改签说明
                 Intent intent = new Intent(mcontext,PlaneChangeInfoActivity.class);
                 startActivity(intent);
-
                 break;
 
             case R.id.city_lin:
@@ -121,7 +113,6 @@ public class PlaneChangeTicketActivity extends BaseActivity{
                 startActivityForResult(i, 4);//日历展示页面
                 break;
 
-
         }
     }
     @Override
@@ -131,7 +122,8 @@ public class PlaneChangeTicketActivity extends BaseActivity{
             if (data!=null){
                 //日期选择
                 dateFormat = data.getStringExtra(CalendarSelectorActivity.ORDER_DAY).replaceAll("#", "-");
-//                Toast.makeText(mcontext, " dateFormat!"+dateFormat, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mcontext, " dateFormat!"+dateFormat, Toast.LENGTH_SHORT).show();
+                System.out.println("改签日期:"+dateFormat);
                 String orderInfo = data.getStringExtra(CalendarSelectorActivity.ORDER_DAY);
                 if(orderInfo!=null){
                     String[] all = orderInfo.split("#");

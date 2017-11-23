@@ -687,18 +687,14 @@ public class RemoteDataHandler {
 			}
 		}
 		final String ukey = url+"?"+pkey;
-		System.out.println("booking  pkey "+ pkey);
+		System.out.println("接口  pkey "+ pkey);
 		final Handler handler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
 				ResponseData data = new ResponseData();
 //				data.setCode(msg.getData().getInt(_CODE));
 				data.setJson((String) msg.obj);
-				System.out.println("booking  data "+ data.getJson());
-//				data.setCode(msg.what);
-//				System.out.print("飞机msg.what"+msg.what);
-//				data.setResult(msg.getData().getString(_RESULT));
-//				data.setCount(msg.getData().getLong(_COUNT));
+				System.out.println("改签申请  data "+ data.getJson());
 
 				try {
 					callback.dataLoaded(data);
@@ -714,7 +710,7 @@ public class RemoteDataHandler {
 				try {
 					System.out.println("booking  ukey "+ ukey);
 					String json = HttpHelper.get2(ukey);
-					System.out.println("booking  json "+ json);
+					System.out.println("改签申请  json "+ json);
 						if (json != null) {
 							json = json.replaceAll("\\x0a|\\x0d|", "");
 //							json = json.replaceAll("null","\"\"");

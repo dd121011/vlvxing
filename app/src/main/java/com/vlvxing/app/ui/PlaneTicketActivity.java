@@ -134,7 +134,11 @@ public class PlaneTicketActivity extends BaseActivity{
         mcontext = this;
         txtDate.setText(getNowDate());
         radioGroupOnCheckChange();//注册単程、返程的选择事件
-        cityLefttxt.setText(MyApp.getInstance().getCity_name());
+        if(MyApp.getInstance().getCity_name().equals("")||MyApp.getInstance().getCity_name()==null){
+            cityLefttxt.setText("北京");
+        }else{
+            cityLefttxt.setText(MyApp.getInstance().getCity_name());
+        }
         getBananer();
         int img_width = MyApp.getInstance().getScreenWidth();
         ViewGroup.LayoutParams params = publicPager.getLayoutParams();
@@ -291,7 +295,6 @@ public class PlaneTicketActivity extends BaseActivity{
                 String goCity = cityLefttxt.getText().toString();
                 String arriveCity = cityRighttxt.getText().toString();
 //                String date = txtDate.getText().toString();
-
                 if (goCity != null && !goCity.equals("") && arriveCity != null && !arriveCity.equals("")&& dateFormat != null && !dateFormat.equals("")){
                 Intent searchIntent = new Intent(mcontext, PlaneSearchActivity.class);
                 searchIntent.putExtra("goCity", goCity);

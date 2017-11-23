@@ -51,6 +51,34 @@ public class FlyOrder implements Serializable{
 
     private String phone;
 
+    private String allowchange;		//是否允许签转
+    private String cancharge;		//是否允许改签
+    private String canrefund;	//是否允许退票
+
+    public String getAllowchange() {
+        return allowchange;
+    }
+
+    public void setAllowchange(String allowchange) {
+        this.allowchange = allowchange;
+    }
+
+    public String getCancharge() {
+        return cancharge;
+    }
+
+    public void setCancharge(String cancharge) {
+        this.cancharge = cancharge;
+    }
+
+    public String getCanrefund() {
+        return canrefund;
+    }
+
+    public void setCanrefund(String canrefund) {
+        this.canrefund = canrefund;
+    }
+
     public String getPhone() {
         return phone;
     }

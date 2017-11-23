@@ -35,14 +35,12 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
+        android:padding="20dp"
         android:orientation="vertical">
-        <TextView
-            android:id="@+id/time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableBottom="@color/grey"
-            android:gravity="center"
-            android:text="3小时25分钟" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/qianhuise"/>
 
     </LinearLayout>
     <LinearLayout
@@ -92,11 +90,9 @@
                 android:text="1754"/>
         </LinearLayout>
         <TextView
-            android:id="@+id/type_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:visibility="gone"
             android:text="改签费"/>
 
 

@@ -186,6 +186,13 @@
                 android:textColor="@color/orangePlane"
                 android:textSize="15sp"
                 android:text="已支付"/>
+            <TextView
+                android:id="@+id/refundfee_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/orangePlane"
+                android:textSize="15sp"
+                android:text=""/>
 
         </LinearLayout>
     </LinearLayout>

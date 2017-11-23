@@ -79,6 +79,9 @@ public class PlaneCompletedOrderActivity extends BaseActivity{
     private List<FlyPassenger> list = new ArrayList<>();
     private boolean isSee = false;
     private MyAdapter adapter;
+    private int cancharge = 0;//为0时,不支持退票,并且不支持改签    为1时,支持改签  为2时,支持退票
+    private int canrefund = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +103,19 @@ public class PlaneCompletedOrderActivity extends BaseActivity{
 
     }
     private void initData(){
+        orderInfo.getAllowchange();//是否允许签转  true,false
+        orderInfo.getCancharge();//是否允许改签   true,false
+        orderInfo.getCanrefund();//是否允许退票   true,false
+        if(orderInfo.getCancharge().equals("true")){//改签
+            cancharge = 1;
+        }else{
+            cancharge = 0;
+        }
+        if(orderInfo.getCanrefund().equals("true")){
+            canrefund = 1;
+        }else{
+            canrefund = 0;
+        }
         orderNo.setText(orderInfo.getOrderno());//订单号
         date_txt.setText(orderInfo.getDeptdate());//起飞日期
         deptCity_txt.setText(orderInfo.getArricity());//起飞城市
@@ -120,23 +136,28 @@ public class PlaneCompletedOrderActivity extends BaseActivity{
                 finish();
                 break;
             case R.id.change_btn:
-                //改签
-                Intent intent = new Intent(mcontext,PlaneChangeTicketActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("orderInfo",orderInfo);
-                intent.putExtras(bundle);
-                startActivity(intent);
-                finish();
+                if(cancharge==1){
+                    //改签
+                    Intent intent = new Intent(mcontext,PlaneChangeTicketActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("orderInfo",orderInfo);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }else{
+                    ToastUtils.show(mcontext,"该机票订单不支持改签");
+                }
                 break;
             case R.id.refund_btn:
-                //退票
-
-                Intent intent1 = new Intent(mcontext,PlaneRefundTicketActivity.class);
-                Bundle bundle1 = new Bundle();
-                bundle1.putSerializable("orderInfo",orderInfo);
-                intent1.putExtras(bundle1);
-                startActivity(intent1);
-                finish();
+                if(canrefund==1){
+                    //退票
+                    Intent intent1 = new Intent(mcontext,PlaneRefundTicketActivity.class);
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putSerializable("orderInfo",orderInfo);
+                    intent1.putExtras(bundle1);
+                    startActivity(intent1);
+                }else{
+                    ToastUtils.show(mcontext,"该机票订单不支持退票");
+                }
                 break;
             case R.id.see_number_lin:
 //                if(isSee){
@@ -147,7 +168,6 @@ public class PlaneCompletedOrderActivity extends BaseActivity{
                 phone.setText(orderInfo.getPhone());
                 adapter.notifyDataSetChanged();
                 break;
-
 
         }
     }

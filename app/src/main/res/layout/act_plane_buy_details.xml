@@ -437,7 +437,7 @@
                                 android:layout_centerVertical="true"
                                 android:textColor="@color/color_444444"
                                 android:textSize="15sp"
-                                android:text="收件人"/>
+                                android:text="发票抬头"/>
                             <EditText
                                 android:id="@+id/baoxiao_name_edit"
                                 android:layout_width="match_parent"
@@ -448,7 +448,7 @@
                                 android:layout_centerVertical="true"
                                 android:padding="10dp"
                                 android:background="@null"
-                                android:hint="请输入收件人姓名"/>
+                                android:hint="请输入公司全名或者个人姓名"/>
 
                         </RelativeLayout>
                         <View

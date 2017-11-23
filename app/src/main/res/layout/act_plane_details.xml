@@ -11,45 +11,49 @@
     tools:context="com.vlvxing.app.ui.PlaneDetailsActivity">
 
     <include layout="@layout/come_or_go_head"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="30dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:background="@drawable/shape_corner">
+        android:layout_marginTop="30dp"
+        android:background="@drawable/shape_corner"
+        android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp">
-         <TextView
-             android:id="@+id/com_code"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-             android:textSize="15sp"
-             android:textColor="@color/colorPlane"/>
-        <!--android:text="海南航空HU7707"-->
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1"/>
-        <TextView
-            android:id="@+id/date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="09月15日周五"
-            android:textSize="15sp"
-            android:textColor="@color/colorPlane"/>
-
-    </LinearLayout>
         <LinearLayout
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/com_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPlane"
+                android:textSize="15sp" />
+            <!--android:text="海南航空HU7707"-->
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="09月15日周五"
+                android:textColor="@color/colorPlane"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -133,54 +137,54 @@
                 </LinearLayout>
 
             </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_corner_down"
-            android:gravity="center"
-            android:paddingBottom="40dp">
+
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center">
-                <TextView
-                    android:id="@+id/plane_style"
+                android:background="@drawable/shape_corner_down"
+                android:gravity="center"
+                android:paddingBottom="40dp">
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textColor="@color/bg_huiC8C8C8"
-                    />
-                <!--android:text="空客319(中)"-->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:text="准点率"
-                    android:textColor="@color/bg_huiC8C8C8"
-                    />
-                <TextView
-                    android:id="@+id/correct"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textColor="@color/bg_huiC8C8C8"
-                    />
-                <!--android:text="66%"-->
-                <TextView
-                    android:id="@+id/meal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="@color/bg_huiC8C8C8"
-                    android:text="无餐食"
-                    />
-                <!---->
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:id="@+id/plane_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textColor="@color/bg_huiC8C8C8" />
+                    <!--android:text="空客319(中)"-->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:text="准点率"
+                        android:textColor="@color/bg_huiC8C8C8" />
+
+                    <TextView
+                        android:id="@+id/correct"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textColor="@color/bg_huiC8C8C8" />
+                    <!--android:text="66%"-->
+                    <TextView
+                        android:id="@+id/meal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:text="无餐食"
+                        android:textColor="@color/bg_huiC8C8C8" />
+                    <!---->
+                </LinearLayout>
+
+
             </LinearLayout>
-
-
-        </LinearLayout>
         </LinearLayout>
     </LinearLayout>
     <RelativeLayout
