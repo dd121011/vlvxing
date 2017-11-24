@@ -27,15 +27,11 @@ public class PlaneRefundSuccessActivity extends BaseActivity{
     TextView headTitle;//标题
     @Bind(R.id.btn_back)
     ImageView ban_back;//返回键
-
     @Bind(R.id.query_btn)
     Button query_btn;
-
     @Bind(R.id.buy_btn)
     Button buy_btn;
-
     private Context mcontext;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,8 +66,6 @@ public class PlaneRefundSuccessActivity extends BaseActivity{
                 startActivity(intent1);
                 finish();
                 break;
-
-
         }
     }
 

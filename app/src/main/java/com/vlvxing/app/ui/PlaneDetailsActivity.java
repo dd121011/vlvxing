@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextClock;
 import android.widget.TextView;
 
@@ -73,6 +75,10 @@ public class PlaneDetailsActivity extends BaseActivity{
     TextView flight_times;//飞行时间
     @Bind(R.id.date)
     TextView date_txt;//xx月xx日
+    @Bind(R.id.body_lin)
+    LinearLayout body_lin;//
+    @Bind(R.id.body_rel)
+    RelativeLayout body_rel;
 
     private Context mcontext;
     private String goCity;
@@ -105,7 +111,6 @@ public class PlaneDetailsActivity extends BaseActivity{
         flightNum = getIntent().getStringExtra("flightNum");//航班号
         planeStyle = getIntent().getStringExtra("planeStyle");//机型
         flightTimes = getIntent().getStringExtra("flightTimes");//飞行时间
-
         headTitleLeft.setText(goCity);
         headTitleRight.setText(arriveCity);
         initData();
@@ -168,15 +173,11 @@ public class PlaneDetailsActivity extends BaseActivity{
                 Gson gson = new Gson();
                 PlaneDetailsResult model = gson.fromJson(json,PlaneDetailsResult.class);
 
-
                 int status = model.getStatus();
                 if(status==1){
-
                     //-1是空  -2是错误的
                     SearchQuoteResponse response = model.getData();
-
                     vendorStr = response.getVendorStr();//booking需要传的卖方信息
-
                     SearchQuoteResponse.Result result = response.getResult();
                     if(result==null){
                         ToastUtils.show(mcontext, "航班信息异常");
@@ -191,11 +192,17 @@ public class PlaneDetailsActivity extends BaseActivity{
                     carrier = result.getCarrier();
 
                     String depAirport = result.getDepAirport();//出发机场
-                    dep_airport.setText(depAirport);
-
+                    if(!result.getDepTerminal().equals("")){
+                        dep_airport.setText(depAirport+result.getDepTerminal());
+                    }else{
+                        dep_airport.setText(depAirport);
+                    }
                     String arrAirport = result.getArrAirport();//到达机场
-                    arr_airport.setText(arrAirport);
-
+                    if(!result.getArrTerminal().equals("")){
+                        arr_airport.setText(arrAirport+result.getArrTerminal());
+                    }else{
+                        arr_airport.setText(arrAirport);
+                    }
                     String correctStr = result.getCorrect();//准点率
                     correct.setText(correctStr);
 
@@ -210,7 +217,6 @@ public class PlaneDetailsActivity extends BaseActivity{
                     }else{
                         meal.setText("无餐食");
                     }
-
                     plane_style.setText(planeStyle);//机型
                     flight_times.setText(flightTimes);//飞行时间
                     String dateStr = result.getDate();
@@ -228,19 +234,12 @@ public class PlaneDetailsActivity extends BaseActivity{
                         System.out.println("价格销售特价"+barePrice);
                         System.out.println("价格票面价"+vppr);
                         price_txt.setText("￥ "+barePrice);
-//                        body_list.setVisibility(View.VISIBLE);
-//                        mData.clear();
-//                        mData.addAll(info);
-//                        adapter.notifyDataSetChanged();
-                    }else{
-//                        body_list.setVisibility(View.INVISIBLE);
-//                        mData.clear();
-//                        adapter.notifyDataSetChanged();
-                        ToastUtils.show(mcontext, "航班信息异常");
+                        body_lin.setVisibility(View.VISIBLE);
+                        body_rel.setVisibility(View.VISIBLE);
                     }
-
+                    dismissDialog();
                 }else{
-                    ToastUtils.show(mcontext, model.getMessage());
+                    ToastUtils.show(mcontext, "系统繁忙,请稍后再试");
                 }
                 dismissDialog();
             }

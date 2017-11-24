@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.handongkeji.ui.BaseActivity;
 import com.handongkeji.widget.MyListView;
@@ -26,9 +27,14 @@ import com.qunar.bean.FlyPassenger;
 import com.qunar.bean.Passenger;
 import com.qunar.model.FlyOrder;
 import com.vlvxing.app.R;
+import com.vlvxing.app.common.IsInstallApp;
+import com.vlvxing.app.common.PayDialog;
+import com.vlvxing.app.pay.Alipay;
+import com.vlvxing.app.pay.WxPay;
 import com.vlvxing.app.utils.DataUtils;
 import com.vlvxing.app.utils.ToastUtils;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +43,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 已完成订单详情
+ * 我的订单详情
  */
 
 public class PlaneCompletedOrderActivity extends BaseActivity{
@@ -68,6 +74,16 @@ public class PlaneCompletedOrderActivity extends BaseActivity{
 
     @Bind(R.id.phone)
     TextView phone;
+    @Bind(R.id.body_lin)
+    LinearLayout body_lin;
+
+    @Bind(R.id.pay_bottom_lin)
+    LinearLayout pay_bottom_lin;//支付
+    @Bind(R.id.bottom_lin)
+    LinearLayout bottom_lin;//退票,改签
+    @Bind(R.id.pay_btn)
+    Button pay_btn;//支付
+
 
     @Bind(R.id.list_view)
     NoScrollListView list_view;//乘机人列表
@@ -81,7 +97,12 @@ public class PlaneCompletedOrderActivity extends BaseActivity{
     private MyAdapter adapter;
     private int cancharge = 0;//为0时,不支持退票,并且不支持改签    为1时,支持改签  为2时,支持退票
     private int canrefund = 0;
+    private int status = -2;//0 未支付  1 已支付   -1 改签  3 退票
 
+
+
+    private String tradeNo, orderId, totalPrice = "0.01", commodityName = "V旅行", commodityMessage = "支付";
+    private int payWay;//支付方式
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,17 +110,22 @@ public class PlaneCompletedOrderActivity extends BaseActivity{
         ButterKnife.bind(this);
         mcontext = this;
         orderInfo = (FlyOrder) getIntent().getSerializableExtra("orderInfo");
-        list = orderInfo.getPassengers();
         if(orderInfo!=null){
+            status = orderInfo.getStatus();
+            list = orderInfo.getPassengers();
+            if(status==0){//未支付
+                pay_bottom_lin.setVisibility(View.VISIBLE);
+                bottom_lin.setVisibility(View.GONE);
+            }else{
+                //已支付
+                bottom_lin.setVisibility(View.VISIBLE);
+                pay_bottom_lin.setVisibility(View.GONE);
+            }
             initData();
         }else{
-            ToastUtils.show(mcontext,"该订单不存在");
+            ToastUtils.show(mcontext,"系统繁忙,请稍后再试");
         }
-        String phone_number = orderInfo.getPhone().substring(0,3)+"****"+orderInfo.getPhone().substring(7);
-        phone.setText(phone_number);
-        headTitle.setText("订单详情");
-        adapter = new MyAdapter(mcontext);
-        list_view.setAdapter(adapter);
+
 
     }
     private void initData(){
@@ -120,16 +146,27 @@ public class PlaneCompletedOrderActivity extends BaseActivity{
         date_txt.setText(orderInfo.getDeptdate());//起飞日期
         deptCity_txt.setText(orderInfo.getArricity());//起飞城市
         arriCity_txt.setText(orderInfo.getDeptcity());//到达城市
+//        if(orderInfo){
+//
+//        }
         dep_airport.setText(orderInfo.getDeptairportcity());//出发机场
         arr_airport.setText(orderInfo.getArriairportcity());//到达机场
         b_time.setText(orderInfo.getDepttime());//出发时间
         e_time.setText(orderInfo.getArritime());//到达时间
         flight_times.setText(orderInfo.getFlightTimes());
         month_txt.setText(DataUtils.getWeek(orderInfo.getDeptdate()));
+
+
+        String phone_number = orderInfo.getPhone().substring(0,3)+"****"+orderInfo.getPhone().substring(7);
+        phone.setText(phone_number);
+        headTitle.setText("订单详情");
+        adapter = new MyAdapter(mcontext);
+        list_view.setAdapter(adapter);
+        body_lin.setVisibility(View.VISIBLE);
     }
 
 
-    @OnClick({R.id.return_lin, R.id.change_btn,R.id.refund_btn,R.id.see_number_lin})
+    @OnClick({R.id.return_lin, R.id.change_btn,R.id.refund_btn,R.id.see_number_lin,R.id.pay_btn})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.return_lin:
@@ -168,7 +205,21 @@ public class PlaneCompletedOrderActivity extends BaseActivity{
                 phone.setText(orderInfo.getPhone());
                 adapter.notifyDataSetChanged();
                 break;
+            case R.id.pay_btn:
+                tradeNo = orderInfo.getOrderno();
+                orderId = orderInfo.getOrderid();
+                totalPrice = orderInfo.getNopayamount()+"";
 
+                PayDialog payDialog=new PayDialog(this,totalPrice);
+                payDialog.setmOnclickListener(new PayDialog.ClickSureListener() {
+                    @Override
+                    public void onClick(int type) {
+                        payWay=type; //支付方式 1支付宝 2微信
+                        payDialog.dismissDialog();
+                        payMoney();
+                    }
+                });
+                break;
         }
     }
 
@@ -194,6 +245,11 @@ public class PlaneCompletedOrderActivity extends BaseActivity{
             return position;
         }
 
+        @Override
+        public boolean isEnabled(int position) {
+            //设置listview不可点击
+            return false;
+        }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
@@ -218,7 +274,6 @@ public class PlaneCompletedOrderActivity extends BaseActivity{
             }
 
             holder.idCard.setText(show_id);
-
             return convertView;
         }
 
@@ -232,6 +287,31 @@ public class PlaneCompletedOrderActivity extends BaseActivity{
                 name = (TextView) itemView.findViewById(R.id.name);
                 idCard = (TextView) itemView.findViewById(R.id.id_card);
             }
+        }
+    }
+
+    public void payMoney() {
+        double price = Double.parseDouble(totalPrice);
+        Toast.makeText(this, "price" + price, Toast.LENGTH_SHORT).show();
+        DecimalFormat decimalFormat = new DecimalFormat(
+                "###################.###########");
+        String totalMoney = decimalFormat.format(price);//变成整数类型
+        Toast.makeText(this, "totalMoney" + totalMoney, Toast.LENGTH_SHORT).show();
+//        int payMethod = dialog.getPayMethod();
+        switch (payWay) {
+            case 1:   //  支付宝支付
+                Alipay alipay = new Alipay(this);
+
+                alipay.getOrderInfo(tradeNo, totalMoney, orderId, commodityName, commodityMessage);
+                break;
+            case 2:          //  微信支付
+                if (!IsInstallApp.isInstall(this, "com.tencent.mm")) {
+                    Toast.makeText(this, "您还没有安装微信", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                WxPay wxPay = new WxPay(this);
+                wxPay.getOrderInfo(tradeNo, totalMoney, orderId); //生成微信支付参数
+                break;
         }
     }
 

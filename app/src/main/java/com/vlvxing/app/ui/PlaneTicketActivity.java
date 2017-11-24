@@ -4,12 +4,14 @@ import android.app.Application;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -300,6 +302,7 @@ public class PlaneTicketActivity extends BaseActivity{
                 searchIntent.putExtra("goCity", goCity);
                 searchIntent.putExtra("arriveCity", arriveCity);
                 searchIntent.putExtra("date", dateFormat);
+                    System.out.println("闪退测试--------0");
 //                startActivityForResult(searchIntent, 4);//横向日期选择并展示车票列表
                 startActivity(searchIntent);//横向日期选择并展示车票列表
                 }else{
@@ -330,18 +333,14 @@ public class PlaneTicketActivity extends BaseActivity{
         }
     }
     private void showDialog() {
-        vDialog = new Dialog(this, R.style.BottomDialog);
+        vDialog = new Dialog(this,R.style.UpdateDialog);
         View contentView = LayoutInflater.from(this).inflate(R.layout.plane_vxingwuyou_dialog, null);
-//        ListView listview = (ListView) contentView.findViewById(R.id.listview);//展示UI容器 body中listview
-//        ImageView close = (ImageView) contentView.findViewById(R.id.close);//关闭
-
+        Window window = vDialog.getWindow();
+        window.setLayout((int) (MyApp.getScreenWidth()*0.8), ViewGroup.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(0x00ffffff));
         vDialog.setContentView(contentView);
-        ViewGroup.LayoutParams layoutParams = contentView.getLayoutParams();
-        layoutParams.width = getResources().getDisplayMetrics().widthPixels;
-//        layoutParams.height = (int)(getResources().getDisplayMetrics().heightPixels * 0.8);
-        contentView.setLayoutParams(layoutParams);
-        vDialog.getWindow().setGravity(Gravity.CENTER_HORIZONTAL);
-        vDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
+//        vDialog.getWindow().setGravity(Gravity.CENTER_HORIZONTAL);
+//        vDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
         vDialog.setCanceledOnTouchOutside(true);
         vDialog.show();
 

@@ -96,7 +96,7 @@ public class PlaneChangeDetailsActivity extends BaseActivity {
     private View mGrayLayout;
     private int fromYDelta;
     private String price, pname, imgUrl, id;
-    private int p = 0 ;//机票单价+机建+燃油费,从上个页面传递过来的(购票必选)
+    private int p = 0 ;
     private int userNumber = 1;//购票数量,从用户添加的乘客来统计
     private String orderNo = "";
     private String dateResult = "";
@@ -132,6 +132,7 @@ public class PlaneChangeDetailsActivity extends BaseActivity {
 //        holder.planeName.setText(info.getFlight()+info.getFlightNo());//航空公司全名
 //        holder.planeStyle.setText(info.getFlightType());//机型全名
         p = Integer.parseInt(orderInfo.getAllFee())*userNumber;
+        totalPrice = p+"";
         if(p ==0){
             quicklypay.setText("改签");
         }else{
@@ -157,15 +158,12 @@ public class PlaneChangeDetailsActivity extends BaseActivity {
         Dialog bottomDialog = new Dialog(this, R.style.BottomDialog);
         View contentView = LayoutInflater.from(this).inflate(R.layout.act_plane_change_price_popupwindow_, null);
         bottomDialog.setContentView(contentView);
-
         ViewGroup.LayoutParams layoutParams = contentView.getLayoutParams();
         layoutParams.width = (getResources().getDisplayMetrics().widthPixels);
         contentView.setLayoutParams(layoutParams);
         bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
         TextView firstPrice = (TextView)contentView.findViewById(R.id.b_first_price);//票价
-
         TextView firstNumber = (TextView)contentView.findViewById(R.id.b_first_number);
-
         Button quicklypay_btn = (Button)contentView.findViewById(R.id.quicklypay_btn);
         if(p ==0){
             quicklypay_btn.setText("改签");
@@ -175,7 +173,6 @@ public class PlaneChangeDetailsActivity extends BaseActivity {
         TextView total_txt = (TextView)contentView.findViewById(R.id.total_txt);//总金额
         firstPrice.setText(p+"");
         firstNumber.setText(userNumber+"");
-
         total_txt.setText(totalTxt.getText().toString());
         LinearLayout bottomLeftLin = (LinearLayout) contentView.findViewById(R.id.bottom_left_lin);
         //设置点击外部空白处可以关闭Activity
@@ -189,7 +186,6 @@ public class PlaneChangeDetailsActivity extends BaseActivity {
                 bottomDialog.dismiss();
             }
         });
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -257,7 +253,6 @@ public class PlaneChangeDetailsActivity extends BaseActivity {
     private void getOrderIdData() {
         //改签申请
         String url = Constants.QUNAR_BASE_URL;
-//        String url = "http://192.168.1.103/";
         HashMap<String,Object> params = new HashMap<>();
         params.put("orderNo",orderNo);
         params.put("changeCauseId",1);
@@ -295,7 +290,6 @@ public class PlaneChangeDetailsActivity extends BaseActivity {
                         gQId = changeApplyResult.getGqId()+"";
                         orderNo = changeApplyResult.getOrderNo();
                         dismissDialog();
-
                         if(p==0){
                             ToastUtils.show(mcontext,"改签申请已递交,请您耐心等待...");
                             Intent intent = new Intent(mcontext,PlaneOrderActivity.class);
@@ -358,11 +352,7 @@ public class PlaneChangeDetailsActivity extends BaseActivity {
                         ApplyChangeResult.ResultBean.ResultsBean bean =  resultsBeanList.get(0);
                         orderNo = bean.getOrderNo();
 //                        payAmount = bean.getPayAmount();
-
-
                     }
-
-
 
                 }else{
                     ToastUtils.show(mcontext, model.getMessage());

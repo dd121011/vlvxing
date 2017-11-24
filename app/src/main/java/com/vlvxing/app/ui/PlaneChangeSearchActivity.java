@@ -83,7 +83,7 @@ public class PlaneChangeSearchActivity extends BaseActivity {
     private List<PlaneChangeSerachBean.ResultBean.ChangeSearchResultBean.FlightSegmentListBean> listBeen = new ArrayList<>();//存储航空公司,出发城市,到达城市等信息
     private Context mcontext;
     private String orderNo;
-    private String arriveCity;
+
     private String date;
     //接口条件
     private HashMap<String, Object> params;//查询航班条件参数
@@ -92,7 +92,8 @@ public class PlaneChangeSearchActivity extends BaseActivity {
 
     private int changeReason = 0;//改签原因
     private int userNumber = 1;//需要改签的乘客个人
-
+    private String arriCity = "";//出发
+    private String deptCity = "";//到达
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,6 +102,10 @@ public class PlaneChangeSearchActivity extends BaseActivity {
         bottom_lin_lay.setVisibility(View.GONE);
         orderNo = getIntent().getStringExtra("orderNo").trim();
         date = getIntent().getStringExtra("changeDate").trim();
+        arriCity = getIntent().getStringExtra("arriCity").trim();
+        deptCity = getIntent().getStringExtra("deptCity").trim();
+        headTitleLeft.setText(arriCity);
+        headTitleRight.setText(deptCity);
         arrToString();
         mcontext = this;
         params = new HashMap<>();//查询航班条件参数
@@ -224,8 +229,8 @@ public class PlaneChangeSearchActivity extends BaseActivity {
                 listBeen.clear();
                 if(resultBean.getFlightSegmentList()!=null){
                     listBeen.addAll(resultBean.getFlightSegmentList());
-                    headTitleLeft.setText(listBeen.get(0).getDptCity());
-                    headTitleRight.setText(listBeen.get(0).getArrCity());
+//                    headTitleLeft.setText(listBeen.get(0).getDptCity());
+//                    headTitleRight.setText(listBeen.get(0).getArrCity());
                     List<PlaneChangeSerachBean.ResultBean.ChangeSearchResultBean.TgqReasonsBean> baenList = resultBean.getTgqReasons();
                     System.out.println("机票改签查询 baenList:"+baenList.size());
                     listData.clear();
@@ -282,16 +287,12 @@ public class PlaneChangeSearchActivity extends BaseActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
-
-
 
 
     public final class ViewHolder {
@@ -302,11 +303,7 @@ public class PlaneChangeSearchActivity extends BaseActivity {
         public TextView price;
         public TextView planeName;
         public TextView planeStyle;
-
     }
-
-
-
 
     //机票列表的数据源适配器
     class MyAdapter extends BaseAdapter {
@@ -362,5 +359,4 @@ public class PlaneChangeSearchActivity extends BaseActivity {
             return convertView;
         }
     }
-
 }

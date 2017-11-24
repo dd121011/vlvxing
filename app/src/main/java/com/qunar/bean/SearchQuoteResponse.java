@@ -70,6 +70,8 @@ public class SearchQuoteResponse {
         private String meal;//true表示有餐食
         private String distance;//航程
         private String flightType;//机型
+        private String depTerminal;
+        private String arrTerminal;
 
         public String getEtime() {
             return etime;
@@ -189,6 +191,22 @@ public class SearchQuoteResponse {
 
         public void setBtime(String btime) {
             this.btime = btime;
+        }
+
+        public String getDepTerminal() {
+            return depTerminal;
+        }
+
+        public void setDepTerminal(String depTerminal) {
+            this.depTerminal = depTerminal;
+        }
+
+        public String getArrTerminal() {
+            return arrTerminal;
+        }
+
+        public void setArrTerminal(String arrTerminal) {
+            this.arrTerminal = arrTerminal;
         }
     }
 

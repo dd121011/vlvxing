@@ -35,7 +35,6 @@ public class PlaneChangeTicketActivity extends BaseActivity{
     TextView headTitle;//标题
     @Bind(R.id.btn_back)
     ImageView ban_back;//返回键
-
     @Bind(R.id.date_txt)
     TextView date_txt;//日期
     @Bind(R.id.city_txt)
@@ -62,15 +61,14 @@ public class PlaneChangeTicketActivity extends BaseActivity{
             ToastUtils.show(mcontext,"该订单不存在");
         }
         headTitle.setText("改签");
-
     }
+
     private void initData(){
         String[] split =   orderInfo.getDeptdate().split("-");
         date_txt.setText(split[1]+"月"+split[2]+"日");//起飞日期
         city_txt.setText(orderInfo.getDeptcity());
         month_txt.setVisibility(View.VISIBLE);
         month_txt.setText(DataUtils.getWeek(orderInfo.getDeptdate()));
-
     }
 
 
@@ -84,12 +82,13 @@ public class PlaneChangeTicketActivity extends BaseActivity{
                 //确认改签
                 Intent searchIntent = new Intent(mcontext,PlaneChangeSearchActivity.class);
                 searchIntent.putExtra("orderNo", orderInfo.getOrderno());
+                searchIntent.putExtra("arriCity",orderInfo.getArricity());
+                searchIntent.putExtra("deptCity",orderInfo.getDeptcity());
                 if(dateFormat==null){
                     searchIntent.putExtra("changeDate", orderInfo.getDeptdate());
                 }else{
                     searchIntent.putExtra("changeDate", dateFormat);
                 }
-
 //                startActivityForResult(searchIntent, 4);//横向日期选择并展示车票列表
                 startActivity(searchIntent);//横向日期选择并展示改签车票列表
                 break;
@@ -101,9 +100,9 @@ public class PlaneChangeTicketActivity extends BaseActivity{
 
             case R.id.city_lin:
                 //到达城市
-                Intent cityArrive = new Intent(mcontext, PlaneSelestorCityActivity.class);
-                cityArrive.putExtra("type", 5);
-                startActivityForResult(cityArrive, 5);//到达城市选择
+//                Intent cityArrive = new Intent(mcontext, PlaneSelestorCityActivity.class);
+//                cityArrive.putExtra("type", 5);
+//                startActivityForResult(cityArrive, 5);//到达城市选择
                 break;
             case R.id.date_lin:
                 //购票日期选择
@@ -112,7 +111,6 @@ public class PlaneChangeTicketActivity extends BaseActivity{
                 i.putExtra(CalendarSelectorActivity.ORDER_DAY, dateFormat);
                 startActivityForResult(i, 4);//日历展示页面
                 break;
-
         }
     }
     @Override
@@ -147,5 +145,4 @@ public class PlaneChangeTicketActivity extends BaseActivity{
             }
         }
     }
-
 }

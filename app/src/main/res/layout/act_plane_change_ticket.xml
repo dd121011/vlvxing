@@ -60,7 +60,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="修改目的地"
+            android:text="目的地"
             android:layout_centerVertical="true"
             android:textSize="18sp"
             android:textColor="@color/calendar_enable_color" />

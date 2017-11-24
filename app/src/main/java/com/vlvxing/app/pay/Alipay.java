@@ -64,7 +64,6 @@ public class Alipay {
     private static final int SDK_PLANE_PAY_FLAG = 3;
     private static final int SDK_PLANE_CHECK_FLAG = 4;
 
-
     private Activity mActivity;
     private int getCount = 0;
     private String orderid;

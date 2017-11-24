@@ -13,6 +13,8 @@
     <include layout="@layout/come_or_go_head"/>
 
     <LinearLayout
+        android:id="@+id/body_lin"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -70,7 +72,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
-
                     <TextView
                         android:id="@+id/b_time"
                         android:layout_width="wrap_content"
@@ -86,7 +87,6 @@
                         android:textColor="@color/bg_huiC8C8C8"
                         android:textSize="15sp" />
                     <!--android:text="首都机场"-->
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -188,9 +188,11 @@
         </LinearLayout>
     </LinearLayout>
     <RelativeLayout
+        android:id="@+id/body_rel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:visibility="gone"
         android:padding="15dp">
 
             <TextView

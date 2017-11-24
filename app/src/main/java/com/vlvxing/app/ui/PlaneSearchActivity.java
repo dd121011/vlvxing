@@ -182,17 +182,16 @@ public class PlaneSearchActivity extends BaseActivity {
                 .selectedDateBackground(Color.TRANSPARENT)//item背景色
                 .backgroundColor(Color.TRANSPARENT, Color.parseColor("#FFFFFF"))//背景选择 (正常，选中)
                 .build();
-
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
             @Override
             public void onDateSelected(Date d, int position) {
 //                Toast.makeText(PlaneSearchActivity.this, DateFormat.getDateInstance().format(d) + " is selected!", Toast.LENGTH_SHORT).show();
                 date = DateFormat.getDateInstance().format(d).toString();
+                System.out.println("时间转换 :onDateSelected date"+date);
                 arrToString();
                 initData();
             }
         });
-
         initData();
         adapter = new MyAdapter(this);
         body_list.setAdapter(adapter);
@@ -218,9 +217,7 @@ public class PlaneSearchActivity extends BaseActivity {
                 startActivity(intnet);
             }
         });
-
         setOnChecked();//底部导航栏 时间,价格排序
-
     }
     //时间,价格排序
     private void setOnChecked(){
@@ -252,14 +249,24 @@ public class PlaneSearchActivity extends BaseActivity {
      * date字符串 xxxx-x-x转换 xxxx-xx-xx
      */
     private void arrToString(){
+        System.out.println("时间转换 date:"+date);
+        if(date.indexOf("年")!=-1){//包含年
+            date = date.replace('年', '-');
+            date = date.replace('月', '-');
+            date = date.substring(0,date.length()-1);
+        }
         String[] dateStr = date.split("-");
-        if(dateStr[1].length()==1)
-            dateStr[1] = 0+dateStr[1];
-        if (dateStr[2].length()==1)
-            dateStr[2] = 0+dateStr[2];
+        if(dateStr[1].length()==1) {
+            dateStr[1] = 0 + dateStr[1];
+            System.out.println("时间转换 长度为1");
+        }
+        if (dateStr[2].length()==1) {
+            dateStr[2] = 0 + dateStr[2];
+        }
         dateResult = dateStr[0]+"-"+dateStr[1]+"-"+dateStr[2];
     }
     private void initData() {
+        System.out.println("时间转换 dateResult:"+dateResult);
         //机票列表的数据源
         String url = Constants.QUNAR_BASE_URL;
 
@@ -323,7 +330,7 @@ public class PlaneSearchActivity extends BaseActivity {
 
                 }else{
                     body_list.setVisibility(View.INVISIBLE);
-                    ToastUtils.show(mcontext, model.getMessage());
+                    ToastUtils.show(mcontext, "暂无航班");
                 }
                 dismissDialog();
 
@@ -896,9 +903,17 @@ public class PlaneSearchActivity extends BaseActivity {
             }
             SearchFlightResponse.FlightInfo info = mData.get(position);
             holder.goTime.setText(info.getDptTime());//出发时间
+
+//            if( !info.getDptTerminal().equals("") || info.getDptTerminal()!=null ){
+//                holder.goOther.setText(info.getDptTerminal());//出发机场
+//            }
+
             holder.goOther.setText(info.getDptAirport());//出发机场
             holder.time.setText(info.getFlightTimes());//飞行时间
             holder.arriveTime.setText(info.getArrTime());//到达时间
+//            if( !info.getArrTerminal().equals("") || info.getArrTerminal()!=null ){
+//                holder.arriveOther.setText(info.getDptAirport()+info.getArrTerminal());//到达机场
+//            }
             holder.arriveOther.setText(info.getArrAirport());//到达机场
             holder.price.setText(info.getBarePrice());//销售价
             holder.planeName.setText(info.getAirlineName());//航空公司全名
