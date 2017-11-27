@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android" >
-   <!--<item android:state_selected="true" android:drawable="@mipmap/trip_red"></item>-->
-    <!--<item android:drawable="@mipmap/trip"></item>-->
-    <item android:state_selected="true" android:drawable="@mipmap/shejiao_checked"></item>
-    <item android:drawable="@mipmap/shejiao_normal"></item>
+   <item android:state_selected="true" android:drawable="@mipmap/trip_red"></item>
+    <item android:drawable="@mipmap/trip"></item>
+    <!--<item android:state_selected="true" android:drawable="@mipmap/shejiao_checked"></item>
+    <item android:drawable="@mipmap/shejiao_normal"></item>-->
+
+
 </selector>

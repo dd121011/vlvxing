@@ -100,7 +100,7 @@ public class PlaneRefundTicketActivity extends BaseActivity{
             ToastUtils.show(mcontext,"该订单不存在");
             return;
         }
-//        refundOrder();
+        refundOrder();
         orderNo.setText(orderInfo.getOrderno());
         adapter = new MyAdapter(mcontext);
         user_list.setAdapter(adapter);
@@ -207,8 +207,10 @@ public class PlaneRefundTicketActivity extends BaseActivity{
     private void submitRefundOrder() {
         showDialog("加载中...");
         String passengerIds = "";
+        int returnRefundFee = 0;
         for(int i = 0;i < userIdList.size();i++){
             passengerIds += userIdList.get(i).getBasePassengerPriceInfo().getPassengerId()+",";
+            returnRefundFee += userIdList.get(i).getRefundFeeInfo().getReturnRefundFee();
         }
         //机票列表的数据源
         String url = Constants.QUNAR_BASE_URL;
@@ -217,6 +219,7 @@ public class PlaneRefundTicketActivity extends BaseActivity{
         params.put("refundCauseId",16);//申请原因
 //        params.put("refundCause","旅行");//退票备注
         params.put("passengerIds",passengerIds);//乘机人ID,多个的话","隔开
+        params.put("returnRefundFee",returnRefundFee);//应退的钱
 //        params.put("callbackUrl","callbackUrl");//退票完成消息回调地址applyRefund
         System.out.println("退票申请接口 passengerIds:"+passengerIds);
         RemoteDataHandler.asyncPlaneGet("http://192.168.1.103:8080/"+"test2",params,mcontext,new RemoteDataHandler.Callback() {
@@ -272,7 +275,7 @@ public class PlaneRefundTicketActivity extends BaseActivity{
 
 
 
-    //机票列表的数据源适配器
+    //乘机人列表
     class MyAdapter extends BaseAdapter {
         private Context context;
         private LayoutInflater mInflater;

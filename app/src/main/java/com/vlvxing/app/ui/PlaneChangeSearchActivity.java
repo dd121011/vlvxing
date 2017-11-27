@@ -192,11 +192,20 @@ public class PlaneChangeSearchActivity extends BaseActivity {
      * date字符串 xxxx-x-x转换 xxxx-xx-xx
      */
     private void arrToString(){
+        System.out.println("时间转换 date:"+date);
+        if(date.indexOf("年")!=-1){//包含年
+            date = date.replace('年', '-');
+            date = date.replace('月', '-');
+            date = date.substring(0,date.length()-1);
+        }
         String[] dateStr = date.split("-");
-        if(dateStr[1].length()==1)
-            dateStr[1] = 0+dateStr[1];
-        if (dateStr[2].length()==1)
-            dateStr[2] = 0+dateStr[2];
+        if(dateStr[1].length()==1) {
+            dateStr[1] = 0 + dateStr[1];
+            System.out.println("时间转换 长度为1");
+        }
+        if (dateStr[2].length()==1) {
+            dateStr[2] = 0 + dateStr[2];
+        }
         dateResult = dateStr[0]+"-"+dateStr[1]+"-"+dateStr[2];
     }
     private void initData() {

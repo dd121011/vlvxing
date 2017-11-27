@@ -17,21 +17,21 @@ import com.handongkeji.widget.MyProcessDialog;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.common.SocializeConstants;
 import com.vlvxing.app.R;
 import com.vlvxing.app.common.ActivityManager;
 import com.vlvxing.app.common.Constants;
 import com.vlvxing.app.common.IsInstallApp;
 import com.vlvxing.app.presenter.LoginAndRegisterPresenter;
+import com.vlvxing.app.utils.ToastUtils;
 import com.vlvxing.app.utils.UmAddAliasAndTag;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -73,6 +73,8 @@ public class LoginActivity extends BaseActivity implements LoginAndRegisterPrese
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         initialize();
+        String a = SocializeConstants.SDK_VERSION;
+//        ToastUtils.show(this,"友盟版本号5.2.1:"+a);
     }
 
     private void initialize() {
@@ -80,6 +82,7 @@ public class LoginActivity extends BaseActivity implements LoginAndRegisterPrese
         mPresenter = new LoginAndRegisterPresenter(this);
         dialog = new MyProcessDialog(this);
         dialog.setMsg("登录中...");
+
     }
 
 
@@ -87,7 +90,7 @@ public class LoginActivity extends BaseActivity implements LoginAndRegisterPrese
         @Override
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
 //            Toast.makeText(getApplicationContext(), "授权成功", Toast.LENGTH_SHORT).show();
-            System.out.println("第三方登陆 onComplete platform:"+platform+",action:"+action+",data:"+data);
+//            System.out.println("第三方登陆 onComplete platform:"+platform+",action:"+action+",data:"+data);
             String userOpenToken, uid = null,screen_name,imageurl;
             dialog.dismiss();
             if (null != data) {
@@ -97,6 +100,7 @@ public class LoginActivity extends BaseActivity implements LoginAndRegisterPrese
                     screen_name = data.get("screen_name");
                     imageurl = data.get("avatar_hd");
                 } else if (TYPE_THIRELOGIN == TYPE_QQ){//openid
+                    Toast.makeText(getApplicationContext(), "系统升级中,暂时无法使用该登录方式", Toast.LENGTH_SHORT).show();
                     uid = data.get("openid");
                     userOpenToken = data.get("openid");
                     screen_name = data.get("screen_name");
@@ -109,7 +113,7 @@ public class LoginActivity extends BaseActivity implements LoginAndRegisterPrese
                 }
                 loginByOpen(TYPE_THIRELOGIN, uid, userOpenToken,screen_name,imageurl);
             } else {
-                Toast.makeText(getApplicationContext(), "暂无法使用该登录方式", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "系统升级中,暂时无法使用该登录方式", Toast.LENGTH_SHORT).show();
             }
         }
 

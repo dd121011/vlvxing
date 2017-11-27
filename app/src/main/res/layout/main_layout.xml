@@ -118,7 +118,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:duplicateParentState="true"
-                    android:text="社交"
+                    android:text="旅途"
                     android:textColor="@color/main_tab_textcolor_selector"
                     android:textSize="13dp" />
             </LinearLayout>

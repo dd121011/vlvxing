@@ -120,8 +120,6 @@ public class PlaneChangeTicketActivity extends BaseActivity{
             if (data!=null){
                 //日期选择
                 dateFormat = data.getStringExtra(CalendarSelectorActivity.ORDER_DAY).replaceAll("#", "-");
-                Toast.makeText(mcontext, " dateFormat!"+dateFormat, Toast.LENGTH_SHORT).show();
-                System.out.println("改签日期:"+dateFormat);
                 String orderInfo = data.getStringExtra(CalendarSelectorActivity.ORDER_DAY);
                 if(orderInfo!=null){
                     String[] all = orderInfo.split("#");

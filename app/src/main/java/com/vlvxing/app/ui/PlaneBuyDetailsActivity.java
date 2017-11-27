@@ -438,7 +438,7 @@ public class PlaneBuyDetailsActivity extends BaseActivity {
                 userInfoList.add(info);
                 adapter.notifyDataSetChanged();
                 num++;
-                Toast.makeText(mcontext, "num" + num, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mcontext, "num" + num, Toast.LENGTH_SHORT).show();
                 addNum(num);
                 break;
             case R.id.quicklypay_btn:
@@ -524,7 +524,7 @@ public class PlaneBuyDetailsActivity extends BaseActivity {
                     } else {
                         userInfoList.remove(position);
                         num--;
-                        Toast.makeText(context, "num" + num, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, "num" + num, Toast.LENGTH_SHORT).show();
                         lessNum(num);
                         adapter.notifyDataSetChanged();
                     }
@@ -638,12 +638,12 @@ public class PlaneBuyDetailsActivity extends BaseActivity {
 
     public void payMoney() {
         double price = Double.parseDouble(totalPrice);
-        Toast.makeText(this, "price" + price, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "price" + price, Toast.LENGTH_SHORT).show();
         DecimalFormat decimalFormat = new DecimalFormat(
                 "###################.###########");
         String totalMoney = decimalFormat.format(price);//变成整数类型
-        Toast.makeText(this, "totalMoney" + totalMoney, Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, "payWay" + payWay, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "totalMoney" + totalMoney, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "payWay" + payWay, Toast.LENGTH_SHORT).show();
 //        int payMethod = dialog.getPayMethod();
         switch (payWay) {
             case 1:   //  支付宝支付

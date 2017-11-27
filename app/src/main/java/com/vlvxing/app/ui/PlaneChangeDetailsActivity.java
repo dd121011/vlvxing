@@ -226,13 +226,9 @@ public class PlaneChangeDetailsActivity extends BaseActivity {
 
     public void payMoney() {
         double price = Double.parseDouble(totalPrice);
-        Toast.makeText(this, "price"+price, Toast.LENGTH_SHORT).show();
         DecimalFormat decimalFormat = new DecimalFormat(
                 "###################.###########");
         String totalMoney = decimalFormat.format(price);//变成整数类型
-        Toast.makeText(this, "totalMoney"+totalMoney, Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, "payWay"+payWay, Toast.LENGTH_SHORT).show();
-//        int payMethod = dialog.getPayMethod();
         switch (payWay) {
             case 1:   //  支付宝支付
                 Alipay alipay = new Alipay(this);
@@ -308,7 +304,6 @@ public class PlaneChangeDetailsActivity extends BaseActivity {
                     dismissDialog();
                 }
                 dismissDialog();
-
             }
         });
     }
@@ -339,7 +334,6 @@ public class PlaneChangeDetailsActivity extends BaseActivity {
                 int status = model.getStatus();
                 if(status==1){
                     ApplyChangeResult response = model.getData();
-
                     ApplyChangeResult.ResultBean result = response.getResult();
                     if(result==null){
                         ToastUtils.show(mcontext, "系统繁忙,请稍后再试!");
@@ -353,16 +347,12 @@ public class PlaneChangeDetailsActivity extends BaseActivity {
                         orderNo = bean.getOrderNo();
 //                        payAmount = bean.getPayAmount();
                     }
-
                 }else{
                     ToastUtils.show(mcontext, model.getMessage());
                 }
                 dismissDialog();
-
             }
         });
     }
-
-
 
 }

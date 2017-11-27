@@ -207,8 +207,8 @@ public class MainActivity extends BaseActivity {
         fragment_list = new ArrayList<>();
         fragment_list.add(new MainFragment());
         fragment_list.add(new JiLuFragment());
-//        fragment_list.add(new LvTuFragment());
-        fragment_list.add(new ForumFragment());
+        fragment_list.add(new LvTuFragment());
+//        fragment_list.add(new ForumFragment());
         fragment_list.add(new WoDeFragment());
 
         viewpager.setAdapter(new PagerAdapter(getSupportFragmentManager()));

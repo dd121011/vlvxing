@@ -157,6 +157,7 @@ public class MyApp extends Application {
 		mVibrator =(Vibrator)getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
 		SDKInitializer.initialize(getApplicationContext());
 		UMShareAPI.get(this);//初始化SDK
+
         //微信
 		PlatformConfig.setWeixin("wxd3cb391989fe67f1", "226c687e3cf3f69ed0ee44a54cc1aef8");
 		//新浪微博
