@@ -21,6 +21,7 @@ import com.handongkeji.modle.ResponseData;
 import com.handongkeji.ui.BrowseActivity;
 import com.handongkeji.utils.AnimateFirstDisplayListener;
 import com.handongkeji.utils.StringUtils;
+import com.handongkeji.widget.MyProcessDialog;
 import com.handongkeji.widget.RoundImageView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -31,6 +32,7 @@ import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 import com.vlvxing.app.R;
 import com.vlvxing.app.common.Constants;
 import com.vlvxing.app.common.MyApp;
@@ -85,6 +87,7 @@ public class WoDeFragment extends Fragment {
     private DisplayImageOptions options;
     private String share_title,share_content, share_url;
     private String credit_card_url;
+    private MyProcessDialog dialog;
 
     @Override
     public void onAttach(Activity activity) {
@@ -98,7 +101,10 @@ public class WoDeFragment extends Fragment {
         View view = inflater.inflate(R.layout.wode_fragment, container, false);
         ButterKnife.bind(this, view);
         init();
+//        dialog = new MyProcessDialog(getActivity());
+//        dialog.setMsg("加载中...");
         getUserInfo();
+
         return view;
     }
 
@@ -117,6 +123,7 @@ public class WoDeFragment extends Fragment {
     }
 
     private void init() {
+
         headTitle.setText("我的");
         rightImg.setVisibility(View.VISIBLE);
         rightImg.setImageResource(R.mipmap.set_red);
@@ -282,32 +289,48 @@ public class WoDeFragment extends Fragment {
      * 友盟分享
      */
     private void umShare(SHARE_MEDIA share_media) {
-        ShareAction shareAction = new ShareAction((Activity) mcontext);
-        shareAction.setPlatform(share_media).withMedia(new UMImage(mcontext, R.mipmap.logos)).withTitle(share_title).withText(share_title).withTargetUrl(share_url).setCallback(umShareListener).share();
+
+//        ShareAction shareAction = new ShareAction((Activity) mcontext);
+//        shareAction.setPlatform(share_media).withMedia(new UMImage(mcontext, R.mipmap.logos)).withTitle(share_title).withText(share_content).withTargetUrl(share_url).setCallback(umShareListener).share();
+        ShareAction shareAction = new ShareAction(getActivity());
+        UMWeb  web = new UMWeb(share_url);
+        web.setTitle(share_title);//标题
+        web.setThumb(new UMImage(getActivity(), R.mipmap.logos));
+        web.setDescription("V旅行");//描述
+        shareAction.setPlatform(share_media).withMedia(web).withText(share_content).setCallback(umShareListener).share();
     }
 
     private UMShareListener umShareListener = new UMShareListener() {
+
+        @Override
+        public void onStart(SHARE_MEDIA share_media) {
+//            dialog.show();
+        }
+
         @Override
         public void onResult(SHARE_MEDIA platform) {
+//            dialog.dismiss();
             Log.d("plat", "platform" + platform);
-            if (platform.name().equals("WEIXIN_FAVORITE")) {
-                Toast.makeText(mcontext, platform + " 收藏成功啦", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(mcontext, platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
-            }
+//            if (platform.name().equals("WEIXIN_FAVORITE")) {
+//                Toast.makeText(mcontext, platform + " 收藏成功啦", Toast.LENGTH_SHORT).show();
+//            } else {
+//                Toast.makeText(mcontext, platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
+//            }
         }
 
         @Override
         public void onError(SHARE_MEDIA platform, Throwable t) {
-            Toast.makeText(mcontext, platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
-            if (t != null) {
-                Log.d("throw", "throw:" + t.getMessage());
-            }
+//            dialog.dismiss();
+//            Toast.makeText(mcontext, platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
+//            if (t != null) {
+//                Log.d("throw", "throw:" + t.getMessage());
+//            }
         }
 
         @Override
         public void onCancel(SHARE_MEDIA platform) {
-            Toast.makeText(mcontext, platform + " 分享取消了", Toast.LENGTH_SHORT).show();
+//            dialog.dismiss();
+//            Toast.makeText(mcontext, platform + " 分享取消了", Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -318,5 +341,6 @@ public class WoDeFragment extends Fragment {
         /** attention to this below ,must add this**/
         UMShareAPI.get(mcontext).onActivityResult(requestCode, resultCode, data);
         Log.d("result", "onActivityResult");
+
     }
 }

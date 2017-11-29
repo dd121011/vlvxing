@@ -9,12 +9,13 @@ import android.widget.Toast;
 import com.handongkeji.handler.RemoteDataHandler;
 import com.handongkeji.modle.ResponseData;
 import com.handongkeji.widget.MyProcessDialog;
-import com.tencent.mm.sdk.constants.ConstantsAPI;
-import com.tencent.mm.sdk.modelbase.BaseReq;
-import com.tencent.mm.sdk.modelbase.BaseResp;
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
+
+import com.tencent.mm.opensdk.constants.ConstantsAPI;
+import com.tencent.mm.opensdk.modelbase.BaseReq;
+import com.tencent.mm.opensdk.modelbase.BaseResp;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.vlvxing.app.common.Constants;
 import com.vlvxing.app.ui.OrderDetailActivity;
 import com.vlvxing.app.utils.ToastUtils;
@@ -58,6 +59,8 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 	public void onReq(BaseReq req) {
 	}
 
+
+
 	// 回调
 	@Override
 	public void onResp(BaseResp resp) {
@@ -79,5 +82,6 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 			}
 		}
 	}
+
 
 }

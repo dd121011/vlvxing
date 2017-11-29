@@ -213,7 +213,6 @@ public class Alipay {
         String url = Constants.URL_PLANE_ORDER_STATUS;
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("orderid", orderid);
-        System.out.println("支付 GetPlaneOrderServerStatus  orderid"+orderid);
         String json;
         try {
             json = HttpHelper.post(url, params);
@@ -302,10 +301,6 @@ public class Alipay {
 
     public void getPlaneOrderInfo(String trade_no, String price, String orderId, String commodityName, String commodityMessage){
 
-        System.out.println("支付 trade_no:"+trade_no);
-        System.out.println("支付  price:"+price);
-        System.out.println("支付  orderId:"+orderId);
-        System.out.println("支付  commodityName:"+commodityName);
         if (!this.check()){
             return ;
         }
@@ -352,13 +347,11 @@ public class Alipay {
     }
 
     public void planePay(String payInfo){
-        System.out.println("支付planePay  payInfo"+payInfo);
         PayTask payTask = new PayTask(mActivity);
         String result = payTask.pay(payInfo, true);
         Message msg = new Message();
         msg.what = SDK_PLANE_PAY_FLAG;
         msg.obj = result;
-        System.out.println("支付 what  "+SDK_PLANE_PAY_FLAG);
         mHandler.sendMessage(msg);
     }
 

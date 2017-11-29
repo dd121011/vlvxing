@@ -23,7 +23,6 @@ import android.os.Environment;
 import android.os.Vibrator;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
-import android.util.Config;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -46,6 +45,7 @@ import com.umeng.message.PushAgent;
 import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.UmengNotificationClickHandler;
 import com.umeng.message.entity.UMessage;
+
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 import com.vlvxing.app.R;
@@ -148,7 +148,6 @@ public class MyApp extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-
 		initYoumeng();
 		/***
 		 * 初始化定位sdk，建议在Application中创建
@@ -156,17 +155,12 @@ public class MyApp extends Application {
 		locationService = new LocationService(getApplicationContext());
 		mVibrator =(Vibrator)getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
 		SDKInitializer.initialize(getApplicationContext());
-		UMShareAPI.get(this);//初始化SDK
-
-        //微信
+		UMShareAPI.get(this);
 		PlatformConfig.setWeixin("wxd3cb391989fe67f1", "226c687e3cf3f69ed0ee44a54cc1aef8");
-		//新浪微博
-        PlatformConfig.setSinaWeibo("557320894", "61d277edc31ad735fce0e1f93502f8f8");
-		//QQ
-        PlatformConfig.setQQZone("1106153781","53AkGv7rAsG5OMli");
+		PlatformConfig.setSinaWeibo("557320894","61d277edc31ad735fce0e1f93502f8f8","http://sns.whalecloud.com");
+		PlatformConfig.setQQZone("1106153781", "53AkGv7rAsG5OMli");
 		Constants.init(this);
-//		 JPushInterface.setDebugMode(true); // 设置开启日志,发布时请关闭日志
-//		 JPushInterface.init(this); // 初始化 JPush
+
 		sysInitSharedPreferences = getSharedPreferences(Constants.SYSTEM_INIT_FILE_NAME, MODE_PRIVATE);
 		am = AccountManager.get(this);
 		DisplayMetrics dm = SystemHelper.getScreenInfo(this);
@@ -668,7 +662,6 @@ public class MyApp extends Application {
 			public void handleMessage(Context context, UMessage uMessage) {
 				super.handleMessage(context, uMessage);
 			}
-
 		};
 		//使用自定义的NotificationHandler，来结合友盟统计处理消息通知，参考http://bbs.umeng.com/thread-11112-1-1.html
 		//CustomNotificationHandler notificationClickHandler = new CustomNotificationHandler();
@@ -680,7 +673,7 @@ public class MyApp extends Application {
 			@Override
 			public void onSuccess(String deviceToken) {
 				//注册成功会返回device token
-				Log.d("aaa", "MyApp onSuccess: "+deviceToken);
+				Log.d("友盟推送", "MyApp onSuccess: "+deviceToken);
 			}
 
 			@Override

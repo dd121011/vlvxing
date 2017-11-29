@@ -25,6 +25,7 @@ import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 import com.vlvxing.app.R;
 import com.vlvxing.app.common.Constants;
 import com.vlvxing.app.common.MyApp;
@@ -220,32 +221,44 @@ public class SaveAfterVideoActivity extends BaseActivity {
      * 友盟分享
      */
     private void umShare(SHARE_MEDIA share_media) {
+//        ShareAction shareAction = new ShareAction(this);
+//        shareAction.setPlatform(share_media).withMedia(new UMImage(this, R.mipmap.logos)).withTitle(share_title).withText(share_content).withTargetUrl(share_url).setCallback(umShareListener).share();
         ShareAction shareAction = new ShareAction(this);
-        shareAction.setPlatform(share_media).withMedia(new UMImage(this, R.mipmap.logos)).withTitle(share_title).withText(share_content).withTargetUrl(share_url).setCallback(umShareListener).share();
+        UMWeb  web = new UMWeb(share_url);
+        web.setTitle(share_title);//标题
+        web.setThumb(new UMImage(this, R.mipmap.logos));
+        web.setDescription("V旅行");//描述
+        shareAction.setPlatform(share_media).withMedia(web).withText(share_content).setCallback(umShareListener).share();
+
     }
 
     private UMShareListener umShareListener = new UMShareListener() {
         @Override
+        public void onStart(SHARE_MEDIA share_media) {
+
+        }
+
+        @Override
         public void onResult(SHARE_MEDIA platform) {
-            Log.d("plat", "platform" + platform);
-            if (platform.name().equals("WEIXIN_FAVORITE")) {
-                Toast.makeText(SaveAfterVideoActivity.this, platform + " 收藏成功啦", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(SaveAfterVideoActivity.this, platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
-            }
+//            Log.d("plat", "platform" + platform);
+//            if (platform.name().equals("WEIXIN_FAVORITE")) {
+//                Toast.makeText(SaveAfterVideoActivity.this, platform + " 收藏成功啦", Toast.LENGTH_SHORT).show();
+//            } else {
+//                Toast.makeText(SaveAfterVideoActivity.this, platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
+//            }
         }
 
         @Override
         public void onError(SHARE_MEDIA platform, Throwable t) {
-            Toast.makeText(SaveAfterVideoActivity.this, platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
-            if (t != null) {
-                Log.d("throw", "throw:" + t.getMessage());
-            }
+//            Toast.makeText(SaveAfterVideoActivity.this, platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
+//            if (t != null) {
+//                Log.d("throw", "throw:" + t.getMessage());
+//            }
         }
 
         @Override
         public void onCancel(SHARE_MEDIA platform) {
-            Toast.makeText(SaveAfterVideoActivity.this, platform + " 分享取消了", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(SaveAfterVideoActivity.this, platform + " 分享取消了", Toast.LENGTH_SHORT).show();
         }
     };
 

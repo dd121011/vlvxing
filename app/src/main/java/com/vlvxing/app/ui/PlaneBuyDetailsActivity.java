@@ -171,6 +171,7 @@ public class PlaneBuyDetailsActivity extends BaseActivity {
     private String attnName;//收件人姓名
     private String attnPhone;//收件人电话
     private String attnAddress;//收件人地址
+//    private boolean isCreateOrder = false;//解决点击按钮,多次生单,一次支付
 
 
     @Override
@@ -456,7 +457,11 @@ public class PlaneBuyDetailsActivity extends BaseActivity {
                 }
                 //验证
                 if (!contact.equals("") && !cardNo.equals("") && checkParams()) {
-                    createOrderData();
+//                    if(isCreateOrder){//默认为false,一旦生单过为true就直接支付
+//                        payMoney();
+//                    }else{
+                        createOrderData();
+//                    }
                 } else {
                     ToastUtils.show(mcontext, "请您确认旅客信息录入是否正确");
                 }
@@ -637,6 +642,7 @@ public class PlaneBuyDetailsActivity extends BaseActivity {
     }
 
     public void payMoney() {
+
         double price = Double.parseDouble(totalPrice);
 //        Toast.makeText(this, "price" + price, Toast.LENGTH_SHORT).show();
         DecimalFormat decimalFormat = new DecimalFormat(
@@ -782,6 +788,7 @@ public class PlaneBuyDetailsActivity extends BaseActivity {
                         tradeNo = result.getString("orderNo");
                         totalPrice = String.valueOf(result.getInt("noPayAmount"));//待支付金额
                         orderId = result.getInt("id") + "";
+//                        isCreateOrder = true;
                         payMoney();
                     }
                 } else {

@@ -49,6 +49,7 @@ import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 import com.vlvxing.app.R;
 import com.vlvxing.app.common.Constants;
 import com.vlvxing.app.common.MyApp;
@@ -123,7 +124,6 @@ public class LvTuFragment extends Fragment implements BDLocationListener{
     private String share_title, share_url;
     private boolean isFirst = true;
     private Overlay maker_overlay;
-    MyProcessDialog dialog;
     private Overlay local_overlay;
     private boolean isLocal = true;
     private List<Overlay> markerOverlays = new ArrayList<>();
@@ -136,6 +136,7 @@ public class LvTuFragment extends Fragment implements BDLocationListener{
      * 定位模式
      */
     private MyLocationConfiguration.LocationMode mCurrentMode;
+    private MyProcessDialog dialog;
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -154,6 +155,8 @@ public class LvTuFragment extends Fragment implements BDLocationListener{
         //获取当前的日期，给定年份管理时间轴的年份
         Calendar c = Calendar.getInstance();
         year = c.get(Calendar.YEAR) + "";
+        dialog = new MyProcessDialog(getActivity());
+        dialog.setMsg("加载中...");
         initMap();
 //        startLocation();
         bindYear();
@@ -666,32 +669,44 @@ public class LvTuFragment extends Fragment implements BDLocationListener{
      * 友盟分享
      */
     private void umShare(SHARE_MEDIA share_media) {
-        ShareAction shareAction = new ShareAction((Activity) mContext);
-        shareAction.setPlatform(share_media).withMedia(new UMImage(mContext, R.mipmap.logos)).withTitle(share_title).withText(share_content).withTargetUrl(share_url).setCallback(umShareListener).share();
+        ShareAction shareAction = new ShareAction(getActivity());
+        UMWeb  web = new UMWeb(share_url);
+        web.setTitle(share_title);//标题
+        web.setThumb(new UMImage(getActivity(), R.mipmap.logos));
+        web.setDescription("V旅行");//描述
+        shareAction.setPlatform(share_media).withMedia(web).withText(share_content).setCallback(umShareListener).share();
     }
 
     private UMShareListener umShareListener = new UMShareListener() {
+
+        @Override
+        public void onStart(SHARE_MEDIA share_media) {
+//            dialog.show();
+        }
+
         @Override
         public void onResult(SHARE_MEDIA platform) {
-            Log.d("plat", "platform" + platform);
-            if (platform.name().equals("WEIXIN_FAVORITE")) {
-                Toast.makeText(mContext, platform + " 收藏成功啦", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(mContext, platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
-            }
+//            dialog.dismiss();
+//            if (platform.name().equals("WEIXIN_FAVORITE")) {
+//                Toast.makeText(mContext, platform + " 收藏成功啦", Toast.LENGTH_SHORT).show();
+//            } else {
+//                Toast.makeText(mContext, platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
+//            }
         }
 
         @Override
         public void onError(SHARE_MEDIA platform, Throwable t) {
-            Toast.makeText(mContext, platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
-            if (t != null) {
-                Log.d("throw", "throw:" + t.getMessage());
-            }
+//            dialog.dismiss();
+//            Toast.makeText(mContext, platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
+//            if (t != null) {
+//                Log.d("throw", "throw:" + t.getMessage());
+//            }
         }
 
         @Override
         public void onCancel(SHARE_MEDIA platform) {
-            Toast.makeText(mContext, platform + " 分享取消了", Toast.LENGTH_SHORT).show();
+//            dialog.dismiss();
+//            Toast.makeText(mContext, platform + " 分享取消了", Toast.LENGTH_SHORT).show();
         }
     };
 

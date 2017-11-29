@@ -4,9 +4,11 @@ import android.Manifest;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -88,8 +90,18 @@ public class MainActivity extends BaseActivity {
         init();
         //提交表单权限，批量注册权限
         requestLocationPermission();
+        //请求第三方分享登陆的权限
+//        requestUMSharePermission();
     }
-
+    /**
+     * 请求第三方分享登陆的权限
+     */
+    private void requestUMSharePermission() {
+        if(Build.VERSION.SDK_INT>=23){
+            String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CALL_PHONE,Manifest.permission.READ_LOGS,Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.SET_DEBUG_APP,Manifest.permission.SYSTEM_ALERT_WINDOW,Manifest.permission.GET_ACCOUNTS,Manifest.permission.WRITE_APN_SETTINGS};
+            ActivityCompat.requestPermissions(this,mPermissionList,123);
+        }
+    }
 
     /**
      * 请求定位权限

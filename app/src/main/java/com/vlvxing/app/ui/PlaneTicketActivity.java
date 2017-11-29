@@ -136,7 +136,7 @@ public class PlaneTicketActivity extends BaseActivity{
         mcontext = this;
         txtDate.setText(getNowDate());
         radioGroupOnCheckChange();//注册単程、返程的选择事件
-        if(MyApp.getInstance().getCity_name().equals("")||MyApp.getInstance().getCity_name()==null){
+        if(MyApp.getInstance().getCity_name()==null){
             cityLefttxt.setText("北京");
         }else{
             cityLefttxt.setText(MyApp.getInstance().getCity_name());
@@ -176,7 +176,7 @@ public class PlaneTicketActivity extends BaseActivity{
     public void getBananer() {
         String url = Constants.URL_SYSAD;
         HashMap<String, String> params = new HashMap<>();
-        params.put("categoryId", "0"); //分类id(0:首页，1国内，2国外  3附近)
+        params.put("categoryId", "0"); //分类id(0:首页，1国内，2国外  3附近 4机票)
         RemoteDataHandler.asyncTokenPost(url, mcontext, true, params, new RemoteDataHandler.Callback() {
                     @Override
                     public void dataLoaded(ResponseData data) {
@@ -302,7 +302,7 @@ public class PlaneTicketActivity extends BaseActivity{
                 searchIntent.putExtra("goCity", goCity);
                 searchIntent.putExtra("arriveCity", arriveCity);
                 searchIntent.putExtra("date", dateFormat);
-                    System.out.println("闪退测试--------0");
+                    System.out.println("购票日期"+dateFormat);
 //                startActivityForResult(searchIntent, 4);//横向日期选择并展示车票列表
                 startActivity(searchIntent);//横向日期选择并展示车票列表
                 }else{

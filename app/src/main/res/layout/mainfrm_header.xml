@@ -211,10 +211,14 @@
             android:layout_height="69dp"
             android:layout_weight="1">
 
-            <ImageView
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@mipmap/train" />
+                android:drawablePadding="14dp"
+                android:drawableTop="@mipmap/train"
+                android:gravity="center"
+                android:text="火车票"
+                android:textSize="14sp" />
         </LinearLayout>
 
 
@@ -225,10 +229,14 @@
             android:layout_marginLeft="5dp"
             android:layout_weight="1">
 
-            <ImageView
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@mipmap/plane" />
+                android:drawablePadding="14dp"
+                android:drawableTop="@mipmap/plane"
+                android:gravity="center"
+                android:text="机票"
+                android:textSize="14sp" />
         </LinearLayout>
 
 
@@ -239,10 +247,14 @@
             android:layout_marginLeft="5dp"
             android:layout_weight="1">
 
-            <ImageView
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@mipmap/dingzhi" />
+                android:drawablePadding="14dp"
+                android:drawableTop="@mipmap/dingzhi"
+                android:gravity="center"
+                android:text="定制游"
+                android:textSize="14sp" />
         </LinearLayout>
 
 
@@ -253,10 +265,14 @@
             android:layout_marginLeft="5dp"
             android:layout_weight="1">
 
-            <ImageView
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@mipmap/car" />
+                android:drawablePadding="14dp"
+                android:drawableTop="@mipmap/car"
+                android:gravity="center"
+                android:text="用车"
+                android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>
 

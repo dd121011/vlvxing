@@ -67,13 +67,17 @@ public class LoginActivity extends BaseActivity implements LoginAndRegisterPrese
     private UMShareAPI mShareAPI = null;                         //第三方的分享
     private SHARE_MEDIA platform = null;
 
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         initialize();
-        String a = SocializeConstants.SDK_VERSION;
+//        String a = SocializeConstants.SDK_VERSION;
 //        ToastUtils.show(this,"友盟版本号5.2.1:"+a);
     }
 
@@ -85,14 +89,19 @@ public class LoginActivity extends BaseActivity implements LoginAndRegisterPrese
 
     }
 
-
     private UMAuthListener umAuthListener = new UMAuthListener() {
+
+        @Override
+        public void onStart(SHARE_MEDIA share_media) {
+            dialog.show();
+        }
+
         @Override
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
 //            Toast.makeText(getApplicationContext(), "授权成功", Toast.LENGTH_SHORT).show();
 //            System.out.println("第三方登陆 onComplete platform:"+platform+",action:"+action+",data:"+data);
             String userOpenToken, uid = null,screen_name,imageurl;
-            dialog.dismiss();
+
             if (null != data) {
                 if (TYPE_THIRELOGIN == TYPE_WB) {
                     uid = data.get("id");
@@ -100,7 +109,6 @@ public class LoginActivity extends BaseActivity implements LoginAndRegisterPrese
                     screen_name = data.get("screen_name");
                     imageurl = data.get("avatar_hd");
                 } else if (TYPE_THIRELOGIN == TYPE_QQ){//openid
-                    Toast.makeText(getApplicationContext(), "系统升级中,暂时无法使用该登录方式", Toast.LENGTH_SHORT).show();
                     uid = data.get("openid");
                     userOpenToken = data.get("openid");
                     screen_name = data.get("screen_name");
@@ -113,6 +121,7 @@ public class LoginActivity extends BaseActivity implements LoginAndRegisterPrese
                 }
                 loginByOpen(TYPE_THIRELOGIN, uid, userOpenToken,screen_name,imageurl);
             } else {
+                dialog.dismiss();
                 Toast.makeText(getApplicationContext(), "系统升级中,暂时无法使用该登录方式", Toast.LENGTH_SHORT).show();
             }
         }
@@ -121,14 +130,12 @@ public class LoginActivity extends BaseActivity implements LoginAndRegisterPrese
         public void onError(SHARE_MEDIA platform, int action, Throwable t) {
             dialog.dismiss();
 //            Log.d("aaa", "Faile");
-            Toast.makeText(getApplicationContext(), "get fail", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onCancel(SHARE_MEDIA platform, int action) {
             dialog.dismiss();
 //            Log.d("aaa", "cancel");
-            Toast.makeText(getApplicationContext(), "get cancel", Toast.LENGTH_SHORT).show();
         }
 
     };
@@ -172,7 +179,7 @@ public class LoginActivity extends BaseActivity implements LoginAndRegisterPrese
 //                        String thirdid = obj.getString("thirdid");                              //第三方的Id
 //                        String userNick = obj.getString("userNick");
 //                        String isRegister = obj.getString("isRegister");
-                        String token=obj.getString("data");
+                        String token = obj.getString("data");
                         String uid=obj.getString("message");
 //                        if ("1".equals(isRegister)) {
 //                            mPresenter.messagePush(token);
@@ -287,13 +294,17 @@ public class LoginActivity extends BaseActivity implements LoginAndRegisterPrese
                     Toast.makeText(this, "您还没有安装微信", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                dialog.show();
+                if (!dialog.isShowing()) {
+                    dialog.show();
+                }
                 TYPE_THIRELOGIN = TYPE_WX;
                 platform = SHARE_MEDIA.WEIXIN;
                 mShareAPI.getPlatformInfo(LoginActivity.this, platform, umAuthListener);
                 break;
             case R.id.web: //微博登录
-                dialog.show();
+                if (!dialog.isShowing()) {
+                    dialog.show();
+                }
                 TYPE_THIRELOGIN = TYPE_WB;
                 platform = SHARE_MEDIA.SINA;
                 mShareAPI.getPlatformInfo(LoginActivity.this, platform, umAuthListener);
@@ -303,7 +314,9 @@ public class LoginActivity extends BaseActivity implements LoginAndRegisterPrese
                     Toast.makeText(this, "您还没有安装QQ", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                dialog.show();
+                if (!dialog.isShowing()) {
+                    dialog.show();
+                }
                 TYPE_THIRELOGIN = TYPE_QQ;
                 platform = SHARE_MEDIA.QQ;
                 mShareAPI.getPlatformInfo(LoginActivity.this, platform, umAuthListener);
@@ -316,5 +329,6 @@ public class LoginActivity extends BaseActivity implements LoginAndRegisterPrese
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mShareAPI.onActivityResult(requestCode, resultCode, data);
+
     }
 }

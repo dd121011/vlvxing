@@ -133,6 +133,7 @@ public class PlaneSearchActivity extends BaseActivity {
         goCity = getIntent().getStringExtra("goCity").trim();//出发城市
         arriveCity = getIntent().getStringExtra("arriveCity").trim();//到达城市
         date = getIntent().getStringExtra("date").trim();//出发日期
+        System.out.println("购票日期,跳转后getIntent"+date);
         arrToString();
         mcontext = this;
         params = new HashMap<>();//查询航班条件参数
@@ -155,7 +156,7 @@ public class PlaneSearchActivity extends BaseActivity {
         body_list.setVisibility(View.INVISIBLE);//默认机票列表不显示
         /** 一个月后结束  1 */
         Calendar endDate = Calendar.getInstance();
-        endDate.add(Calendar.MONTH, 3);//设置购票日期暂时只能在3个月内
+        endDate.add(Calendar.MONTH, 4);//设置购票日期暂时只能在3个月内
 
         /** 从现在起1个月前开始   -1*/
         Calendar startDate = Calendar.getInstance();

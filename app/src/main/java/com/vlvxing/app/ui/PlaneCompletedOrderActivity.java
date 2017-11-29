@@ -20,13 +20,20 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.handongkeji.handler.RemoteDataHandler;
+import com.handongkeji.modle.ResponseData;
 import com.handongkeji.ui.BaseActivity;
+import com.handongkeji.utils.StringUtils;
 import com.handongkeji.widget.MyListView;
 import com.handongkeji.widget.NoScrollListView;
 import com.qunar.bean.FlyPassenger;
 import com.qunar.bean.Passenger;
+import com.qunar.bean.changeSearch.PlaneChangeSerachBean;
 import com.qunar.model.FlyOrder;
+import com.qunar.model.PlaneChangeSerachResult;
 import com.vlvxing.app.R;
+import com.vlvxing.app.common.Constants;
 import com.vlvxing.app.common.IsInstallApp;
 import com.vlvxing.app.common.PayDialog;
 import com.vlvxing.app.pay.Alipay;
@@ -34,8 +41,12 @@ import com.vlvxing.app.pay.WxPay;
 import com.vlvxing.app.utils.DataUtils;
 import com.vlvxing.app.utils.ToastUtils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
@@ -84,7 +95,6 @@ public class PlaneCompletedOrderActivity extends BaseActivity{
     @Bind(R.id.pay_btn)
     Button pay_btn;//支付
 
-
     @Bind(R.id.list_view)
     NoScrollListView list_view;//乘机人列表
     private FlyOrder orderInfo = new FlyOrder();
@@ -114,8 +124,9 @@ public class PlaneCompletedOrderActivity extends BaseActivity{
             status = orderInfo.getStatus();
             list = orderInfo.getPassengers();
             if(status==0){//未支付
-                pay_bottom_lin.setVisibility(View.VISIBLE);
-                bottom_lin.setVisibility(View.GONE);
+                getOrderStuas(orderInfo.getOrderno());
+//                pay_bottom_lin.setVisibility(View.VISIBLE);
+//                bottom_lin.setVisibility(View.GONE);
             }else{
                 //已支付
                 bottom_lin.setVisibility(View.VISIBLE);
@@ -128,6 +139,39 @@ public class PlaneCompletedOrderActivity extends BaseActivity{
 
 
     }
+
+    private boolean getOrderStuas(String orderNo) {
+        //机票列表的数据源
+        String url = Constants.QUNAR_BASE_URL;
+        HashMap<String,Object> params = new HashMap<>();
+        params.put("orderNo",orderNo);
+        showDialog("加载中...");
+        RemoteDataHandler.asyncPlaneGet(url+"getFlyorderStatus",params,mcontext,new RemoteDataHandler.Callback() {
+            @Override
+            public void dataLoaded(ResponseData data) throws JSONException {
+//                System.out.println("机票超时状态 data:"+data);
+                String json = data.getJson();
+                if (StringUtils.isStringNull(json)) {
+                    dismissDialog();
+                    return;
+                }
+//                System.out.println("机票超时状态 json:"+json);
+                JSONObject jsonObject = new JSONObject(json);
+                String message = jsonObject.getString("message");
+                if(message.equals("SUCCESS")){
+                    pay_bottom_lin.setVisibility(View.VISIBLE);
+                    bottom_lin.setVisibility(View.GONE);
+                }else{
+                    ToastUtils.show(mcontext,"该订单已超时,请重新下单");
+                }
+                dismissDialog();
+
+            }
+        });
+        return false;
+    }
+
+
     private void initData(){
         orderInfo.getAllowchange();//是否允许签转  true,false
         orderInfo.getCancharge();//是否允许改签   true,false
@@ -282,7 +326,6 @@ public class PlaneCompletedOrderActivity extends BaseActivity{
             public TextView name;
             public TextView idCard;
 
-
             ViewHolder(View itemView) {
                 name = (TextView) itemView.findViewById(R.id.name);
                 idCard = (TextView) itemView.findViewById(R.id.id_card);
@@ -292,16 +335,12 @@ public class PlaneCompletedOrderActivity extends BaseActivity{
 
     public void payMoney() {
         double price = Double.parseDouble(totalPrice);
-        Toast.makeText(this, "price" + price, Toast.LENGTH_SHORT).show();
         DecimalFormat decimalFormat = new DecimalFormat(
                 "###################.###########");
         String totalMoney = decimalFormat.format(price);//变成整数类型
-        Toast.makeText(this, "totalMoney" + totalMoney, Toast.LENGTH_SHORT).show();
-//        int payMethod = dialog.getPayMethod();
         switch (payWay) {
             case 1:   //  支付宝支付
                 Alipay alipay = new Alipay(this);
-
                 alipay.getOrderInfo(tradeNo, totalMoney, orderId, commodityName, commodityMessage);
                 break;
             case 2:          //  微信支付

@@ -9,6 +9,10 @@ import android.os.Handler;
 import com.handongkeji.ui.BaseActivity;
 import com.vlvxing.app.R;
 
+/**
+ *
+ * 欢迎页
+ */
 public class SplashActivity extends BaseActivity {
 
     @Override

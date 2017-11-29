@@ -9,9 +9,10 @@ import android.widget.Toast;
 
 import com.handongkeji.handler.RemoteDataHandler;
 import com.handongkeji.widget.MyProcessDialog;
-import com.tencent.mm.sdk.modelpay.PayReq;
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
+
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.vlvxing.app.common.Constants;
 import com.vlvxing.app.common.MyApp;
 

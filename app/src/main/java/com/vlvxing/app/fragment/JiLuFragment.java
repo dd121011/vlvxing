@@ -109,14 +109,18 @@ import com.handongkeji.utils.CommonUtils;
 import com.handongkeji.utils.ProviderUtils;
 import com.handongkeji.utils.StringUtils;
 import com.handongkeji.widget.CallDialog;
+import com.handongkeji.widget.MyProcessDialog;
+import com.lidong.photopicker.Image;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.imagepicker.view.CropImageView;
 import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 import com.vlvxing.app.R;
 import com.vlvxing.app.album.util.DrivingRouteOverlay;
 import com.vlvxing.app.album.util.OverlayBitmapUtils;
@@ -303,6 +307,7 @@ public class JiLuFragment extends Fragment implements BDLocationListener, OnGetP
     private boolean isPhoto = false;
     private LatLng lng = null;  //目的地经纬度
 
+    private MyProcessDialog umDialog;
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -343,6 +348,8 @@ public class JiLuFragment extends Fragment implements BDLocationListener, OnGetP
         year = c.get(Calendar.YEAR) + "";
         bindYear();
         tmcSetting();//实时路况
+        umDialog = new MyProcessDialog(getActivity());
+        umDialog.setMsg("加载中...");
         return view;
     }
     private void tmcSetting(){
@@ -1150,54 +1157,7 @@ public class JiLuFragment extends Fragment implements BDLocationListener, OnGetP
 
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {//你断点 看看 data 返回的是什么
-        super.onActivityResult(requestCode, resultCode, data);
-        if (data == null) {
-            return;
-        }
-        if (data.getData() == null) {
-            return;
-        }
 
-//        if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
-//            if (data != null && requestCode == RESULT_CAPTURE) {
-//                ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
-//                ImageItem imageItem = images.get(0);
-//                String path = imageItem.path;
-//                Intent intent = new Intent(mContext, AddImgMakerActivity.class).putExtra("path", path).putExtra("lat", myLat)
-//                        .putExtra("lng", myLng).putExtra("address", addrStr).putExtra("isRecord", isRecord);
-//                startActivity(intent);
-//            }
-//        }
-//        if (requestCode == 1) {//获取图片
-//            if (resultCode == 4) { //获取拍摄视频的路径
-//                Uri data1 = data.getData();
-//                Cursor c = mContext.getContentResolver().query(data1, new String[]{MediaStore.MediaColumns.DATA}, null, null, null);
-//                if (c != null && c.moveToFirst()) {
-//                    Intent intent = new Intent(mContext, AddVideoMakerActivity.class).putExtra("lat", myLat)
-//                            .putExtra("lng", myLng).putExtra("address", addrStr).putExtra("isRecord", isRecord);
-//                    intent.putExtra("relesaeWhat", "dajiakan");
-//                    intent.putExtra("videoPath", c.getString(0)); //视频路径
-//                    startActivity(intent);
-//                }
-//            }
-//        }
-
-// else{ //获取拍摄的图片  content://com.vlvxing.app.provider/external_files/Android/data/com.vlvxing.app/cache/htmlcache.jpg
-//                Uri uri = data.getData(); //你这里是怎么弄的
-//                if (data.getExtras().get("data") != null) {
-//                    bitmap = (Bitmap) data.getExtras().get("data");
-//                }
-//                if (null == bitmap) {
-//                    return;
-//                }
-//                Intent intent = new Intent(mContext, AddImgMakerActivity.class).putExtra("bitmap", bitmap).putExtra("lat", myLat)
-//                        .putExtra("lng",myLng).putExtra("address", addrStr).putExtra("isRecord", isRecord);
-//                startActivity(intent);
-//            }
-//        }
-    }
 
     /**
      * Mainactivity中有onActivityResult方法，所以Fragment中的onActivityResult方法不走
@@ -1638,33 +1598,66 @@ public class JiLuFragment extends Fragment implements BDLocationListener, OnGetP
      * 友盟分享
      */
     private void umShare(SHARE_MEDIA share_media) {
-        ShareAction shareAction = new ShareAction((Activity) mContext);
-        shareAction.setPlatform(share_media).withMedia(new UMImage(mContext, R.mipmap.logos)).withTitle(share_title).withText(share_content).withTargetUrl(share_url).setCallback(umShareListener).share();
+        ShareAction shareAction = new ShareAction(getActivity());
+        UMWeb  web = new UMWeb(share_url);
+        web.setTitle(share_title);//标题
+        web.setThumb(new UMImage(getActivity(), R.mipmap.logos));
+        web.setDescription("V旅行");//描述
+        shareAction.setPlatform(share_media).withMedia(web).withText(share_content).setCallback(umShareListener).share();
+
     }
 
     private UMShareListener umShareListener = new UMShareListener() {
+
+        @Override
+        public void onStart(SHARE_MEDIA platform) {
+            //分享开始的回调，可以用来处理等待框，或相关的文字提示
+//            umDialog.show();
+        }
+
         @Override
         public void onResult(SHARE_MEDIA platform) {
+//            umDialog.dismiss();
             Log.d("plat", "platform" + platform);
-            if (platform.name().equals("WEIXIN_FAVORITE")) {
-                Toast.makeText(mContext, platform + " 收藏成功啦", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(mContext, platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
-            }
+//            if (platform.name().equals("WEIXIN_FAVORITE")) {
+//                Toast.makeText(mContext, platform + " 收藏成功啦", Toast.LENGTH_SHORT).show();
+//            } else {
+//                Toast.makeText(mContext, platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
+//            }
         }
 
         @Override
         public void onError(SHARE_MEDIA platform, Throwable t) {
-            Toast.makeText(mContext, platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
-            if (t != null) {
-                Log.d("throw", "throw:" + t.getMessage());
-            }
+//            umDialog.dismiss();
+//            Toast.makeText(mContext, platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
+//            if (t != null) {
+//                Log.d("throw", "throw:" + t.getMessage());
+//            }
         }
 
         @Override
         public void onCancel(SHARE_MEDIA platform) {
-            Toast.makeText(mContext, platform + " 分享取消了", Toast.LENGTH_SHORT).show();
+//            umDialog.dismiss();
+//            Toast.makeText(mContext, platform + " 分享取消了", Toast.LENGTH_SHORT).show();
         }
     };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        /** attention to this below ,must add this**/
+//        if (data == null) {
+//            return;
+//        }
+//        if (data.getData() == null) {
+//            return;
+//        }
+        UMShareAPI.get(mContext).onActivityResult(requestCode, resultCode, data);
+        Log.d("result", "onActivityResult");
+//        if(umDialog.isShowing()){
+//            umDialog.dismiss();
+//        }
+    }
+
 
 }
