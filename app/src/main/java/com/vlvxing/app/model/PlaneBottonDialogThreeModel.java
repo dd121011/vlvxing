@@ -6,6 +6,18 @@ package com.vlvxing.app.model;
 
 public class PlaneBottonDialogThreeModel {
     private String title;
+    private int position;
+    public String code;
+    private String price;
+    private boolean bo;
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
 
     public String getTitle() {
         return title;
@@ -31,6 +43,11 @@ public class PlaneBottonDialogThreeModel {
         this.bo = bo;
     }
 
-    private String price;
-    private boolean bo;
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 }

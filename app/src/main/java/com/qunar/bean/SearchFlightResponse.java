@@ -1,6 +1,7 @@
 package com.qunar.bean;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -65,7 +66,7 @@ public class SearchFlightResponse {
             this.flightInfos = flightInfos;
         }
 
-        public Set<String> airlineSet;//航空公司
+        public Map<String,String> airlineMap;//航空公司
         private Set<String> dptAirportSet;//起飞机场
         private Set<String> arrAirportSet;//落地机场
 
@@ -86,12 +87,12 @@ public class SearchFlightResponse {
             this.arrAirportSet = arrAirportSet;
         }
 
-        public Set<String> getAirlineSet() {
-            return airlineSet;
+        public Map<String, String> getAirlineMap() {
+            return airlineMap;
         }
 
-        public void setAirlineSet(Set<String> airlineSet) {
-            this.airlineSet = airlineSet;
+        public void setAirlineMap(Map<String, String> airlineMap) {
+            this.airlineMap = airlineMap;
         }
     }
 

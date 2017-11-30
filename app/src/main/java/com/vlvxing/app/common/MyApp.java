@@ -648,6 +648,8 @@ public class MyApp extends Application {
 		};
 		mPushAgent.setMessageHandler(messageHandler);
 
+
+
 		/**
 		 * 自定义行为的回调处理，参考文档：高级功能-通知的展示及提醒-自定义通知打开动作
 		 * UmengNotificationClickHandler是在BroadcastReceiver中被调用，故
@@ -666,6 +668,9 @@ public class MyApp extends Application {
 		//使用自定义的NotificationHandler，来结合友盟统计处理消息通知，参考http://bbs.umeng.com/thread-11112-1-1.html
 		//CustomNotificationHandler notificationClickHandler = new CustomNotificationHandler();
 		mPushAgent.setNotificationClickHandler(notificationClickHandler);
+
+
+
 
 		//注册推送服务，每次调用register方法都会回调该接口
 		mPushAgent.register(new IUmengRegisterCallback() {

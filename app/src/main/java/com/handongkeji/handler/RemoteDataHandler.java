@@ -750,13 +750,11 @@ public class RemoteDataHandler {
 			}
 		}
 		final String ukey = url+"?"+pkey;
-		System.out.println("生单接口  url+pkey: "+ pkey);
 		final Handler handler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
 				ResponseData data = new ResponseData();
 				data.setJson((String) msg.obj);
-				System.out.println("生单接口  handler data "+ data.getJson());
 				try {
 					callback.dataLoaded(data);
 				} catch (JSONException e) {
@@ -770,7 +768,6 @@ public class RemoteDataHandler {
 				Message msg = handler.obtainMessage(HttpStatus.SC_OK);
 				try {
 					String json = HttpHelper.post(url, params);
-					System.out.println("booking  json "+ json);
 					if (json != null) {
 						json = json.replaceAll("\\x0a|\\x0d|", "");
 //							json = json.replaceAll("null","\"\"");
