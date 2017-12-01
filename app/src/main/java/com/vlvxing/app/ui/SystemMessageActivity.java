@@ -225,6 +225,7 @@ public class SystemMessageActivity extends BaseActivity {
             holder.itemLin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     if (type == 2) { //订单
                         context.startActivity(new Intent(context, OrderDetailActivity.class).putExtra("id", id));
                     }

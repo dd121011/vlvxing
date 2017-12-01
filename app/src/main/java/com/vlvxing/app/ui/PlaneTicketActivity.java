@@ -313,10 +313,8 @@ public class PlaneTicketActivity extends BaseActivity{
                 //切换城市
                 Animation animationLeft = AnimationUtils.loadAnimation(this, R.anim.plane_translate_left);//加载Xml文件中的动画imgShow.startAnimation(scaleAnimation2);
                 leftCityLin.startAnimation(animationLeft);//开始动画
-
                 Animation animationRight = AnimationUtils.loadAnimation(this, R.anim.plane_translate_right);//加载Xml文件中的动画imgShow.startAnimation(scaleAnimation2);
                 rightCityLin.startAnimation(animationRight);//开始动画
-
                 String left = cityLefttxt.getText().toString();
                 String right = cityRighttxt.getText().toString();
                 cityLefttxt.setText(right);

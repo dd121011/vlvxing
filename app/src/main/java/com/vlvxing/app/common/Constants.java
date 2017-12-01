@@ -25,9 +25,8 @@ public final class Constants {
      */
     public static final String QUNAR_KEY = "0748cebf8cf346cf64070333c7fed08f";   //从开发者平台获取
     public static final String QUNAR_TOKEN = "109cfbc62855bdc711a68c77c3e6bd97"; //从开发者平台获取
-//    public static final String QUNAR_BASE_URL = "http://qae.qunar.com/api/router?";
+//    public static final String QUNAR_BASE_URL = "http://60.205.213.239:81/ticket/";
     public static final String QUNAR_BASE_URL = "http://app.mtvlx.cn/ticket/";
-
     public static final String QUNAR_SEARCHFLIGHT = "flight.national.supply.sl.searchflight";//航班搜索接口
     /**
      * 系统初始化配置文件名

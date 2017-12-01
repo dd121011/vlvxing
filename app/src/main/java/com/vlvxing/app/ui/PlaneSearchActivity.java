@@ -100,7 +100,6 @@ public class PlaneSearchActivity extends BaseActivity {
     private String arriveCity;
     private String date;
     private Dialog bottomDialog;
-    //    private List<PlaneScreenBottomListViewFirstModel> li;
     private String strFirst = "";//直飞经停
     private String strSecond = "";//起飞时段
     private String strThree = "";//记录航空公司中用户选择了哪些航空公司
@@ -109,7 +108,6 @@ public class PlaneSearchActivity extends BaseActivity {
     private HashMap<String, Boolean> mapSecond;//记录起飞时刻中用户选择了哪些航班时段
     //航空公司
     private List<PlaneBottonDialogThreeModel> bottomDialogThreeData;//航空公司
-    private List<PlaneBottonDialogThreeModel> bottomDialogThreeLastData;//航空公司
 //    private HashMap<Integer, Boolean> lCurrentItem;//航空公司listview 有哪些item是被选中的
 
     //直飞经停
@@ -119,16 +117,16 @@ public class PlaneSearchActivity extends BaseActivity {
     private List<PlaneBottonDialogThreeModel> bottomDialogFourQifeiData;//航空公司 起飞机场
     private List<PlaneBottonDialogThreeModel> bottomDialogFourJiangluoData;//航空公司 降落机场
 
-    private HashMap<Integer, Boolean> firstHashMap;//起飞机场 记录用户选择的所有机场
-    private HashMap<Integer, Boolean> secondHashMap;//降落机场 记录用户选择的所有机场
+    private HashMap<String, Boolean> firstHashMap = new HashMap<>();//起飞机场 记录用户选择的所有机场
+    private HashMap<String, Boolean> secondHashMap = new HashMap<>();
+    ;//降落机场 记录用户选择的所有机场
     //接口条件
     private HashMap<String, Object> params;//查询航班条件参数
     private String dateResult = "";
-//    private Set<String> companySet = null;//航空公司
     private String sort = "1";//1时间+  2价格+  3飞行时间 -1(-)  -2(-)  -3(-)
 
-    private boolean isClicked = false;//航空公司
-    private HashMap<String,String> hsThreeData = new HashMap<String, String>();
+    private HashMap<String, String> hsThreeData = new HashMap<String, String>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,14 +135,13 @@ public class PlaneSearchActivity extends BaseActivity {
         goCity = getIntent().getStringExtra("goCity").trim();//出发城市
         arriveCity = getIntent().getStringExtra("arriveCity").trim();//到达城市
         date = getIntent().getStringExtra("date").trim();//出发日期
-        System.out.println("购票日期,跳转后getIntent"+date);
         arrToString();
         mcontext = this;
         params = new HashMap<>();//查询航班条件参数
         //底部筛选弹出框
         bottomDialog = new Dialog(this, R.style.BottomDialog);
         //获取上个页面,用户选择的日期,并转换成日历对象,设置横向日历默认选中的日期
-        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date d = null;
         try {
             d = sdf.parse(date);
@@ -190,9 +187,8 @@ public class PlaneSearchActivity extends BaseActivity {
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
             @Override
             public void onDateSelected(Date d, int position) {
-//                Toast.makeText(PlaneSearchActivity.this, DateFormat.getDateInstance().format(d) + " is selected!", Toast.LENGTH_SHORT).show();
                 date = DateFormat.getDateInstance().format(d).toString();
-                System.out.println("时间转换 :onDateSelected date"+date);
+//                System.out.println("时间转换 :onDateSelected date"+date);
                 arrToString();
                 initData();
             }
@@ -205,11 +201,11 @@ public class PlaneSearchActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intnet = new Intent(mcontext, PlaneDetailsActivity.class);
-                if(goCity.equals("")){
+                if (goCity.equals("")) {
                     ToastUtils.show(mcontext, "请选择出发城市");
                     return;
                 }
-                if(arriveCity.equals("")){
+                if (arriveCity.equals("")) {
                     ToastUtils.show(mcontext, "请选择到达城市");
                     return;
                 }
@@ -226,16 +222,16 @@ public class PlaneSearchActivity extends BaseActivity {
 
         clearSecondAllChecked();//初始化筛选中的起飞时段
 
-        bottomDialogThreeLastData = new ArrayList<>();//用来记录航空公司的选中状态
     }
+
     //时间,价格排序
-    private void setOnChecked(){
+    private void setOnChecked() {
         leftCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
+                if (b) {
                     sort = "-1";
-                }else{
+                } else {
                     sort = "1";
                 }
                 initData();
@@ -245,75 +241,72 @@ public class PlaneSearchActivity extends BaseActivity {
         rightCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
+                if (b) {
                     sort = "-2";
-                }else{
+                } else {
                     sort = "2";
                 }
                 initData();
             }
         });
     }
+
     /**
      * date字符串 xxxx-x-x转换 xxxx-xx-xx
      */
-    private void arrToString(){
-        System.out.println("时间转换 date:"+date);
-        if(date.indexOf("年")!=-1){//包含年
+    private void arrToString() {
+        if (date.indexOf("年") != -1) {//包含年
             date = date.replace('年', '-');
             date = date.replace('月', '-');
-            date = date.substring(0,date.length()-1);
+            date = date.substring(0, date.length() - 1);
         }
         String[] dateStr = date.split("-");
-        if(dateStr[1].length()==1) {
+        if (dateStr[1].length() == 1) {
             dateStr[1] = 0 + dateStr[1];
-            System.out.println("时间转换 长度为1");
         }
-        if (dateStr[2].length()==1) {
+        if (dateStr[2].length() == 1) {
             dateStr[2] = 0 + dateStr[2];
         }
-        dateResult = dateStr[0]+"-"+dateStr[1]+"-"+dateStr[2];
+        dateResult = dateStr[0] + "-" + dateStr[1] + "-" + dateStr[2];
     }
+
     private void initData() {
-        System.out.println("时间转换 dateResult:"+dateResult);
         //机票列表的数据源
         String url = Constants.QUNAR_BASE_URL;
 
-        params.put("dptCity",goCity);
-        params.put("arrCity",arriveCity);
-        params.put("date",dateResult);
-        params.put("ex_track","youxuan");
-        params.put("dptFlyTime",strSecond);
-        params.put("sort",sort); //1时间+  2价格+   -1(-)  -2(-)
-        params.put("airlineName",strThree);//航空公司
-        params.put("dptAirpot",strFourQifei);//出发机场
-        params.put("arriAirpot",strFourJiangluo);//到达机场
-        if(firstResult){
-            params.put("stop","true");
-        }else{
-            params.put("stop","false");
+        params.put("dptCity", goCity);
+        params.put("arrCity", arriveCity);
+        params.put("date", dateResult);
+        params.put("ex_track", "youxuan");
+        params.put("dptFlyTime", strSecond);
+        params.put("sort", sort); //1时间+  2价格+   -1(-)  -2(-)
+        params.put("airlineName", strThree);//航空公司
+        params.put("dptAirpot", strFourQifei);//出发机场
+        params.put("arriAirpot", strFourJiangluo);//到达机场
+        if (firstResult) {
+            params.put("stop", "true");
+        } else {
+            params.put("stop", "false");
         }
         showDialog("加载中...");
-        RemoteDataHandler.asyncPlaneGet(url+"searchFlight",params,mcontext,new RemoteDataHandler.Callback() {
+        RemoteDataHandler.asyncPlaneGet(url + "searchFlight", params, mcontext, new RemoteDataHandler.Callback() {
             @Override
             public void dataLoaded(ResponseData data) throws JSONException {
-                System.out.println("飞机接口回调 data:"+data);
                 String json = data.getJson();
                 if (StringUtils.isStringNull(json)) {
                     dismissDialog();
                     return;
                 }
-                System.out.println("飞机接口回调 json:"+json);
                 Gson gson = new Gson();
-                PlaneResult model = gson.fromJson(json,PlaneResult.class);
+                PlaneResult model = gson.fromJson(json, PlaneResult.class);
                 int status = model.getStatus();
-                if(status==1){
+                if (status == 1) {
 
                     //-1是空  -2是错误的
                     SearchFlightResponse response = model.getData();
                     SearchFlightResponse.Result result = response.getResult();
 
-                    Map<String,String> companySet = result.getAirlineMap();//航空公司
+                    Map<String, String> companySet = result.getAirlineMap();//航空公司
                     //航空公司list数据绑定,访问一次重置一次
                     initThreeData(companySet);
 
@@ -322,28 +315,27 @@ public class PlaneSearchActivity extends BaseActivity {
                     clearThreeAllChecked();
 
 
-
                     Set<String> qifeiSet = result.getDptAirportSet();//起飞机场
                     Set<String> jiangluoSet = result.getArrAirportSet();//降落机场
                     //机场落地 list数据绑定
-                    initFourData(qifeiSet,jiangluoSet);
+                    initFourData(qifeiSet, jiangluoSet);
                     //起飞时段 记录了哪些航班
 //                    clearSecondAllChecked();//每次查询新数据,都需要重置用户的选中状态
 
                     List<SearchFlightResponse.FlightInfo> info = result.getFlightInfos();
-                    if(info.size()>0){
+                    if (info.size() > 0) {
                         body_list.setVisibility(View.VISIBLE);
                         mData.clear();
                         mData.addAll(info);
                         adapter.notifyDataSetChanged();
-                    }else{
+                    } else {
                         body_list.setVisibility(View.INVISIBLE);
                         mData.clear();
                         adapter.notifyDataSetChanged();
                         ToastUtils.show(mcontext, "暂无航班");
                     }
 
-                }else{
+                } else {
                     body_list.setVisibility(View.INVISIBLE);
                     ToastUtils.show(mcontext, "暂无航班");
                 }
@@ -352,6 +344,7 @@ public class PlaneSearchActivity extends BaseActivity {
             }
         });
     }
+
     //直飞
     private void clearFirstAllChecked() {
         firstResult = false;
@@ -361,15 +354,15 @@ public class PlaneSearchActivity extends BaseActivity {
     private void clearSecondAllChecked() {
         //起飞时段 记录了哪些航班
         mapSecond = new HashMap<>();
-        mapSecond.put("first",false);
-        mapSecond.put("second",false);
-        mapSecond.put("three",false);
-        mapSecond.put("four",false);
+        mapSecond.put("first", false);
+        mapSecond.put("second", false);
+        mapSecond.put("three", false);
+        mapSecond.put("four", false);
         strSecond = "";
     }
 
     //航空公司list数据绑定
-    private void initThreeData(Map<String,String> companyMap) {
+    private void initThreeData(Map<String, String> companyMap) {
         bottomDialogThreeData = getDialogThreeData(companyMap);
         strThree = "";
     }
@@ -386,105 +379,110 @@ public class PlaneSearchActivity extends BaseActivity {
     }
 
     //机场起飞,落地list数据绑定
-    private void initFourData(Set<String> qifeiSet,Set<String> jiangluoSet) {
+    private void initFourData(Set<String> qifeiSet, Set<String> jiangluoSet) {
         bottomDialogFourQifeiData = getDialogFourQifeiData(qifeiSet);
         bottomDialogFourJiangluoData = getDialogFourJiangluoData(jiangluoSet);
-        clearFourAllChecked();
+
     }
 
     //初始化;清理; 起飞机场 降落机场的选中状态
     private void clearFourAllChecked() {
         //起飞机场   默认填充所有的为false
-        firstHashMap = new HashMap<Integer, Boolean>();
+        firstHashMap = new HashMap<String, Boolean>();
         for (int i = 0; i < bottomDialogFourQifeiData.size(); i++) {
-            firstHashMap.put(i, false);
+            bottomDialogFourQifeiData.get(i).setBo(false);
         }
 
         //降落机场 默认填充所有的为false
-        secondHashMap = new HashMap<Integer, Boolean>();
-        for (int i = 0; i < bottomDialogFourQifeiData.size(); i++) {
-            secondHashMap.put(i, false);
+        secondHashMap = new HashMap<String, Boolean>();
+        for (int i = 0; i < bottomDialogFourJiangluoData.size(); i++) {
+            bottomDialogFourJiangluoData.get(i).setBo(false);
         }
 
     }
+
     //获取起飞时段的数据
-    private void getStrSecondResult(){
+    private void getStrSecondResult() {
         //起飞时段
         strSecond = "";
-        if(mapSecond.size()>0){
+        if (mapSecond.size() > 0) {
             if (mapSecond.get("first")) {
                 strSecond += "1";
             }
-            if(mapSecond.get("second")){
+            if (mapSecond.get("second")) {
                 strSecond += "2";
             }
-            if(mapSecond.get("three")){
+            if (mapSecond.get("three")) {
                 strSecond += "3";
             }
-            if(mapSecond.get("four")){
+            if (mapSecond.get("four")) {
                 strSecond += "4";
             }
 
         }
 
-        System.out.println("飞机起飞时段 最终结果:"+strSecond);
+//        System.out.println("飞机起飞时段 最终结果:"+strSecond);
     }
 
     //获取航空公司的最终结果
-    private void getStrThreeResult(){
+    private void getStrThreeResult() {
         //航空公司
         strThree = "";
-        for (int i = 0;i<bottomDialogThreeData.size();i++) {
-            if(bottomDialogThreeData.get(i).isBo()){//判断哪些是被选中的,如果被选中的话,则拼接在最终结果中
-                strThree = strThree + "" + bottomDialogThreeData.get(i).getCode()+",";//获取二字码,拼接在接口中
-            }else{
-                if(hsThreeData.containsKey(bottomDialogThreeData.get(i).getCode())){
-                    strThree = strThree + "" + bottomDialogThreeData.get(i).getCode()+",";//获取二字码,拼接在接口中
+        for (int i = 0; i < bottomDialogThreeData.size(); i++) {
+            if (bottomDialogThreeData.get(i).isBo()) {//判断哪些是被选中的,如果被选中的话,则拼接在最终结果中
+                strThree = strThree + "" + bottomDialogThreeData.get(i).getCode() + ",";//获取二字码,拼接在接口中
+            } else {
+                if (hsThreeData.containsKey(bottomDialogThreeData.get(i).getCode())) {
+                    strThree = strThree + "" + bottomDialogThreeData.get(i).getCode() + ",";//获取二字码,拼接在接口中
                 }
 
             }
         }
 
-        System.out.println("飞机航空公司  最终结果:"+strThree);
+//        System.out.println("飞机航空公司  最终结果:"+strThree);
     }
 
     //获取起飞机场/落地机场的最终结果
-    private void getStrFourResult(){
+    private void getStrFourResult() {
         //机场落地  起飞机场
         strFourQifei = "";
-        Set<Integer> fourSetQifei = new HashSet<Integer>();
-        for (Map.Entry<Integer, Boolean> entry : firstHashMap.entrySet()) {
-            if (entry.getValue()) {
-                fourSetQifei.add(entry.getKey());
+        for (int i = 0; i < bottomDialogFourQifeiData.size(); i++) {
+            if (bottomDialogFourQifeiData.get(i).isBo()) {//判断哪些是被选中的,如果被选中的话,则拼接在最终结果中
+                strFourQifei = strFourQifei + "" + bottomDialogFourQifeiData.get(i).getTitle() + ",";//获取二字码,拼接在接口中
+            } else {
+                if (firstHashMap.containsKey(bottomDialogFourQifeiData.get(i).getTitle())) {
+                    strFourQifei = strFourQifei + "" + bottomDialogFourQifeiData.get(i).getTitle() + ",";//获取二字码,拼接在接口中
+                }
+
             }
         }
 
-        for (Integer value : fourSetQifei) {
-            strFourQifei = strFourQifei + "" + bottomDialogFourQifeiData.get(value).getTitle()+",";
-        }
-        System.out.println("飞机起飞机场:"+strFourQifei);
+//        System.out.println("飞机起飞机场:"+strFourQifei);
 
         //机场落地  降落机场
         strFourJiangluo = "";
-        Set<Integer> fourSetJiangluo = new HashSet<Integer>();
-        for (Map.Entry<Integer, Boolean> entry : secondHashMap.entrySet()) {
-            if (entry.getValue()) {
-                fourSetJiangluo.add(entry.getKey());
+        for (int i = 0; i < bottomDialogFourJiangluoData.size(); i++) {
+            if (bottomDialogFourJiangluoData.get(i).isBo()) {//判断哪些是被选中的,如果被选中的话,则拼接在最终结果中
+                strFourJiangluo = strFourJiangluo + "" + bottomDialogFourJiangluoData.get(i).getTitle() + ",";//获取二字码,拼接在接口中
+            } else {
+                if (secondHashMap.containsKey(bottomDialogFourJiangluoData.get(i).getTitle())) {
+                    strFourJiangluo = strFourJiangluo + "" + bottomDialogFourJiangluoData.get(i).getTitle() + ",";//获取二字码,拼接在接口中
+                }
+
             }
         }
 
-        for (Integer value : fourSetJiangluo) {
-            strFourJiangluo = strFourJiangluo + "" + bottomDialogFourJiangluoData.get(value).getTitle()+",";
-        }
-        System.out.println("飞机落地机场:"+strFourJiangluo);
+
+//        System.out.println("飞机落地机场:"+strFourJiangluo);
     }
+
     //完成条件选择 提交条件查询
     private void submit() {
-        if(firstResult){
-            System.out.println("飞机直飞经停  最终结果:true");
-        }else{
-            System.out.println("飞机直飞经停  最终结果:false");
-        }
+//        if(firstResult){
+////            System.out.println("飞机直飞经停  最终结果:true");
+//        }else{
+////            System.out.println("飞机直飞经停  最终结果:false");
+//        }
         //获取起飞时段的最终结果
         getStrSecondResult();
         //获取航空公司的最终结果
@@ -513,7 +511,6 @@ public class PlaneSearchActivity extends BaseActivity {
                 //只要点击任意一个,另一个checkbox都会取消任何状态  两种排序方式不可混合
                 rightCheckTxt.setTextColor(Color.parseColor("#666666"));
                 rightCheckBox.setChecked(false);
-
 
                 //按时间排序
                 if (leftCheckBox.isChecked()) {
@@ -558,7 +555,6 @@ public class PlaneSearchActivity extends BaseActivity {
         LinearLayout first_lin = (LinearLayout) contentView.findViewById(R.id.first_lin);//直飞/经停的布局 first
         CheckBox firstCheck = (CheckBox) contentView.findViewById(R.id.check);//直飞/经停的选择状态按钮
 
-        System.out.println("飞机  直飞/经停中的 直飞的选中状态:"+firstResult);
         if (firstResult) {
             firstCheck.setChecked(true);
         } else {
@@ -587,7 +583,6 @@ public class PlaneSearchActivity extends BaseActivity {
 
         ViewGroup.LayoutParams layoutParams = contentView.getLayoutParams();
         layoutParams.width = getResources().getDisplayMetrics().widthPixels;
-//        layoutParams.height = (int)(getResources().getDisplayMetrics().heightPixels * 0.8);
         contentView.setLayoutParams(layoutParams);
         bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
         bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
@@ -600,6 +595,8 @@ public class PlaneSearchActivity extends BaseActivity {
                 clearSecondAllChecked();
                 clearThreeAllChecked();
                 hsThreeData.clear();
+                firstHashMap.clear();
+                secondHashMap.clear();
                 clearFourAllChecked();
                 bottomDialog.dismiss();
                 initData();
@@ -658,24 +655,24 @@ public class PlaneSearchActivity extends BaseActivity {
                         listview.setVisibility(View.GONE);
                         fourLin.setVisibility(View.GONE);
                         second_lin.setVisibility(View.VISIBLE);
-                            if (mapSecond.size() > 0) {
-                                for (Map.Entry<String, Boolean> entry : mapSecond.entrySet()) {
-                                    if (entry.getValue()) {
-                                        switch (entry.getKey()) {
-                                            case "first":
-                                                checkFirst.setChecked(true);
-                                                break;
-                                            case "second":
-                                                checkSecond.setChecked(true);
-                                                break;
-                                            case "three":
-                                                checkThree.setChecked(true);
-                                                break;
-                                            case "four":
-                                                checkFour.setChecked(true);
-                                                break;
-                                        }
+                        if (mapSecond.size() > 0) {
+                            for (Map.Entry<String, Boolean> entry : mapSecond.entrySet()) {
+                                if (entry.getValue()) {
+                                    switch (entry.getKey()) {
+                                        case "first":
+                                            checkFirst.setChecked(true);
+                                            break;
+                                        case "second":
+                                            checkSecond.setChecked(true);
+                                            break;
+                                        case "three":
+                                            checkThree.setChecked(true);
+                                            break;
+                                        case "four":
+                                            checkFour.setChecked(true);
+                                            break;
                                     }
+                                }
                             }
                         }
 
@@ -734,22 +731,23 @@ public class PlaneSearchActivity extends BaseActivity {
                         listview.setVisibility(View.VISIBLE);
                         fourLin.setVisibility(View.GONE);
                         second_lin.setVisibility(View.GONE);
-
-                        DialogThreeAdapter adapter = new DialogThreeAdapter(mcontext, bottomDialogThreeData,hsThreeData);
-                        listview.setAdapter(adapter);
+                        DialogThreeAdapter adapter = new DialogThreeAdapter(mcontext, bottomDialogThreeData, hsThreeData);
+                        if (bottomDialogThreeData != null) {
+                            listview.setAdapter(adapter);
+                        }
 
                         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
                                                     long arg3) {
 
                                 if (bottomDialogThreeData.get(arg2).isBo()) {//如果已经被选中的话，这次点击就取消选中
-                                    if(hsThreeData.containsKey(bottomDialogThreeData.get(arg2).getCode())){
+                                    if (hsThreeData.containsKey(bottomDialogThreeData.get(arg2).getCode())) {
                                         hsThreeData.remove(bottomDialogThreeData.get(arg2).getCode());
                                     }
                                     bottomDialogThreeData.get(arg2).setBo(false);
                                 } else {
                                     bottomDialogThreeData.get(arg2).setBo(true);
-                                    hsThreeData.put(bottomDialogThreeData.get(arg2).getCode(),bottomDialogThreeData.get(arg2).getTitle());
+                                    hsThreeData.put(bottomDialogThreeData.get(arg2).getCode(), bottomDialogThreeData.get(arg2).getTitle());
                                 }
 
                                 adapter.notifyDataSetChanged();
@@ -761,51 +759,49 @@ public class PlaneSearchActivity extends BaseActivity {
                         listview.setVisibility(View.GONE);
                         second_lin.setVisibility(View.GONE);
                         fourLin.setVisibility(View.VISIBLE);
-
                         //起飞机场
                         DialogFourAdapter adapterFourQifei = new DialogFourAdapter(mcontext, bottomDialogFourQifeiData, firstHashMap);
-                        firstList.setAdapter(adapterFourQifei);
+
+                        if (bottomDialogFourQifeiData != null) {
+                            firstList.setAdapter(adapterFourQifei);
+                        }
+
 
                         firstList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                if (firstHashMap.get(position)) {//如果已经被选中的话，这次点击就取消选中
-                                    firstHashMap.put(position, false);
-
-
-//                                    adapterFourQifei.setCurrentItem(position);
-//                                    adapterFourQifei.setClick(false);
-
+                                if (bottomDialogFourQifeiData.get(position).isBo()) {//如果已经被选中的话，这次点击就取消选中
+                                    if (firstHashMap.containsKey(bottomDialogFourQifeiData.get(position).getTitle())) {
+                                        firstHashMap.remove(bottomDialogFourQifeiData.get(position).getTitle());
+                                    }
+                                    bottomDialogFourQifeiData.get(position).setBo(false);
                                 } else {
-                                    firstHashMap.put(position, true);
-
-//                                    adapterFourQifei.setCurrentItem(position);
-//                                    adapterFourQifei.setClick(true);
-
+                                    firstHashMap.put(bottomDialogFourQifeiData.get(position).getTitle(), true);
+                                    bottomDialogFourQifeiData.get(position).setBo(true);
                                 }
-
                                 adapterFourQifei.notifyDataSetChanged();
 
                             }
                         });
                         //落地机场
                         DialogFourAdapter adapterFourLuodi = new DialogFourAdapter(mcontext, bottomDialogFourJiangluoData, secondHashMap);
-                        secondList.setAdapter(adapterFourLuodi);
+                        if (bottomDialogFourJiangluoData != null) {
+                            secondList.setAdapter(adapterFourLuodi);
+                        }
 
                         secondList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                if (secondHashMap.get(position)) {
-                                    secondHashMap.put(position, false);
+                                if (bottomDialogFourJiangluoData.get(position).isBo()) {
 
-//                                    adapterFourLuodi.setCurrentItem(position);
-//                                    adapterFourLuodi.setClick(false);
+                                    if (secondHashMap.containsKey(bottomDialogFourJiangluoData.get(position).getTitle())) {
+                                        secondHashMap.remove(bottomDialogFourJiangluoData.get(position).getTitle());
+                                    }
+                                    bottomDialogFourJiangluoData.get(position).setBo(false);
 
                                 } else {
-                                    secondHashMap.put(position, true);
-
-//                                    adapterFourLuodi.setCurrentItem(position);
-//                                    adapterFourLuodi.setClick(true);
+                                    secondHashMap.put(bottomDialogFourJiangluoData.get(position).getTitle(), true);
+                                    bottomDialogFourJiangluoData.get(position).setBo(true);
 
                                 }
                                 adapterFourLuodi.notifyDataSetChanged();
@@ -821,10 +817,6 @@ public class PlaneSearchActivity extends BaseActivity {
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                clearFirstAllChecked();
-//                clearSecondAllChecked();
-//                clearThreeAllChecked();
-//                clearFourAllChecked();
                 bottomDialog.dismiss();
             }
         });
@@ -855,7 +847,7 @@ public class PlaneSearchActivity extends BaseActivity {
     }
 
     //航空公司列表的数据源
-    private List<PlaneBottonDialogThreeModel> getDialogThreeData(Map<String,String> companyMap) {
+    private List<PlaneBottonDialogThreeModel> getDialogThreeData(Map<String, String> companyMap) {
         List<PlaneBottonDialogThreeModel> list = new ArrayList<PlaneBottonDialogThreeModel>();
         int i = 0;
         for (Map.Entry<String, String> entry : companyMap.entrySet()) {
@@ -873,10 +865,9 @@ public class PlaneSearchActivity extends BaseActivity {
     //机场落地 起飞机场 的数据源
     private List<PlaneBottonDialogThreeModel> getDialogFourQifeiData(Set<String> qifeiSet) {
         List<PlaneBottonDialogThreeModel> list = new ArrayList<PlaneBottonDialogThreeModel>();
-        for (String str : qifeiSet){
+        for (String str : qifeiSet) {
             PlaneBottonDialogThreeModel map = new PlaneBottonDialogThreeModel();
             map.setTitle(str);
-//            map.setPrice("1915");
             map.setBo(false);
             list.add(map);
         }
@@ -886,10 +877,9 @@ public class PlaneSearchActivity extends BaseActivity {
     //机场落地 落地机场 的数据源
     private List<PlaneBottonDialogThreeModel> getDialogFourJiangluoData(Set<String> jiangluoSet) {
         List<PlaneBottonDialogThreeModel> list = new ArrayList<PlaneBottonDialogThreeModel>();
-        for (String str : jiangluoSet){
+        for (String str : jiangluoSet) {
             PlaneBottonDialogThreeModel map = new PlaneBottonDialogThreeModel();
             map.setTitle(str);
-//            map.setPrice("1915");
             map.setBo(false);
             list.add(map);
         }
@@ -906,8 +896,6 @@ public class PlaneSearchActivity extends BaseActivity {
         public TextView planeName;
         public TextView planeStyle;
     }
-
-
 
 
     //机票列表的数据源适配器

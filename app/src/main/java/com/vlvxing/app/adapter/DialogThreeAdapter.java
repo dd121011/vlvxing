@@ -27,7 +27,6 @@ import java.util.Set;
 public class DialogThreeAdapter extends BaseAdapter {
     private Context context;
     private List<PlaneBottonDialogThreeModel> bottomDialogThreeData;//填充数据
-    private List<PlaneBottonDialogThreeModel> bottomDialogThreeLastData;//记录用户上次点击的数据集合 为true的是点击过的
     private boolean isChecked = false;//为true的时候--是被点击过的   false--未被点击过的
     private boolean isClicked = false;
     private HashMap<String,String> hsThreeData ;
