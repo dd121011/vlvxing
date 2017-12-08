@@ -2,11 +2,14 @@ package com.vlvxing.app.ui;
 
 import android.app.Application;
 import android.app.Dialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +42,7 @@ import com.handongkeji.ui.BaseActivity;
 
 import com.handongkeji.ui.BrowseActivity;
 import com.handongkeji.utils.StringUtils;
+import com.handongkeji.widget.CallDialog;
 import com.qunar.bean.SearchFlightRequest;
 import com.qunar.service.RequestService;
 import com.sivin.Banner;
@@ -81,6 +85,8 @@ public class PlaneTicketActivity extends BaseActivity{
     TextView headTitle;//标题
     @Bind(R.id.btn_back)
     ImageView ban_back;//返回键
+    @Bind(R.id.phone_img)
+    ImageView phone_img;//电话咨询
     @Bind(R.id.radio_group)
     RadioGroup radioGroup;//単程、往返的父控件
     @Bind(R.id.left_radio_btn)
@@ -123,6 +129,7 @@ public class PlaneTicketActivity extends BaseActivity{
     private Dialog vDialog;
     @Bind(R.id.plane_pager)
     Banner publicPager;//轮播
+    private String mobile ="010-50928502";
     //轮播图数据源
     private List<SysadModel.DataBean> img_list = new ArrayList<>();
     private List<String> bannerData = new ArrayList<>();
@@ -133,6 +140,7 @@ public class PlaneTicketActivity extends BaseActivity{
         setContentView(R.layout.activity_plane_tricket);
         ButterKnife.bind(this);
         headTitle.setText("机票");
+        phone_img.setVisibility(View.VISIBLE);
         mcontext = this;
         txtDate.setText(getNowDate());
         radioGroupOnCheckChange();//注册単程、返程的选择事件
@@ -262,16 +270,45 @@ public class PlaneTicketActivity extends BaseActivity{
         });
     }
 
+    private void clickQuery() {
+        final CallDialog dialog = new CallDialog(this, "");
+        dialog.setTitle("要拨打客服：" + mobile + "吗?");
+        dialog.setNegativeButtonListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mobile.trim().length() != 0) {
+                    Intent mobileIntent = new Intent(
+                            "android.intent.action.CALL", Uri.parse("tel:"
+                            + mobile));
+                    ComponentName componentName = mobileIntent.resolveActivity(getPackageManager());
+                    if (componentName != null) {
+                        String className = componentName.getClassName();
+                        Log.d("aaa", "onClick: "+className);
+                    }
+                    startActivity(mobileIntent); // 启动
+                }
+                // 否则Toast提示一下
+                else {
+                    ToastUtils.show(mcontext, "电话为空");
+                }
+                dialog.dismissDialog();
+            }
+        });
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
     }
 
-    @OnClick({R.id.return_lin,R.id.city_txt_left,R.id.city_txt_right,R.id.search,R.id.go_or_come,R.id.bottom_left_btn,R.id.bottom_right_btn,R.id.date_lin})
+    @OnClick({R.id.return_lin,R.id.phone_img,R.id.city_txt_left,R.id.city_txt_right,R.id.search,R.id.go_or_come,R.id.bottom_left_btn,R.id.bottom_right_btn,R.id.date_lin})
     public void onClick(View view){
         switch(view.getId()){
             case R.id.return_lin:
                 finish();
+                break;
+            case R.id.phone_img://电话咨询
+                clickQuery();
                 break;
             case R.id.city_txt_left:
                 //出发城市
@@ -341,7 +378,6 @@ public class PlaneTicketActivity extends BaseActivity{
 //        vDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
         vDialog.setCanceledOnTouchOutside(true);
         vDialog.show();
-
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

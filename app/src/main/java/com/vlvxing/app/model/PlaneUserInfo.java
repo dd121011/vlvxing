@@ -7,16 +7,16 @@ import java.io.Serializable;
  */
 
 public class PlaneUserInfo implements Serializable {
-    private Integer number;
+    private int number;
     private String name;
     private String card;
 
 
-    public Integer getNumber() {
+    public int getNumber() {
         return number;
     }
 
-    public void setNumber(Integer number) {
+    public void setNumber(int number) {
         this.number = number;
     }
 
@@ -38,7 +38,7 @@ public class PlaneUserInfo implements Serializable {
 
 
 
-    public PlaneUserInfo(Integer number,String name, String card) {
+    public PlaneUserInfo(int number,String name, String card) {
         this.number = number;
         this.name = name;
         this.card = card;

@@ -1,21 +1,28 @@
 package com.qunar.model;
 
-import com.qunar.bean.applyChange.ApplyChangeResult;
-import com.qunar.bean.changeSearch.PlaneChangeSerachBean;
+import com.qunar.bean.SearchQuoteResponse;
 
 import java.io.Serializable;
 
 /**
- * 改签支付
- * @author Zophar
+ * 机票订单推送 详情返回数据
+ * @author hjgang
  */
-public class PlaneChangeApplyResult implements Serializable{
+public class PlaneOrderMessageResult implements Serializable{
   public static final long serialVersionUID = 46601L;
   private int status;
   private String message;
   private Object content;
   private String type;
-  private ApplyChangeResult data;
+  private FlyOrder data;
+
+  public FlyOrder getData() {
+    return data;
+  }
+
+  public void setData(FlyOrder data) {
+    this.data = data;
+  }
 
   public static long getSerialVersionUID() {
     return serialVersionUID;
@@ -37,6 +44,8 @@ public class PlaneChangeApplyResult implements Serializable{
     this.message = message;
   }
 
+
+
   public Object getContent() {
     return content;
   }
@@ -51,24 +60,5 @@ public class PlaneChangeApplyResult implements Serializable{
 
   public void setType(String type) {
     this.type = type;
-  }
-
-  public ApplyChangeResult getData() {
-    return data;
-  }
-
-  public void setData(ApplyChangeResult data) {
-    this.data = data;
-  }
-
-  @Override
-  public String toString() {
-    return "PlaneChangeApplyResult{" +
-            "status=" + status +
-            ", message='" + message + '\'' +
-            ", content=" + content +
-            ", type='" + type + '\'' +
-            ", data=" + data +
-            '}';
   }
 }

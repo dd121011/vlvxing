@@ -187,6 +187,7 @@ public final class Constants {
 //	public static final String URL_CONTEXTPATH = "http://192.168.1.68/lvyoushejiao/";
     public static final String URL_CONTEXTPATH = "http://app.mtvlx.cn/lvyoushejiao/";  //客户的
 //    public static final String URL_CONTEXTPATH = "http://192.168.1.21/lvyoushejiao/";
+
     /**
      * 应用图片完整路径c
      */
@@ -321,6 +322,16 @@ public final class Constants {
      * 城市列表
      **/
     public static final String URL_CITYLIST = URL_CONTEXTPATH + "/sysArea/getTheCity.json";
+
+    /**
+     * 机票城市列表 Zophar
+     **/
+    public static final String PLANE_CITYLIST  =  "/getTheCity";
+    /**
+     * 城市搜索 Zophar
+     */
+    public static String PLANE_CITYSELECT = "/sousuodiqu";
+
     /**
      * 定制游中的目的地（包括国内外市）sysArea/getAllTheCity.json
      */

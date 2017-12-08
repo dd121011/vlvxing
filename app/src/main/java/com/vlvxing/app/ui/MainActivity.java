@@ -87,21 +87,42 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
         ButterKnife.bind(this);
+        myApp.setIs_active(true);//当前app处于活跃状态,用于友盟消息推送,区分app是否存在于前台或者后台
         init();
+
+
         //提交表单权限，批量注册权限
         requestLocationPermission();
+
+        //分享后的线路 点击分享的链接跳转到app内部
+        boolean lineDetails = getIntent().getBooleanExtra("lineDetails", false);
+        if (lineDetails) {
+            String id = getIntent().getStringExtra("productId");//线路id
+            startActivity(new Intent(MainActivity.this, LineDetailsActivity.class).putExtra("id", id));
+        }
         //请求第三方分享登陆的权限
 //        requestUMSharePermission();
     }
+
     /**
      * 请求第三方分享登陆的权限
      */
-    private void requestUMSharePermission() {
-        if(Build.VERSION.SDK_INT>=23){
-            String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CALL_PHONE,Manifest.permission.READ_LOGS,Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.SET_DEBUG_APP,Manifest.permission.SYSTEM_ALERT_WINDOW,Manifest.permission.GET_ACCOUNTS,Manifest.permission.WRITE_APN_SETTINGS};
-            ActivityCompat.requestPermissions(this,mPermissionList,123);
-        }
-    }
+//    private void requestUMSharePermission() {
+//        if (Build.VERSION.SDK_INT >= 23) {
+//            String[] mPermissionList = new String[]{
+//                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//                    Manifest.permission.ACCESS_FINE_LOCATION,
+//                    Manifest.permission.CALL_PHONE,
+//                    Manifest.permission.READ_LOGS,
+//                    Manifest.permission.READ_PHONE_STATE,
+//                    Manifest.permission.READ_EXTERNAL_STORAGE,
+//                    Manifest.permission.SET_DEBUG_APP,
+//                    Manifest.permission.SYSTEM_ALERT_WINDOW,
+//                    Manifest.permission.GET_ACCOUNTS,
+//                    Manifest.permission.WRITE_APN_SETTINGS};
+//            ActivityCompat.requestPermissions(this, mPermissionList, 123);
+//        }
+//    }
 
     /**
      * 请求定位权限
@@ -113,12 +134,25 @@ public class MainActivity extends BaseActivity {
                 Manifest.permission.CAMERA,
                 Manifest.permission.WAKE_LOCK,
                 Manifest.permission.ACCESS_NETWORK_STATE,
-                Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.CALL_PHONE};
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.CALL_PHONE
+
+
+
+//                Manifest.permission.ACCESS_FINE_LOCATION,
+//                Manifest.permission.CALL_PHONE,
+//                Manifest.permission.READ_LOGS,
+//                Manifest.permission.READ_PHONE_STATE,
+//                Manifest.permission.SET_DEBUG_APP,
+//                Manifest.permission.SYSTEM_ALERT_WINDOW,
+//                Manifest.permission.GET_ACCOUNTS,
+//                Manifest.permission.WRITE_APN_SETTINGS
+        };
         //如果没有注册权限
         if (!AndPermission.hasPermission(this, permissions)) {
             AndPermission.with(this).permission(permissions).requestCode(REQUEST_CODE_LOCATION).send();
         } else {
-         //如果注册过权限，直接触发定位
+            //如果注册过权限，直接触发定位
             startLocation();
         }
     }
@@ -163,11 +197,11 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (data==null){
+        if (data == null) {
             return;
         }
         if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
-            if (resultCode==1004) { //  65636 拍照  131172  选择本地图片
+            if (resultCode == 1004) { //  65636 拍照  131172  选择本地图片
                 ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
                 ImageItem imageItem = images.get(0);
                 String path = imageItem.path;
@@ -175,7 +209,7 @@ public class MainActivity extends BaseActivity {
             }
         }
 
-        if (resultCode==-1) { //获取拍摄视频的路径
+        if (resultCode == -1) { //获取拍摄视频的路径
             Uri data1 = data.getData();
             Cursor c = getContentResolver().query(data1, new String[]{MediaStore.MediaColumns.DATA}, null, null, null);
             if (c != null && c.moveToFirst()) {
@@ -238,9 +272,9 @@ public class MainActivity extends BaseActivity {
 //            currentTab.setSelected(true);
 //            viewpager.setCurrentItem(3);
 //        } else {
-            currentTab = shouyeLin;
-            currentTab.setSelected(true);
-            viewpager.setCurrentItem(0);
+        currentTab = shouyeLin;
+        currentTab.setSelected(true);
+        viewpager.setCurrentItem(0);
 //        }
     }
 
@@ -272,6 +306,7 @@ public class MainActivity extends BaseActivity {
 
     /**
      * 传入布局对象、fragment下标，实现切换
+     *
      * @param tab
      * @param index
      */

@@ -11,7 +11,7 @@ import java.io.Serializable;
  */
 public class PlaneBookResult implements Serializable{
   public static final long serialVersionUID = 46601L;
-  private Integer status;
+  private int status;
   private String message;
   private Object content;
   private String type;
@@ -28,11 +28,11 @@ public class PlaneBookResult implements Serializable{
     return serialVersionUID;
   }
 
-  public Integer getStatus() {
+  public int getStatus() {
     return status;
   }
 
-  public void setStatus(Integer status) {
+  public void setStatus(int status) {
     this.status = status;
   }
 

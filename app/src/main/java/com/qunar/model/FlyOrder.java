@@ -29,13 +29,13 @@ public class FlyOrder implements Serializable{
 
     private String cabin;
 
-    private Integer nopayamount;//金额
+    private int nopayamount;//金额
 
     private String deptairportcity;
 
     private String arriairportcity;
 
-    private Integer status;
+    private int status;
 
     private String statusdesc;
 
@@ -183,11 +183,11 @@ public class FlyOrder implements Serializable{
         this.cabin = cabin;
     }
 
-    public Integer getNopayamount() {
+    public int getNopayamount() {
         return nopayamount;
     }
 
-    public void setNopayamount(Integer nopayamount) {
+    public void setNopayamount(int nopayamount) {
         this.nopayamount = nopayamount;
     }
 
@@ -207,11 +207,11 @@ public class FlyOrder implements Serializable{
         this.arriairportcity = arriairportcity;
     }
 
-    public Integer getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -253,5 +253,36 @@ public class FlyOrder implements Serializable{
 
     public void setClientsite(String clientsite) {
         this.clientsite = clientsite;
+    }
+
+    @Override
+    public String toString() {
+        return "FlyOrder{" +
+                "orderid='" + orderid + '\'' +
+                ", orderno='" + orderno + '\'' +
+                ", airlinename='" + airlinename + '\'' +
+                ", airlinecode='" + airlinecode + '\'' +
+                ", flightnum='" + flightnum + '\'' +
+                ", deptcity='" + deptcity + '\'' +
+                ", arricity='" + arricity + '\'' +
+                ", deptdate='" + deptdate + '\'' +
+                ", depttime='" + depttime + '\'' +
+                ", arritime='" + arritime + '\'' +
+                ", cabin='" + cabin + '\'' +
+                ", nopayamount=" + nopayamount +
+                ", deptairportcity='" + deptairportcity + '\'' +
+                ", arriairportcity='" + arriairportcity + '\'' +
+                ", status=" + status +
+                ", statusdesc='" + statusdesc + '\'' +
+                ", userid=" + userid +
+                ", createtime=" + createtime +
+                ", flightTimes='" + flightTimes + '\'' +
+                ", clientsite='" + clientsite + '\'' +
+                ", passengers=" + passengers +
+                ", phone='" + phone + '\'' +
+                ", allowchange='" + allowchange + '\'' +
+                ", cancharge='" + cancharge + '\'' +
+                ", canrefund='" + canrefund + '\'' +
+                '}';
     }
 }

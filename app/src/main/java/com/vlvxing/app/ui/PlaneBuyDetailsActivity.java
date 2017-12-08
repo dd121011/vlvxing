@@ -385,7 +385,7 @@ public class PlaneBuyDetailsActivity extends BaseActivity {
                 ToastUtils.show(this, "请填写收件人姓名!");
                 return false;
             }
-            if (attnPhone.equals("")) {
+            if (!ValidateHelper.isPhoneNumberValid(attnPhone)) {
                 ToastUtils.show(this, "请填写收件人手机号码!");
                 return false;
             }

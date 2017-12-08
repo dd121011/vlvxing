@@ -71,6 +71,24 @@ public class MessageModel {
         private String redirection;
         private String ispush;
         private String orderid;
+        private String msgurl;
+        private int type;
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
+        }
+
+        public String getMsgurl() {
+            return msgurl;
+        }
+
+        public void setMsgurl(String msgurl) {
+            this.msgurl = msgurl;
+        }
 
         public String getMsgid() {
             return msgid;

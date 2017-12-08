@@ -81,6 +81,8 @@ dependencies {
     })
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.github.bumptech.glide:glide:3.5.2'
+    compile 'com.android.support:support-v4:25.3.0'
+    compile 'com.android.support:design:25.3.1'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.1'
     compile 'com.android.support:multidex:1.0.1'
@@ -102,7 +104,7 @@ dependencies {
     //横向日历购买车票
     compile project(':horizontalcalendar')
     compile 'com.android.support:recyclerview-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
+
     /*compile fileTree(include: ['*.jar'], dir: 'libs')
                         compile 'com.android.support:appcompat-v7:25.3.0'
                         compile 'com.android.support:design:25.3.0'

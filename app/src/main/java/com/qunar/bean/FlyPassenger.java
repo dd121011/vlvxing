@@ -11,13 +11,13 @@ public class FlyPassenger implements Serializable{
 
     private String name;
 
-    private Integer agetype;
+    private int agetype;
 
     private String cardtype;
 
     private String cardno;
 
-    private Integer sex;
+    private int sex;
 
     private String birthday;
 
@@ -39,11 +39,11 @@ public class FlyPassenger implements Serializable{
         this.name = name;
     }
 
-    public Integer getAgetype() {
+    public int getAgetype() {
         return agetype;
     }
 
-    public void setAgetype(Integer agetype) {
+    public void setAgetype(int agetype) {
         this.agetype = agetype;
     }
 
@@ -63,11 +63,11 @@ public class FlyPassenger implements Serializable{
         this.cardno = cardno;
     }
 
-    public Integer getSex() {
+    public int getSex() {
         return sex;
     }
 
-    public void setSex(Integer sex) {
+    public void setSex(int sex) {
         this.sex = sex;
     }
 

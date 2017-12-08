@@ -77,6 +77,7 @@ public class MessageCenterActivity extends BaseActivity {
         String url = Constants.URL_MSGCENTER;
         HashMap<String, String> params = new HashMap<>();
         params.put("token", myApp.getUserTicket());
+
         RemoteDataHandler.asyncTokenPost(url, this, false, params, new RemoteDataHandler.Callback() {
             @Override
             public void dataLoaded(ResponseData data) throws JSONException {

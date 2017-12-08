@@ -256,9 +256,8 @@ public class PlaneOrderActivity extends BaseActivity {
                 PlaneOrderResult result = gson.fromJson(json, PlaneOrderResult.class);
 
                 if (result != null) {
-                    Integer status = result.getStatus();//订单状态码
+                    int status = result.getStatus();//订单状态码
                     System.out.println("我的订单 status:" + status);
-                    if (status != null) {
                         if (status == 1) {
                             System.out.println("我的订单 if status:" + status);
                             list.clear();
@@ -269,7 +268,6 @@ public class PlaneOrderActivity extends BaseActivity {
                     } else {
                         ToastUtils.showT(mcontext, "暂无数据");
                     }
-                }
                 dismissDialog();
             }
         });

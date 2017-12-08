@@ -13,23 +13,31 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.utils.DistanceUtil;
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.handongkeji.handler.RemoteDataHandler;
 import com.handongkeji.modle.ResponseData;
 import com.handongkeji.ui.BaseActivity;
+import com.handongkeji.ui.BrowseActivity;
 import com.handongkeji.utils.StringUtils;
 import com.handongkeji.widget.MyListView;
 import com.handongkeji.widget.MyProcessDialog;
 import com.mcxtzhang.swipemenulib.SwipeMenuLayout;
+import com.qunar.model.FlyOrder;
+import com.qunar.model.PlaneOrderMessageResult;
 import com.vlvxing.app.R;
 import com.vlvxing.app.common.Constants;
 import com.vlvxing.app.model.MessageModel;
+import com.vlvxing.app.model.OrderDetaisModel;
 import com.vlvxing.app.utils.DataUtils;
 import com.vlvxing.app.utils.ToastUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -211,8 +219,8 @@ public class SystemMessageActivity extends BaseActivity {
             final MessageModel.DataBean bean = list.get(position);
             String title;
             if (type == 1) {
-//                title = "系统公告";
-                title = "";
+                title = "系统消息";
+//                title = "";
             } else {
                 title = "订单通知";
             }
@@ -225,10 +233,22 @@ public class SystemMessageActivity extends BaseActivity {
             holder.itemLin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    if (type == 2) { //订单
-                        context.startActivity(new Intent(context, OrderDetailActivity.class).putExtra("id", id));
+                    if(type == 1){
+                        if(bean.getMsgurl()!=null){
+                            Intent intent = new Intent(context, BrowseActivity.class);
+                            intent.putExtra("url", bean.getMsgurl());
+                            startActivity(intent);
+                        }
                     }
+                    if (type == 2) { //订单
+                        if(bean.getType() == 3 ){
+                            getPlaneOrderMessage(id);
+                        }else{
+                            context.startActivity(new Intent(context, OrderDetailActivity.class).putExtra("id", id));
+                        }
+
+                    }
+
                     changeMsgStatus(msgid);
                 }
             });
@@ -242,6 +262,28 @@ public class SystemMessageActivity extends BaseActivity {
             return convertView;
         }
 
+        private void getPlaneOrderMessage(String id) {
+            showDialog("数据加载中...");
+            String url = Constants.URL_ORDERDETAIL;
+            HashMap<String, String> params = new HashMap<>();
+            params.put("orderId",id);
+            params.put("token",myApp.getUserTicket());
+            RemoteDataHandler.asyncPost(url, params, SystemMessageActivity.this, true, new RemoteDataHandler.Callback() {
+                @Override
+                public void dataLoaded(ResponseData data) throws JSONException {
+                    String json = data.getJson();
+                    System.out.println("友盟  json"+json);
+                    if (StringUtils.isStringNull(json)) {
+                        return;
+                    }
+                    Gson gson = new Gson();
+                    PlaneOrderMessageResult info = gson.fromJson(json, PlaneOrderMessageResult.class);
+                    System.out.println("友盟  orderInfo"+info.getData());
+                    context.startActivity(new Intent(context, PlaneCompletedOrderActivity.class).putExtra("orderInfo", info.getData()));
+                    dismissDialog();
+                }
+            });
+        }
 
         class ViewHolder {
             @Bind(R.id.title_txt)

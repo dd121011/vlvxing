@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
@@ -57,7 +58,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSideBar.OnTouchingLetterChangedListener{
+public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSideBar.OnTouchingLetterChangedListener {
     List<String> resourseData = new ArrayList<String>();
     @Bind(R.id.root)
     LinearLayout root;
@@ -90,6 +91,8 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
     @Bind(R.id.view_right)
     View viewRight;//类似背景选择器 右
     private SortAdapter adapter;
+
+    private GridViewHot hotAdapter;
     private CharacterParser characterParser;
     private List<SortModel> SourceDateList;
     private PinyinComparator pinyinComparator;
@@ -99,42 +102,46 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
     private LinearLayout listViewHeader;
     private Context mcontext;
     LayoutInflater inflater;
-    private String historyCityName [] = {""};
-    private String hotCityName [] ={"北京","上海","广州","深圳"};
+    private String historyCityName[] = {""};
+    private List<String> hotCityName;
     private String historyCityResult = "";
     private String hotCityResult = "";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plane_selestor_city);
         ButterKnife.bind(this);
-
-        historyCityName[0] = SharedPrefsUtil.getValue(this,PlaneTicketActivity.PLANE_HISTORY_CITY, "");
+        historyCityName[0] = SharedPrefsUtil.getValue(this, PlaneTicketActivity.PLANE_HISTORY_CITY, "");
 
         //设置第一次进入界面不弹出软键盘
         serchLin.setFocusable(true);
         serchLin.setFocusableInTouchMode(true);
         serchLin.requestFocus();
+        //设置弹出键盘不会影响
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         mcontext = this;
-        inflater= LayoutInflater.from(this);
+        inflater = LayoutInflater.from(this);
         init();// 初始化控件
         loadData();// 获取首页列表
         radioGroupOnCheckChange();//注册国际、国内的选择事件
     }
+
     /**
      * 単程、往返的父容器选择状态的事件监听
      */
-    private void radioGroupOnCheckChange(){
+    private void radioGroupOnCheckChange() {
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                if(leftBtn.getId() == checkedId){
+                if (leftBtn.getId() == checkedId) {
                     //単程
                     viewLeft.setVisibility(View.VISIBLE);
                     viewRight.setVisibility(View.INVISIBLE);
                 }
 
-                if(rightBtn.getId() == checkedId){
+                if (rightBtn.getId() == checkedId) {
                     //往返
                     viewLeft.setVisibility(View.INVISIBLE);
                     viewRight.setVisibility(View.VISIBLE);
@@ -142,19 +149,20 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
             }
         });
     }
+
     private void init() {
         View headerView = getLayoutInflater().inflate(R.layout.plane_listview_header, null);
         GridView historyCity = (MyGridView) headerView.findViewById(R.id.history_city);
-        TextView history_txt  = (TextView)headerView.findViewById(R.id.history_txt);
-        if(historyCityName[0].equals("")){
+        TextView history_txt = (TextView) headerView.findViewById(R.id.history_txt);
+        if (historyCityName[0].equals("")) {
             historyCity.setVisibility(View.GONE);
             history_txt.setVisibility(View.GONE);
         }
         GridView hotCity = (MyGridView) headerView.findViewById(R.id.hot_city);
-        GridViewHistory historyAdapter =new GridViewHistory(mcontext,historyCityName);
+        GridViewHistory historyAdapter = new GridViewHistory(mcontext, historyCityName);
         historyCity.setAdapter(historyAdapter);
-
-        GridViewHot hotAdapter = new GridViewHot(mcontext,hotCityName);
+        hotCityName = new ArrayList<>();
+        hotAdapter = new GridViewHot(mcontext, hotCityName);
         hotCity.setAdapter(hotAdapter);
 
         historyCity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -167,10 +175,10 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
 
 //                        myApp.setCity_name(name);
 //                        myApp.setAreaid(locationId);
-                    intent.putExtra("name", historyCityResult.trim());
-                    intent.putExtra("locationId", "");
-                    setResult(RESULT_OK, intent);
-                    finish();
+                intent.putExtra("name", historyCityResult.trim());
+                intent.putExtra("locationId", "");
+                setResult(RESULT_OK, intent);
+                finish();
 //                        startActivity(new Intent(mContext, MainActivity.class));
 
 //                Toast.makeText(mcontext, "历史城市"+selectorPosition, Toast.LENGTH_SHORT).show();
@@ -183,15 +191,14 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 hotAdapter.changeState(position);
                 int selectorPosition = position;
-
-                hotCityResult    = hotCityName[selectorPosition];
+                hotCityResult = hotCityName.get(selectorPosition);
 
 //                        myApp.setCity_name(name);
 //                        myApp.setAreaid(locationId);
-                    intent.putExtra("name", hotCityResult.trim());
-                    intent.putExtra("locationId", "");
-                    setResult(RESULT_OK, intent);
-                    finish();
+                intent.putExtra("name", hotCityResult.trim());
+                intent.putExtra("locationId", "");
+                setResult(RESULT_OK, intent);
+                finish();
 //                        startActivity(new Intent(mContext, MainActivity.class));
 
 
@@ -238,7 +245,7 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
         });
     }
 
-    @OnClick({ R.id.back})
+    @OnClick({R.id.back})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -246,7 +253,6 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
                 break;
         }
     }
-
 
 
     class resultAdapter extends BaseAdapter {
@@ -284,17 +290,17 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
                 holder.title = (TextView) convertView.findViewById(R.id.title_txt);
                 JSONObject obj = list.get(position);
                 try {
-                    final String areaname = obj.getString("areaname");
+                    final String areaname = obj.getString("address");
                     final String areaid = obj.getString("areaid");
                     holder.title.setText(areaname);
                     holder.title.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
 //                                intent.putExtra("areaname", areaname);
-                                intent.putExtra("name", areaname);
-                                intent.putExtra("areaid", areaid);
-                                setResult(RESULT_OK, intent);
-                                finish();
+                            intent.putExtra("name", areaname);
+                            intent.putExtra("areaid", areaid);
+                            setResult(RESULT_OK, intent);
+                            finish();
 
                         }
                     });
@@ -315,25 +321,33 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
 
     @Override
     public void onTouchingLetterChanged(String s) {
-        if("历史".equals(s)){
-            Toast.makeText(PlaneSelestorCityActivity.this, "历史", Toast.LENGTH_SHORT).show();
-        }
-        if("热门".equals(s)){
-            Toast.makeText(PlaneSelestorCityActivity.this, "热门", Toast.LENGTH_SHORT).show();
-        }
+
         int position = adapter.getPositionForSection(s.charAt(0));
 //        Toast.makeText(PlaneSelestorCityActivity.this, "position"+position, Toast.LENGTH_SHORT).show();
         if (position != -1) {
-            resultList.setSelection(position);
+//            resultList.post(new Runnable() {
+//
+//                @Override
+//                public void run() {
+////                    resultList.smoothScrollToPosition(position);
+//                    resultList.setSelection(position);
+//                    System.out.println("机票城市 position"+position);
+//                }
+//
+//            });
+
+            System.out.println("机票城市 position" + position);
+            countryLvcountry.setSelection(position);
+
         }
     }
 
     private List<SortModel> filledData(JSONArray array) throws JSONException {
-
+        //最终数据中set进去一个 A B C首字母
         List<SortModel> mSortList = new ArrayList<SortModel>();
         for (int i = 0; i < array.length(); i++) {
             JSONObject tmpObj = (JSONObject) array.get(i);
-            String tmpString = tmpObj.getString("areaname");
+            String tmpString = tmpObj.getString("address");
             String idString = tmpObj.getString("areaid");
             SortModel sortModel = new SortModel();
             sortModel.setName(tmpString);
@@ -352,11 +366,11 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
     }
 
     private void selectCity() {
-        String url = Constants.URL_CITYSELECT;
+        String url = Constants.PLANE_CITYSELECT;
         HashMap<String, String> params = new HashMap<String, String>();
         String city = selectEdt.getText().toString().trim();
         params.put("areaName", city);
-        RemoteDataHandler.asyncPost(url, params, this, false, new RemoteDataHandler.Callback() {
+        RemoteDataHandler.asyncPost("http://192.168.1.103:8080" + url, params, this, false, new RemoteDataHandler.Callback() {
             @Override
             public void dataLoaded(ResponseData data) {
                 String json = data.getJson();
@@ -394,10 +408,10 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
 
     private void loadData() {
         showDialog("加载中...");
-        String url = Constants.URL_CITYLIST;
+        String url = Constants.PLANE_CITYLIST;
         HashMap<String, String> params = new HashMap<String, String>();
 //        params.put("parentareaid", parentareaid);
-        RemoteDataHandler.asyncPost(url, params, this, false, new RemoteDataHandler.Callback() {
+        RemoteDataHandler.asyncPost("http://192.168.1.103:8080" + url, params, this, false, new RemoteDataHandler.Callback() {
             @Override
             public void dataLoaded(ResponseData data) {
                 String json = data.getJson();
@@ -410,19 +424,36 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
                         if (status.equals("1")) {
                             String datas = obj.getString("data");
                             JSONArray array = new JSONArray(datas);
-                            jsonArrays = new JSONArray();
+//                            jsonArrays = new JSONArray();
                             if (array.length() > 0) {
                                 commonNoDataLayout.setVisibility(View.GONE);
                                 countryLvcountry.setVisibility(View.VISIBLE);
+                                List<SortModel> mSortList = new ArrayList<SortModel>();
                                 for (int i = 0; i < array.length(); i++) {
-//                                JSONObject jsonObject = array.getJSONObject(i);
+                                    JSONObject jsonObject = array.getJSONObject(i);
 //                                String cityDatas = jsonObject.getString("children");
 //                                JSONArray cityArray = new JSONArray(cityDatas);
 //                                for (int j = 0; j < cityArray.length(); j++) {
-                                    jsonArrays.put(array.get(i));
+//                                    jsonArrays.put(array.get(i));
 //                                }
+                                    //最终数据中set进去一个 A B C首字母
+
+                                    SortModel sortModel = new SortModel();
+                                    String cityName = jsonObject.getString("address");
+                                    String areaId = jsonObject.getString("areaid");
+//                                    String pinyin = jsonObject.getString("belongtocity");
+                                    sortModel.setName(cityName);
+                                    sortModel.setAreaid(areaId);
+                                    sortModel.setSortLetters(jsonObject.getString("capitalized"));
+
+//                                    sortModel.setSortLetters("#");
+                                    if (jsonObject.getString("isHot").equals("1")) {
+                                        hotCityName.add(cityName);
+                                    }
+                                    mSortList.add(sortModel);
                                 }
-                                SourceDateList = filledData(jsonArrays);
+                                SourceDateList = mSortList;
+                                hotAdapter.notifyDataSetChanged();
                                 Collections.sort(SourceDateList, pinyinComparator);
                                 adapter.LoadData(SourceDateList);
                             } else {
@@ -507,10 +538,10 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
                 public void onClick(View v) {
 //                        myApp.setCity_name(name);
 //                        myApp.setAreaid(locationId);
-                        intent.putExtra("name", name);
-                        intent.putExtra("locationId", locationId);
-                        setResult(RESULT_OK, intent);
-                        finish();
+                    intent.putExtra("name", name);
+                    intent.putExtra("locationId", locationId);
+                    setResult(RESULT_OK, intent);
+                    finish();
 //                        startActivity(new Intent(mContext, MainActivity.class));
                 }
             });
@@ -555,16 +586,17 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
     }
 
 
-    class GridViewHistory extends BaseAdapter{
-        private Context context=null;
-        private String data[]=null;
+    class GridViewHistory extends BaseAdapter {
+        private Context context = null;
+        private String data[] = null;
         private int selectorPosition = -1;
 
-        private class Holder{
+        private class Holder {
             LinearLayout city_lin;
             ImageView item_img;
             TextView item_tex;
         }
+
         //构造方法
         public GridViewHistory(Context context, String[] data) {
             this.context = context;
@@ -590,15 +622,15 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
         @Override
         public View getView(int position, View view, ViewGroup viewGroup) {
             Holder holder;
-            if(view==null){
-                view = inflater.inflate(R.layout.act_plane_hot_city_gridview_item,null);
-                holder=new Holder();
-                holder.item_img=(ImageView)view.findViewById(R.id.city_selector_img);
-                holder.item_tex=(TextView)view.findViewById(R.id.city_name);
-                holder.city_lin = (LinearLayout)view.findViewById(R.id.city_lin);
+            if (view == null) {
+                view = inflater.inflate(R.layout.act_plane_hot_city_gridview_item, null);
+                holder = new Holder();
+                holder.item_img = (ImageView) view.findViewById(R.id.city_selector_img);
+                holder.item_tex = (TextView) view.findViewById(R.id.city_name);
+                holder.city_lin = (LinearLayout) view.findViewById(R.id.city_lin);
                 view.setTag(holder);
-            }else{
-                holder=(Holder) view.getTag();
+            } else {
+                holder = (Holder) view.getTag();
             }
 
             holder.item_tex.setText(data[position]);
@@ -611,6 +643,7 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
 
             return view;
         }
+
         public void changeState(int pos) {
             selectorPosition = pos;
             notifyDataSetChanged();
@@ -618,32 +651,32 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
         }
     }
 
-    class GridViewHot extends BaseAdapter{
-        private Context context=null;
-        private String data[]=null;
+    class GridViewHot extends BaseAdapter {
+        private Context context = null;
+        private List<String> data = null;
         private int selectorPosition = -1;
 
-        private class Holder{
+        private class Holder {
             LinearLayout city_lin;
             ImageView item_img;
             TextView item_tex;
         }
+
         //构造方法
-        public GridViewHot(Context context, String[] data) {
+        public GridViewHot(Context context, List<String> data) {
             this.context = context;
             this.data = data;
-
         }
 
 
         @Override
         public int getCount() {
-            return data.length;
+            return data.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return data[position];
+            return data.get(position);
         }
 
         @Override
@@ -654,18 +687,18 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
         @Override
         public View getView(int position, View view, ViewGroup viewGroup) {
             Holder holder;
-            if(view==null){
-                view = inflater.inflate(R.layout.act_plane_hot_city_gridview_item,null);
-                holder=new Holder();
-                holder.item_img=(ImageView)view.findViewById(R.id.city_selector_img);
-                holder.item_tex=(TextView)view.findViewById(R.id.city_name);
-                holder.city_lin = (LinearLayout)view.findViewById(R.id.city_lin);
+            if (view == null) {
+                view = inflater.inflate(R.layout.act_plane_hot_city_gridview_item, null);
+                holder = new Holder();
+                holder.item_img = (ImageView) view.findViewById(R.id.city_selector_img);
+                holder.item_tex = (TextView) view.findViewById(R.id.city_name);
+                holder.city_lin = (LinearLayout) view.findViewById(R.id.city_lin);
                 view.setTag(holder);
-            }else{
-                holder=(Holder) view.getTag();
+            } else {
+                holder = (Holder) view.getTag();
             }
 
-            holder.item_tex.setText(data[position]);
+            holder.item_tex.setText(data.get(position));
             if (selectorPosition == position) {
                 holder.item_img.setVisibility(View.VISIBLE);
             } else {
@@ -675,6 +708,7 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
 
             return view;
         }
+
         public void changeState(int pos) {
             selectorPosition = pos;
             notifyDataSetChanged();

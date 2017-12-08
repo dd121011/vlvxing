@@ -5,6 +5,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.handongkeji.widget.MyProcessDialog;
 import com.umeng.message.PushAgent;
@@ -31,6 +34,15 @@ public class BaseActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dialog = new MyProcessDialog(this);
+        //透明状态栏
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            Window window = getWindow();
+//            // Translucent status bar
+//            window.setFlags(
+//                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+//                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//        }
+
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         //统计应用启动数据
 		PushAgent.getInstance(this).onAppStart();

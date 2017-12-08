@@ -515,11 +515,11 @@ public class PlaneSearchActivity extends BaseActivity {
                 //按时间排序
                 if (leftCheckBox.isChecked()) {
                     leftCheckTxt.setTextColor(Color.parseColor("#666666"));
-                    leftCheckTxt.setText("从晚到早");
+                    leftCheckTxt.setText("从早到晚");
                     leftCheckBox.setChecked(false);
                 } else {
                     leftCheckTxt.setTextColor(Color.parseColor("#ea5413"));
-                    leftCheckTxt.setText("从早到晚");
+                    leftCheckTxt.setText("从晚到早");
                     leftCheckBox.setChecked(true);
                 }
                 break;
@@ -530,11 +530,11 @@ public class PlaneSearchActivity extends BaseActivity {
 
                 //按价格排序
                 if (rightCheckBox.isChecked()) {
-                    rightCheckTxt.setText("从高到低");
+                    rightCheckTxt.setText("价格最低");
                     rightCheckTxt.setTextColor(Color.parseColor("#666666"));
                     rightCheckBox.setChecked(false);
                 } else {
-                    rightCheckTxt.setText("从低到高");
+                    rightCheckTxt.setText("价格最高");
                     rightCheckTxt.setTextColor(Color.parseColor("#ea5413"));
                     rightCheckBox.setChecked(true);
                 }
