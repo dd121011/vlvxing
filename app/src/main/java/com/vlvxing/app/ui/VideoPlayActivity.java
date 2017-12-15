@@ -124,7 +124,6 @@ public class VideoPlayActivity extends BaseActivity implements MediaPlayer.OnCom
     public void surfaceCreated(SurfaceHolder holder) {
 
 //        Log.i("test", "surfaceCreated");
-
         // 当SurfaceView中的Surface被创建的时候被调用
         //在这里我们指定MediaPlayer在当前的Surface中进行播放
         player.setDisplay(holder);

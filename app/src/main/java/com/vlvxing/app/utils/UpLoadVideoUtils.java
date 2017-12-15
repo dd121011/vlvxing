@@ -217,7 +217,6 @@ public class UpLoadVideoUtils {
         VODUploadCallback callback = new VODUploadCallback() {
             @Override
             public void onUploadSucceed(UploadFileInfo info) {
-
                 Log.i("test1","info.getFilePath() ------------------" + info.getFilePath());
                 Log.i("test1","onsucceed ------------------" + info.getVodInfo().toString());
                 Message msg = new Message();

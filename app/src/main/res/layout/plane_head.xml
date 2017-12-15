@@ -86,15 +86,18 @@
             android:textSize="12sp"
             android:visibility="gone"
             />
-        <ImageView
-            android:id="@+id/phone_img"
+        <TextView
+            android:id="@+id/phone_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="20dp"
             android:visibility="gone"
+            android:text="客服"
+            android:textSize="12sp"
+            android:textColor="@color/orangePlane"
             android:layout_centerVertical="true"
-            android:src="@mipmap/plane_phone"/>
+            android:drawableTop="@mipmap/plane_phone"/>
 
     </RelativeLayout>
 

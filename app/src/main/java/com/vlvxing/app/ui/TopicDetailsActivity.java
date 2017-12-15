@@ -537,7 +537,6 @@ public class TopicDetailsActivity extends BaseActivity {
                 //只需要展示一条回复
                 holder.first_name.setText(bean.getMessageList().get(0).getmName());
                 holder.first_body.setText(bean.getMessageList().get(0).getmBody());
-
                 spannableDate = new SpannableString(bean.getMessageList().get(0).getmDate());
                 spannableDate.setSpan(new ForegroundColorSpan(Color.GRAY), 0, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 spannableDate.setSpan(new AbsoluteSizeSpan(25), 0, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -548,7 +547,6 @@ public class TopicDetailsActivity extends BaseActivity {
                 holder.first_body.append(spannableDate);
                 holder.first_body.append(spannableSpace);
                 holder.first_body.append(spannableTime);
-
                 holder.first_lin.setVisibility(View.VISIBLE);
                 holder.second_lin.setVisibility(View.GONE);
                 holder.more_lin.setVisibility(View.GONE);
@@ -568,8 +566,6 @@ public class TopicDetailsActivity extends BaseActivity {
                 holder.first_body.append(spannableDate);
                 holder.first_body.append(spannableSpace);
                 holder.first_body.append(spannableTime);
-
-
 
                 holder.second_name.setText(bean.getMessageList().get(1).getmName());
                 holder.second_body.setText(bean.getMessageList().get(1).getmBody());
@@ -606,8 +602,6 @@ public class TopicDetailsActivity extends BaseActivity {
                 holder.first_body.append(spannableDate);
                 holder.first_body.append(spannableSpace);
                 holder.first_body.append(spannableTime);
-
-
 
                 holder.second_name.setText(bean.getMessageList().get(1).getmName());
                 holder.second_body.setText(bean.getMessageList().get(1).getmBody());

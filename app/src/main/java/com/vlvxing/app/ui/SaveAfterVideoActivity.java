@@ -99,8 +99,9 @@ public class SaveAfterVideoActivity extends BaseActivity {
 
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
-        int type = intent.getIntExtra("type", 0); ////0 从旅途中进入 1从记录界面进入 2从轨迹详情进入
-
+        int type = intent.getIntExtra("type", 0);
+        System.out.println("test 视频功能  SaveAfterVideoActivity  getIntent type="+type);
+        System.out.println("test 视频功能  SaveAfterVideoActivity  getIntent id="+id);
         share_url = Constants.URL_VIDEOSHARE + "?pathInfoId=" + id;
         if (type == 1) {
             rightImg.setVisibility(View.GONE);

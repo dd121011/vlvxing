@@ -258,7 +258,7 @@ public class SelestorCityActivity extends BaseActivity implements SideBar.OnTouc
     public void onTouchingLetterChanged(String s) {
         int position = adapter.getPositionForSection(s.charAt(0));
         if (position != -1) {
-            resultList.setSelection(position);
+            countryLvcountry.setSelection(position);
         }
     }
 
@@ -345,6 +345,7 @@ public class SelestorCityActivity extends BaseActivity implements SideBar.OnTouc
                             String datas = obj.getString("data");
                             JSONArray array = new JSONArray(datas);
                             jsonArrays = new JSONArray();
+                            List<SortModel> mSortList = new ArrayList<SortModel>();
                             if (array.length() > 0) {
                                 commonNoDataLayout.setVisibility(View.GONE);
                                 countryLvcountry.setVisibility(View.VISIBLE);
@@ -353,10 +354,23 @@ public class SelestorCityActivity extends BaseActivity implements SideBar.OnTouc
 //                                String cityDatas = jsonObject.getString("children");
 //                                JSONArray cityArray = new JSONArray(cityDatas);
 //                                for (int j = 0; j < cityArray.length(); j++) {
-                                    jsonArrays.put(array.get(i));
-//                                }
+                                    JSONObject tmpObj = (JSONObject) array.get(i);
+                                    String tmpString = tmpObj.getString("areaname");
+                                    String idString = tmpObj.getString("areaid");
+                                    SortModel sortModel = new SortModel();
+                                    sortModel.setName(tmpString);
+                                    sortModel.setAreaid(idString);
+                                    String pinyin = characterParser.getSelling(tmpString);
+                                    String sortString = pinyin.substring(0, 1).toUpperCase();
+                                    if (sortString.matches("[A-Z]")) {
+                                        sortModel.setSortLetters(sortString.toUpperCase());
+                                    } else {
+                                        sortModel.setSortLetters("#");
+                                    }
+                                    mSortList.add(sortModel);
                                 }
-                                SourceDateList = filledData(jsonArrays);
+
+                                SourceDateList = mSortList;
                                 Collections.sort(SourceDateList, pinyinComparator);
                                 adapter.LoadData(SourceDateList);
                             } else {

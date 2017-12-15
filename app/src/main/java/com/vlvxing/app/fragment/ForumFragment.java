@@ -114,7 +114,7 @@ public class ForumFragment extends Fragment {
 //        linearLayout.setVisibility(View.INVISIBLE);
 
         String paramsStr = "{\"arr\":\"SHA\",\"dpt\":\"PEK\",\"date\":\"2017-10-15\",\"ex_track\":\"youxuan\"}";
-        String url = RequestService.doRequest(Constants.QUNAR_SEARCHFLIGHT, paramsStr);
+//        String url = RequestService.doRequest(Constants.QUNAR_SEARCHFLIGHT, paramsStr);
 //      getInfo(url, null);
         checkedDialog = new Dialog(context, R.style.BottomDialog);
         list = getListViewData();

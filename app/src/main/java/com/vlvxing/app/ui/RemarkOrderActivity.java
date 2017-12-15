@@ -215,10 +215,14 @@ public class RemarkOrderActivity extends BaseActivity {
                 File originalFile = new File(imagePath);
                 // 原始图片的大小
                 long originalLength = originalFile.length();
+                System.out.println("上传图片 originalLength"+originalLength);
                 String path = Constants.CACHE_DIR_UPLOADING_IMG + "/" + System.currentTimeMillis() + i + ".jpg";
+                System.out.println("上传图片 path"+path);
                 File resultFile = compressBitmap(imagePath, path, orientation);
                 // 压缩后图片的大小
                 long resultLength = resultFile.length();
+                System.out.println("上传图片 orientation"+orientation);
+                System.out.println("上传图片 resultLength"+resultLength);
                 // 调用上传图片的方法
                 uploadImage(resultFile);
             }

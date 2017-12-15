@@ -71,7 +71,7 @@ public class VheadsDetailActivity extends BaseActivity {
         share_content="看世界，V旅行";
         content=bean.getDescription();
         share_url = Constants.URL_VHEADSSHARE + "?vHeadId=" + id; //微头条详情
-//        String url="http://www.baidu.com";
+//
 //        webview.getSettings().setAllowFileAccess(true);
 //        webview.getSettings().setJavaScriptEnabled(true);
 //
@@ -106,7 +106,6 @@ public class VheadsDetailActivity extends BaseActivity {
 //                return true;
 //            }
 //        });
-
         initDatas();
     }
 
@@ -121,7 +120,7 @@ public class VheadsDetailActivity extends BaseActivity {
 //            public void dataLoaded(ResponseData data) {
 //                String text = data.getJson();
                 String text=content;
-                int width = (int) (MyApp.getScreenWidth() * 0.32f - 30f);
+                int width = (int) (MyApp.getScreenWidth());
                 if (text != null) {
                     String[] splitd = text.split("img");
                     StringBuffer sbd = new StringBuffer();

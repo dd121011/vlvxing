@@ -183,8 +183,8 @@ public class SettingActivity extends BaseActivity {
                 clearCacheDialog.show();
 
                 break;
-            case R.id.rel7:  //检查更新
-                CheckVersion.update(this, true);
+            case R.id.rel7:
+
                 break;
         }
     }

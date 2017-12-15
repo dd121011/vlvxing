@@ -59,6 +59,7 @@ import com.vlvxing.app.ui.LineDetailsActivity;
 import com.vlvxing.app.ui.LoginActivity;
 import com.vlvxing.app.ui.MainActivity;
 import com.vlvxing.app.ui.PlaneTicketActivity;
+import com.vlvxing.app.utils.AppShortCutUtil;
 import com.vlvxing.app.utils.SharedPrefsUtil;
 
 import org.json.JSONException;
@@ -121,8 +122,16 @@ public class MyApp extends Application {
     private String AuccontName = "com.vlvxing.app";
     public LocationService locationService;
     public Vibrator mVibrator;
+    private boolean isSendUrl;//判断当前有没有新的url被点击,如果被点击则 为true,在mainActivity中的onresume方法中开发阀门
 
-//	public boolean isrecord() {
+    public boolean isSendUrl() {
+        return isSendUrl;
+    }
+
+    public void setSendUrl(boolean sendUrl) {
+        isSendUrl = sendUrl;
+    }
+    //	public boolean isrecord() {
 //		boolean isrecord = SharedPrefsUtil.getValue(applicationContext, "isrecord", false);
 //		return isrecord;
 //	}
@@ -648,8 +657,15 @@ public class MyApp extends Application {
              * */
             @Override
             public Notification getNotification(Context context, UMessage msg) {
-//                Toast.makeText(context, "友盟推送 自定义通知栏样式的回调方法 getNotification" + "UMessage=" + msg, Toast.LENGTH_SHORT).show();
-//                System.out.println("友盟推送 自定义通知栏样式的回调方法 getNotification");
+                System.out.println("友盟推送 自定义通知栏样式的回调方法 getNotification"+msg.custom);
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(msg.custom);
+                    int messageNum = jsonObject.getInt("messageNum");
+                    AppShortCutUtil.addNumShortCut(context,MainActivity.class,true,String.valueOf(messageNum),false);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
                 switch (msg.builder_id) {
 //                    case 1:
@@ -740,7 +756,6 @@ public class MyApp extends Application {
                                         break;
 
                                 }
-
 
                             } else if (type == 2) {
                                 //订单消息

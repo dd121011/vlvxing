@@ -192,9 +192,10 @@ public class HttpHelper {
 			throws IOException {
 		String result = null;
 		HttpPost post = new HttpPost(url);
+		System.out.println("上传图片   multipartPost  url:"+url);
 		MultipartEntity entity = new MultipartEntity(
 				HttpMultipartMode.BROWSER_COMPATIBLE);
-
+		System.out.println("上传图片   entity  entity:"+entity);
 		// 处理基本参数
 		if (null != params) {
 			for (Entry<String, String> paramPair : params.entrySet()) {
@@ -202,21 +203,27 @@ public class HttpHelper {
 						paramPair.getKey(),
 						new StringBody(paramPair.getValue(), Charset
 								.forName(HTTP.UTF_8)));
+				System.out.println("上传图片   处理基本参数 paramPair.getKey() :"+paramPair.getKey());
+				System.out.println("上传图片   处理基本参数 paramPair.getValue() :"+paramPair.getValue());
 			}
 		}
-
+		System.out.println("上传图片   params  params:"+params);
 		// 处理文件参数
 		if (null != fileMap && fileMap.size() != 0) {
 			for (Entry<String, File> paramPair : fileMap.entrySet()) {
 				entity.addPart(paramPair.getKey(), new FileBody(paramPair.getValue()));
+				System.out.println("上传图片   处理文件参数 paramPair.getKey() :"+paramPair.getKey());
+				System.out.println("上传图片   处理文件参数 paramPair.getValue() :"+paramPair.getValue());
 			}
 		}
+		System.out.println("上传图片   entity  entity:"+entity);
 		post.setEntity(entity);
 		HttpResponse response = httpClient.execute(post);
+		System.out.println("上传图片   post  post:"+post);
 		if (HttpStatus.SC_OK == response.getStatusLine().getStatusCode()) {
 			result = EntityUtils.toString(response.getEntity());
 		}
-
+		System.out.println("上传图片   result:"+result);
 		return result;
 	}
 

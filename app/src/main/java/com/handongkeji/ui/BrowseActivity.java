@@ -55,71 +55,71 @@ public class BrowseActivity extends BaseActivity {
 		progressDialog.setCancelable(true);
 		progressDialog.setCanceledOnTouchOutside(false);
 		final WebView wbShow = (WebView)findViewById(R.id.wbShow);
-		wbShow.getSettings().setAllowFileAccess(true);          
-		wbShow.getSettings().setJavaScriptEnabled(true);   
-		
-		wbShow.getSettings().setSupportZoom(true); 
-		// 设置出现缩放工具 
+		wbShow.getSettings().setAllowFileAccess(true);
+		wbShow.getSettings().setJavaScriptEnabled(true);
+
+		wbShow.getSettings().setSupportZoom(true);
+		// 设置出现缩放工具
 		wbShow.getSettings().setBuiltInZoomControls(true);
 		//扩大比例的缩放
 		wbShow.getSettings().setUseWideViewPort(true);
-	    //	自适应屏幕
+		//	自适应屏幕
 		wbShow.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
 		wbShow.getSettings().setLoadWithOverviewMode(true);
 		wbShow.loadUrl(bUrl);
 		wbShow.setWebViewClient(new WebViewClient(){
-			@Override                        
-			public void onPageFinished(WebView view, String url) {                                
+			@Override
+			public void onPageFinished(WebView view, String url) {
 				// TODO Auto-generated method stubs
-				super.onPageFinished(view, url);                                
-				//页面下载完毕,却不代表页面渲染完毕显示出来                                
-				//WebChromeClient中progress==100时也是一样                                
-				if (wbShow.getContentHeight() != 0) {                                        
-					//这个时候网页才显示                         
-					
-					}      
+				super.onPageFinished(view, url);
+				//页面下载完毕,却不代表页面渲染完毕显示出来
+				//WebChromeClient中progress==100时也是一样
+				if (wbShow.getContentHeight() != 0) {
+					//这个时候网页才显示
+
+				}
 				if(progressDialog!=null)
 				{
 					progressDialog.dismiss();
 				}
-				}                       
-			@Override                        
-			public boolean shouldOverrideUrlLoading(WebView view, String url) {   
-				// TODO Auto-generated method stub           
-				//自身加载新链接,不做外部跳转                
-				view.loadUrl(url);         
-				return true;                
-				}                             
-			});                  
-		wbShow.setWebChromeClient(new WebChromeClient(){                
-			@Override                
-			public void onProgressChanged(WebView view, int newProgress) {       
-				// TODO Auto-generated method stub      
-				super.onProgressChanged(view, newProgress);  
-				//这里将textView换成你的progress来设置进度//          
-				if (newProgress == 0) {//                  
-					
-					//progressBar.setVisibility(View.VISIBLE);//                               
-					}  
-			}   
-//					pr}ogressBar.setProgress(newProgress);       
-//					progressBar.postInvalidate();//               
-//					if (newProgress == 100) {//                 
-//						progressBar.setVisibility(View.GONE);//       
-//						}              
-//					}       
+			}
+			@Override
+			public boolean shouldOverrideUrlLoading(WebView view, String url) {
+				// TODO Auto-generated method stub
+				//自身加载新链接,不做外部跳转
+				view.loadUrl(url);
+				return true;
+			}
+		});
+		wbShow.setWebChromeClient(new WebChromeClient(){
+			@Override
+			public void onProgressChanged(WebView view, int newProgress) {
+				// TODO Auto-generated method stub
+				super.onProgressChanged(view, newProgress);
+				//这里将textView换成你的progress来设置进度//
+				if (newProgress == 0) {//
+
+					//progressBar.setVisibility(View.VISIBLE);//
+				}
+			}
+//					pr}ogressBar.setProgress(newProgress);
+//					progressBar.postInvalidate();//
+//					if (newProgress == 100) {//
+//						progressBar.setVisibility(View.GONE);//
+//						}
+//					}
 
 			/**
-			 * 
-			 * 
+			 *
+			 *
 			 * 设置标题
 			 */
 			@Override
 			public void onReceivedTitle(WebView view, String title) {
 				BrowseActivity.this.title.setText(title);
 				super.onReceivedTitle(view, title);
-				
+
 			}
-				});
+		});
 	}
 }

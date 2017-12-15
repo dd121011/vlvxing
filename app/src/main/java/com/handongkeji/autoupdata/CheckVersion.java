@@ -95,7 +95,8 @@ public class CheckVersion {
                 AlertUpdate();
             } else {
                 if (mIsEnforceCheck) {
-                    Toast.makeText(mContext, "当前版本已经是最新版本", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, "当前版本已经是最新版本", Toast.LENGTH_SHORT).show();
+                    System.out.println("当前版本已经是最新版本");
                 }
             }
         } catch (JSONException e) {

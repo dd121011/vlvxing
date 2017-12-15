@@ -1021,13 +1021,15 @@ public class RemoteDataHandler {
 				msg.getData().putBoolean("hasMore", false);
 
 				try {
+					System.out.println("上传图片   url:"+url);
 					String json = HttpHelper.multipartPost(url, params, fileMap);
 					if (json != null) {
 						json = json.replaceAll("\\x0a|\\x0d", "");
 						msg.obj = json;
-
+						System.out.println("上传图片   json:"+json);
 					}
 					handler.sendMessage(msg);
+					System.out.println("上传图片   msg:"+msg);
 				} catch (IOException e) {
 					msg.what = HttpStatus.SC_REQUEST_TIMEOUT;
 					e.printStackTrace();

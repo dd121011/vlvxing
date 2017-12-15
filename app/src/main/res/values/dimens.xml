@@ -1,5 +1,4 @@
 <resources>
-
     <!-- 横向日历购票相关 -->
     <dimen name="fab_margin">16dp</dimen>
     <!-- 日历购票相关 -->

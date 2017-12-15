@@ -26,7 +26,6 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.handongkeji.handler.RemoteDataHandler;
 import com.handongkeji.modle.ResponseData;
@@ -301,7 +300,6 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
                             intent.putExtra("areaid", areaid);
                             setResult(RESULT_OK, intent);
                             finish();
-
                         }
                     });
                 } catch (JSONException e) {
@@ -370,7 +368,7 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
         HashMap<String, String> params = new HashMap<String, String>();
         String city = selectEdt.getText().toString().trim();
         params.put("areaName", city);
-        RemoteDataHandler.asyncPost("http://192.168.1.103:8080" + url, params, this, false, new RemoteDataHandler.Callback() {
+        RemoteDataHandler.asyncPost(url, params, this, false, new RemoteDataHandler.Callback() {
             @Override
             public void dataLoaded(ResponseData data) {
                 String json = data.getJson();
@@ -411,7 +409,7 @@ public class PlaneSelestorCityActivity extends BaseActivity implements PlaneSide
         String url = Constants.PLANE_CITYLIST;
         HashMap<String, String> params = new HashMap<String, String>();
 //        params.put("parentareaid", parentareaid);
-        RemoteDataHandler.asyncPost("http://192.168.1.103:8080" + url, params, this, false, new RemoteDataHandler.Callback() {
+        RemoteDataHandler.asyncPost( url, params, this, false, new RemoteDataHandler.Callback() {
             @Override
             public void dataLoaded(ResponseData data) {
                 String json = data.getJson();

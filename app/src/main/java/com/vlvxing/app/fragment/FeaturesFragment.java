@@ -68,7 +68,7 @@ public class FeaturesFragment extends Fragment {
         Bundle bundle = getArguments();
         data = bundle.getString("data");
         String text = data;
-        int width = (int) (MyApp.getScreenWidth() * 0.32f - 30f);
+        int width = (int) (MyApp.getScreenWidth());
         if (text != null) {
             String[] splitd = text.split("img");
             StringBuffer sbd = new StringBuffer();

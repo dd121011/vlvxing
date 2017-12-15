@@ -1,5 +1,7 @@
 package com.handongkeji.utils;
 
+import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
@@ -7,6 +9,9 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -14,8 +19,47 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static com.ta.utdid2.b.a.j.TAG;
 
 public class BitmapUtils {
+	/**
+	 * 压缩图片（质量压缩）
+	 * @param bitmap
+	 */
+	public static File compressImageToFile(Bitmap bitmap) {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
+		int options = 100;
+		while (baos.toByteArray().length / 1024 > 500) {  //循环判断如果压缩后图片是否大于500kb,大于继续压缩
+			baos.reset();//重置baos即清空baos
+			options -= 10;//每次都减少10
+			bitmap.compress(Bitmap.CompressFormat.JPEG, options, baos);//这里压缩options%，把压缩后的数据存放到baos中
+			long length = baos.toByteArray().length;
+		}
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+		Date date = new Date(System.currentTimeMillis());
+		String filename = format.format(date);
+		File file = new File(Environment.getExternalStorageDirectory(),filename+".png");
+		try {
+			FileOutputStream fos = new FileOutputStream(file);
+			try {
+				fos.write(baos.toByteArray());
+				fos.flush();
+				fos.close();
+			} catch (IOException e) {
+//				BAFLogger.e(TAG,e.getMessage());
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e) {
+//			BAFLogger.e(TAG,e.getMessage());
+			e.printStackTrace();
+		}
+//		recycleBitmap(bitmap);
+		return file;
+	}
 
 	// 质量压缩法：
 	public static Bitmap compressImage(Bitmap image) {
@@ -186,5 +230,19 @@ public class BitmapUtils {
 
 		return bitmap;
 
+	}
+	public static int getOrientation(Context context, Uri photoUri) {
+		int orientation = 0;
+		Cursor cursor = context.getContentResolver().query(photoUri,
+				new String[] { MediaStore.Images.ImageColumns.ORIENTATION }, null, null, null);
+		if (cursor != null) {
+			if (cursor.getCount() != 1) {
+				return -1;
+			}
+			cursor.moveToFirst();
+			orientation = cursor.getInt(0);
+			cursor.close();
+		}
+		return orientation;
 	}
 }

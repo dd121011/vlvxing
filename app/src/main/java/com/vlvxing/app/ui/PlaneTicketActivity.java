@@ -85,8 +85,8 @@ public class PlaneTicketActivity extends BaseActivity{
     TextView headTitle;//标题
     @Bind(R.id.btn_back)
     ImageView ban_back;//返回键
-    @Bind(R.id.phone_img)
-    ImageView phone_img;//电话咨询
+    @Bind(R.id.phone_txt)
+    TextView phone_txt;//电话咨询
     @Bind(R.id.radio_group)
     RadioGroup radioGroup;//単程、往返的父控件
     @Bind(R.id.left_radio_btn)
@@ -140,7 +140,7 @@ public class PlaneTicketActivity extends BaseActivity{
         setContentView(R.layout.activity_plane_tricket);
         ButterKnife.bind(this);
         headTitle.setText("机票");
-        phone_img.setVisibility(View.VISIBLE);
+        phone_txt.setVisibility(View.VISIBLE);
         mcontext = this;
         txtDate.setText(getNowDate());
         radioGroupOnCheckChange();//注册単程、返程的选择事件
@@ -184,7 +184,7 @@ public class PlaneTicketActivity extends BaseActivity{
     public void getBananer() {
         String url = Constants.URL_SYSAD;
         HashMap<String, String> params = new HashMap<>();
-        params.put("categoryId", "0"); //分类id(0:首页，1国内，2国外  3附近 4机票)
+        params.put("categoryId", "4"); //分类id(0:首页，1国内，2国外  3附近 4机票)
         RemoteDataHandler.asyncTokenPost(url, mcontext, true, params, new RemoteDataHandler.Callback() {
                     @Override
                     public void dataLoaded(ResponseData data) {
@@ -301,13 +301,13 @@ public class PlaneTicketActivity extends BaseActivity{
         super.onResume();
     }
 
-    @OnClick({R.id.return_lin,R.id.phone_img,R.id.city_txt_left,R.id.city_txt_right,R.id.search,R.id.go_or_come,R.id.bottom_left_btn,R.id.bottom_right_btn,R.id.date_lin})
+    @OnClick({R.id.return_lin,R.id.phone_txt,R.id.city_txt_left,R.id.city_txt_right,R.id.search,R.id.go_or_come,R.id.bottom_left_btn,R.id.bottom_right_btn,R.id.date_lin})
     public void onClick(View view){
         switch(view.getId()){
             case R.id.return_lin:
                 finish();
                 break;
-            case R.id.phone_img://电话咨询
+            case R.id.phone_txt://电话咨询
                 clickQuery();
                 break;
             case R.id.city_txt_left:

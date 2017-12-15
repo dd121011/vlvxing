@@ -3,9 +3,11 @@ package com.vlvxing.app.ui;
 import android.Manifest;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -20,7 +22,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.handongkeji.autoupdata.CheckVersion;
 import com.handongkeji.ui.BaseActivity;
+import com.handongkeji.utils.Bimp;
+import com.handongkeji.utils.BitmapUtils;
 import com.handongkeji.utils.StringUtils;
 import com.handongkeji.widget.NoScrollViewPager;
 import com.lzy.imagepicker.ImagePicker;
@@ -33,6 +38,7 @@ import com.vlvxing.app.fragment.JiLuFragment;
 import com.vlvxing.app.fragment.LvTuFragment;
 import com.vlvxing.app.fragment.MainFragment;
 import com.vlvxing.app.fragment.WoDeFragment;
+import com.vlvxing.app.utils.AppShortCutUtil;
 import com.vlvxing.app.utils.BDLocationUtils;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionListener;
@@ -40,6 +46,7 @@ import com.yanzhenjie.permission.SettingService;
 
 import org.simple.eventbus.EventBus;
 
+import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -82,24 +89,22 @@ public class MainActivity extends BaseActivity {
     private boolean isToWode = false;
     public static final int REQUEST_CODE_LOCATION = 3;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
         ButterKnife.bind(this);
+
+
         myApp.setIs_active(true);//当前app处于活跃状态,用于友盟消息推送,区分app是否存在于前台或者后台
         init();
-
 
         //提交表单权限，批量注册权限
         requestLocationPermission();
 
-        //分享后的线路 点击分享的链接跳转到app内部
-        boolean lineDetails = getIntent().getBooleanExtra("lineDetails", false);
-        if (lineDetails) {
-            String id = getIntent().getStringExtra("productId");//线路id
-            startActivity(new Intent(MainActivity.this, LineDetailsActivity.class).putExtra("id", id));
-        }
+        //检查更新
+        CheckVersion.update(this, true);
         //请求第三方分享登陆的权限
 //        requestUMSharePermission();
     }
@@ -205,6 +210,13 @@ public class MainActivity extends BaseActivity {
                 ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
                 ImageItem imageItem = images.get(0);
                 String path = imageItem.path;
+//                    File file1 = new File(path);
+//                    path = file1.getAbsolutePath();
+//                    com.handongkeji.utils.ImageItem item = new com.handongkeji.utils.ImageItem();
+//                    item.setBitmap(tmpbitmap);
+//                    item.setImagePath(path);
+//                System.out.println("test 上传图片 主页面 getOrientation:"+item.getOrientation());
+//                System.out.println("test 上传图片 主页面 path:"+path);
                 ((JiLuFragment) fragment_list.get(1)).intentAddIng(path);
             }
         }
@@ -214,6 +226,7 @@ public class MainActivity extends BaseActivity {
             Cursor c = getContentResolver().query(data1, new String[]{MediaStore.MediaColumns.DATA}, null, null, null);
             if (c != null && c.moveToFirst()) {
                 String path = c.getString(0);
+                System.out.println("test 视频功能 主页面 path:"+path);
                 ((JiLuFragment) fragment_list.get(1)).intentAddVideo(path);
             }
         }
@@ -221,7 +234,6 @@ public class MainActivity extends BaseActivity {
         if (requestCode == 203) {
             requestLocationPermission();
         }
-
     }
 
     /**
@@ -302,6 +314,19 @@ public class MainActivity extends BaseActivity {
             changeTab(wodeLin, 3);
             isToWode = false;
         }
+        if(myApp.isSendUrl()){
+            //分享后的线路 点击分享的链接跳转到app内部
+            boolean lineDetails = getIntent().getBooleanExtra("lineDetails", false);
+            if (lineDetails) {
+                String id = getIntent().getStringExtra("productId");//线路id
+                System.out.println("获得数据 首页   id:"+id);
+                startActivity(new Intent(MainActivity.this, LineDetailsActivity.class).putExtra("id", id));
+            }
+            myApp.setSendUrl(false);
+        }
+        //如果该用户有未读消息,则每次进入app后所有的未读消息清零
+        AppShortCutUtil.deleteShortCut(MainActivity.this,MainActivity.class);
+
     }
 
     /**
@@ -330,7 +355,6 @@ public class MainActivity extends BaseActivity {
                     return;
                 }
                 changeTab(faxianLin, 1);
-
                 break;
             case R.id.rewan_lin:  //旅途
                 //判断是否登录

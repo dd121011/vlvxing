@@ -67,7 +67,8 @@ public class FeaturesFragment1 extends Fragment {
 //                    text = readme.getString("text");
 //                    Log.e("TAG", "text1" + text);
 //                }
-        int width = (int) (MyApp.getScreenWidth() * 0.32f - 30f);
+        int width = (int) (MyApp.getScreenWidth());
+//        int width = (int) (MyApp.getScreenWidth() * 0.32f - 30f);
         if (text != null) {
             String[] splitd = text.split("img");
             StringBuffer sbd = new StringBuffer();

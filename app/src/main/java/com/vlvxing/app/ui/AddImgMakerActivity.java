@@ -1,9 +1,17 @@
 package com.vlvxing.app.ui;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.os.StrictMode;
+import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,18 +24,22 @@ import com.bumptech.glide.Glide;
 import com.handongkeji.handler.RemoteDataHandler;
 import com.handongkeji.modle.ResponseData;
 import com.handongkeji.ui.BaseActivity;
+import com.handongkeji.utils.Bimp;
+import com.handongkeji.utils.BitmapUtils;
 import com.handongkeji.utils.StringUtils;
 import com.vlvxing.app.R;
 import com.vlvxing.app.common.Constants;
 import com.vlvxing.app.common.MyApp;
 import com.vlvxing.app.model.RecordModel;
 import com.vlvxing.app.utils.CacheData;
+import com.vlvxing.app.utils.FileUtil;
 import com.vlvxing.app.utils.ToastUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -41,6 +53,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.OkHttpClient;
 
 /**
  * Created by Administrator on 2017/6/12 0012.
@@ -59,29 +72,46 @@ public class AddImgMakerActivity extends BaseActivity {
     TextView saveTxt;
     private Bitmap bitmap;
     private double lat, lng;
-    private String mLecenseUrl, address,id,path;
+    private String mLecenseUrl, address, id, path;
     private boolean isRecord; //判断是否点击了开始录制
     private int type;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addimgmaker_layout);
         ButterKnife.bind(this);
+
+//        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+//                .detectDiskReads()
+//                .detectDiskWrites()
+//                .detectNetwork()   // or .detectAll() for all detectable problems
+//                .penaltyLog()
+//                .build());
+//        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+//                .detectLeakedSqlLiteObjects()
+//                .detectLeakedClosableObjects()
+//                .penaltyLog()
+//                .penaltyDeath()
+//                .build());
+
+
         // 获取图片的宽度
         int img_width = MyApp.getInstance().getScreenWidth();
         ViewGroup.LayoutParams params = img.getLayoutParams();
-        params.height = (img_width * 150) /240; // 750:500
+        params.height = (img_width * 150) / 240; // 750:500
         img.setLayoutParams(params);
         Intent intent = getIntent();
-        type=intent.getIntExtra("type",0); //1编辑修改  0添加标注
-        if (type==1){
-            id=intent.getStringExtra("id");
+        type = intent.getIntExtra("type", 0); //1编辑修改  0添加标注
+
+        if (type == 1) {
+            id = intent.getStringExtra("id");
             String picurl = intent.getStringExtra("url");
             if (!StringUtils.isStringNull(picurl)) {
                 Glide.with(this).load(picurl).into(img);
             }
             headTitle.setText("编辑图片标注点");
-        }else {
+        } else {
             path = intent.getStringExtra("path");
             lat = intent.getDoubleExtra("lat", 0);
             lng = intent.getDoubleExtra("lng", 0);
@@ -91,14 +121,16 @@ public class AddImgMakerActivity extends BaseActivity {
             Glide.with(this).load(path).into(img);
             headTitle.setText("添加图片标注点");
         }
+
     }
 
     private void uploadImg() {
+
         showDialog("上传中...");
         String url = Constants.URL_UPLOAD;//上传图片接口
         HashMap<String, File> fileMap = new HashMap<>();
-//        String filePath = Constants.CACHE_DIR_UPLOADING_IMG + "/lecenseimg.jpg";//待上传图片缓存目录
-        final File file = new File(path);//保存图片路径
+        final File file = new File(path);//保存图片路径Context c, String filePath, String fileName, Bitmap bitmap
+
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -106,23 +138,19 @@ public class AddImgMakerActivity extends BaseActivity {
                 e.printStackTrace();
             }
         }
-//        try {
-//            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
-//            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-//            bos.flush();
-//            bos.close();
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
         fileMap.put("file", file);
+        System.out.println("上传图片   file:" + path);
+        System.out.println("上传图片   file:" + file.getPath());
+        System.out.println("上传图片  file getAbsolutePath:" + file.getAbsolutePath());
+
         HashMap<String, String> params = new HashMap<>();
         params.put("filemark", "3");
+
         RemoteDataHandler.asyncMultipartPost(url, params, fileMap, new RemoteDataHandler.Callback() {
             @Override
             public void dataLoaded(ResponseData data) {
                 String json = data.getJson();
+                System.out.println("上传图片   json:" + json);
                 if (null != json && !json.equals("")) {
                     JSONObject obj = null;
                     try {
@@ -133,7 +161,7 @@ public class AddImgMakerActivity extends BaseActivity {
                             mLecenseUrl = obj.getString("data").replace("\\", "/");
                             if (isRecord) {
                                 saveRecord();
-                            }else{
+                            } else {
                                 saveImg(); // 保存记录（单个图片或视频）
                             }
                         } else {
@@ -148,6 +176,7 @@ public class AddImgMakerActivity extends BaseActivity {
             }
         });
     }
+
 
     /**
      * 保存记录（单个图片或视频）
@@ -188,11 +217,11 @@ public class AddImgMakerActivity extends BaseActivity {
     }
 
     private void saveRecord() {
-         String name = nameEdt.getText().toString().trim();
+        String name = nameEdt.getText().toString().trim();
         if (StringUtils.isStringNull(name)) {
-           name="";
+            name = "";
         }
-        RecordModel model = new RecordModel(lng, lat, mLecenseUrl, "", "",System.currentTimeMillis() + "", name, address);
+        RecordModel model = new RecordModel(lng, lat, mLecenseUrl, "", "", System.currentTimeMillis() + "", name, address);
         List<RecordModel> list = new ArrayList<>();
         list.add(model);
         CacheData.saveRecentSubList(list, "addmaker");
@@ -207,9 +236,9 @@ public class AddImgMakerActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.save_txt:
-                if (type==0) {
+                if (type == 0) {
                     uploadImg(); //添加标注点
-                }else{
+                } else {
                     UpdateImg(); //编辑标注
                 }
                 break;
@@ -241,7 +270,7 @@ public class AddImgMakerActivity extends BaseActivity {
                 String message = obj.getString("message");
                 if (status.equals("1")) {
                     ToastUtils.show(AddImgMakerActivity.this, "修改成功!");
-                   finish();
+                    finish();
                     SaveAfterActivity.mContext.finish();
                 } else {
                     ToastUtils.show(AddImgMakerActivity.this, message);

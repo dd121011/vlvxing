@@ -248,6 +248,7 @@
             <RelativeLayout
                 android:id="@+id/rel7"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="58dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
@@ -274,6 +275,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:visibility="gone"
                 android:background="@color/color_e7e7e7"
                 android:layout_marginLeft="50dp"
                 />

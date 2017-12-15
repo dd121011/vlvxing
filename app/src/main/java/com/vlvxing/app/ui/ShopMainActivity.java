@@ -125,7 +125,7 @@ public class ShopMainActivity extends BaseActivity {
 
     private void loadWeb(String data) {
         String text = data;
-        int width = (int) (MyApp.getScreenWidth() * 0.32f - 30f);
+        int width = (int) (MyApp.getScreenWidth());
         if (text != null) {
             String[] splitd = text.split("img");
             StringBuffer sbd = new StringBuffer();

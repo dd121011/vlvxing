@@ -450,17 +450,6 @@ public class FileUtil {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
 	/**
 	 * 将Bitmap 图片保存到本地路径，并返回路径
 	 * @param c
@@ -518,6 +507,5 @@ public class FileUtil {
 		}
 		return fileFullName;
 	}
-
 
 }

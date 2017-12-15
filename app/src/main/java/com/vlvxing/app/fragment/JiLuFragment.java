@@ -645,6 +645,8 @@ public class JiLuFragment extends Fragment implements BDLocationListener, OnGetP
                 }
                 String id = marker.getExtraInfo().getString("id");
                 int type = marker.getExtraInfo().getInt("type", 0); // //0图片  1视屏 2轨迹
+                System.out.println("test 视频功能  记录碎片 marker单击事件 id:"+id);
+                System.out.println("test 视频功能  记录碎片 marker单击事件 type:"+type);
                 RecordMapModel.DataBean bean = null;
                 if (type != 2) {
                     bean = marker.getExtraInfo().getParcelable("bean");
@@ -652,7 +654,9 @@ public class JiLuFragment extends Fragment implements BDLocationListener, OnGetP
                 if (type == 0) {
                     startActivity(new Intent(mContext, SaveAfterActivity.class).putExtra("id", id).putExtra("data", bean)); //图片详情
                 } else if (type == 1) {
+                    System.out.println("test 视频功能  记录碎片 marker单击事件 type=1,跳转至-SaveAfterVideoActivity"+type);
                     startActivity(new Intent(mContext, SaveAfterVideoActivity.class).putExtra("id", id).putExtra("data", bean)); //视频详情
+
                 } else if(type == 2){
                     startActivity(new Intent(mContext, TrackDetailActivity.class).putExtra("id", id)); //轨迹详情
                 }

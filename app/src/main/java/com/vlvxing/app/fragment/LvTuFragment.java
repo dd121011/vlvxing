@@ -416,9 +416,8 @@ public class LvTuFragment extends Fragment implements BDLocationListener{
                     return false;
                 }
 
-
                 String id = marker.getExtraInfo().getString("id");
-                int type = marker.getExtraInfo().getInt("type", 0); // //0图片  1视屏 2轨迹
+                int type = marker.getExtraInfo().getInt("type", 0);  //0图片  1视屏 2轨迹
                 RecordMapModel.DataBean bean = null;
                 if (type != 2) {
                     bean = marker.getExtraInfo().getParcelable("bean");
@@ -487,8 +486,10 @@ public class LvTuFragment extends Fragment implements BDLocationListener{
                 if (StringUtils.isStringNull(json)) {
                     return;
                 }
+
                 Gson gson = new Gson();
                 RecordMapModel model = gson.fromJson(json, RecordMapModel.class);
+//                System.out.println("test 视频功能  记录碎片 marker单击事件 type:"+type);
                 String status = model.getStatus();
                 if ("1".equals(status)) {
                     String roadid = null, id = null;

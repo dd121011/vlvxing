@@ -221,8 +221,8 @@ public class PlaneRefundTicketActivity extends BaseActivity{
         params.put("passengerIds",passengerIds);//乘机人ID,多个的话","隔开
         params.put("returnRefundFee",returnRefundFee);//应退的钱
 //        params.put("callbackUrl","callbackUrl");//退票完成消息回调地址applyRefund
-        System.out.println("退票申请接口 passengerIds:"+passengerIds);
-        RemoteDataHandler.asyncPlaneGet("http://192.168.1.103:8080/"+"test2",params,mcontext,new RemoteDataHandler.Callback() {
+//        System.out.println("退票申请接口 passengerIds:"+passengerIds);
+        RemoteDataHandler.asyncPlaneGet(url+"applyRefund",params,mcontext,new RemoteDataHandler.Callback() {
             @Override
             public void dataLoaded(ResponseData data) throws JSONException {
                 System.out.println("退票申请接口 data:"+data);

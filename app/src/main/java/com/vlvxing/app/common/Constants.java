@@ -27,7 +27,6 @@ public final class Constants {
     public static final String QUNAR_TOKEN = "109cfbc62855bdc711a68c77c3e6bd97"; //从开发者平台获取
 //    public static final String QUNAR_BASE_URL = "http://60.205.213.239:81/ticket/";
     public static final String QUNAR_BASE_URL = "http://app.mtvlx.cn/ticket/";
-    public static final String QUNAR_SEARCHFLIGHT = "flight.national.supply.sl.searchflight";//航班搜索接口
     /**
      * 系统初始化配置文件名
      */
@@ -182,11 +181,9 @@ public final class Constants {
      * 应用上下文完整路径
      *
      */
-    public static final String URL_PLANE_PATH = "http://app.mtvlx.cn/demo/";
+    public static final String URL_PLANE_PATH = "http://app.mtvlx.cn/ticket/";
 //	public static final String URL_CONTEXTPATH = PROTOCOL + HOST2 + PORT;
-//	public static final String URL_CONTEXTPATH = "http://192.168.1.68/lvyoushejiao/";
     public static final String URL_CONTEXTPATH = "http://app.mtvlx.cn/lvyoushejiao/";  //客户的
-//    public static final String URL_CONTEXTPATH = "http://192.168.1.21/lvyoushejiao/";
 
     /**
      * 应用图片完整路径c
@@ -326,28 +323,28 @@ public final class Constants {
     /**
      * 机票城市列表 Zophar
      **/
-    public static final String PLANE_CITYLIST  =  "/getTheCity";
+    public static final String PLANE_CITYLIST  = URL_PLANE_PATH + "getTheCity";
     /**
      * 城市搜索 Zophar
      */
-    public static String PLANE_CITYSELECT = "/sousuodiqu";
+    public static String PLANE_CITYSELECT = URL_PLANE_PATH + "sousuodiqu";
 
     /**
      * 定制游中的目的地（包括国内外市）sysArea/getAllTheCity.json
      */
-    public static String URL_CITYSALL=URL_CONTEXTPATH+"sysArea/getAllTheCity.json";
+    public static String URL_CITYSALL = URL_CONTEXTPATH+"sysArea/getAllTheCity.json";
     /**
      * 城市搜索
      */
-    public static String URL_CITYSELECT=URL_CONTEXTPATH+"sysArea/sousuodiqu.json";
+    public static String URL_CITYSELECT = URL_CONTEXTPATH+"sysArea/sousuodiqu.json";
     /**
      * 热门景点
      */
-    public static final String URL_HOTSCIENCE= URL_CONTEXTPATH+"ProSpotsController/getProSpots.html";
+    public static final String URL_HOTSCIENCE = URL_CONTEXTPATH+"ProSpotsController/getProSpots.html";
     /**
      * 国内外商品列表
      */
-    public static final String URL_PRODUCTLIST1= URL_CONTEXTPATH+"ProProductController/productList.html";
+    public static final String URL_PRODUCTLIST1 = URL_CONTEXTPATH+"ProProductController/productList.html";
     /**
      * 附近时获取商品列表  或者   附近中的自驾游和周末游
      */
