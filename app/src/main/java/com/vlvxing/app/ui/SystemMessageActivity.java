@@ -73,12 +73,14 @@ public class SystemMessageActivity extends BaseActivity {
     private SwipeRefreshLayout.OnRefreshListener onRefreshListener;
     private int type;
     private myAdapter adapter;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.message_layout);
         ButterKnife.bind(this);
+        context = this;
         listView.setVisibility(View.GONE);
         Intent intent = getIntent();
         type = intent.getIntExtra("type", 0);
@@ -94,33 +96,33 @@ public class SystemMessageActivity extends BaseActivity {
         initData();
 
         onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
-        @Override
-        public void onRefresh() {
-            if (isRefreshing) return;
-            isRefreshing = true;
-            currentPage = 1;
-            swipeRefresh.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    initData();
-                }
-            }, 1000);
-        }
-    };
+            @Override
+            public void onRefresh() {
+                if (isRefreshing) return;
+                isRefreshing = true;
+                currentPage = 1;
+                swipeRefresh.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        initData();
+                    }
+                }, 1000);
+            }
+        };
         swipeRefresh.setOnRefreshListener(onRefreshListener);
         swipeRefresh.setColorSchemeResources(R.color.color_ea5413);
 
         listView.setLoadDataListener(new MyListView.LoadDataListener() {
-        @Override
-        public void onLoadMore() {
-            if (isLoadMore) return;
-            isLoadMore = true;
-            currentPage++;
-            initData();
-        }
-    });
-    onRefresh();
-}
+            @Override
+            public void onLoadMore() {
+                if (isLoadMore) return;
+                isLoadMore = true;
+                currentPage++;
+                initData();
+            }
+        });
+        onRefresh();
+    }
 
     private void onRefresh() {
         swipeRefresh.setRefreshing(true);
@@ -233,17 +235,43 @@ public class SystemMessageActivity extends BaseActivity {
             holder.itemLin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(type == 1){
-                        if(bean.getMsgurl()!=null){
-                            Intent intent = new Intent(context, BrowseActivity.class);
-                            intent.putExtra("url", bean.getMsgurl());
-                            startActivity(intent);
+
+                    if (type == 1) {
+                        if (bean.getType() == 1) {
+                            if (bean.getMsgurl() != null) {
+                                Intent intent = new Intent(context, BrowseActivity.class);
+                                intent.putExtra("url", bean.getMsgurl());
+                                startActivity(intent);
+                            }
+                        } else if (bean.getType() == 2) {
+                            String activityName = bean.getAndroidclassname();
+                            try {
+                                if(!"".equals(activityName)&&activityName!=null){
+                                    Class clazz = Class.forName(activityName);
+                                    System.out.println("通知:clazz:"+clazz);
+                                    Intent intentActivity = new Intent(context, clazz);
+//                                intentActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(intentActivity);
+                                }
+                            } catch (ClassNotFoundException e) {
+                                e.printStackTrace();
+                            }
+
+                        } else if (bean.getType() == 3) {
+                            int productid = bean.getProductid();
+                            if (productid != 0) {
+                                //线路
+                                Intent intentLine = new Intent(context, LineDetailsActivity.class);
+                                intentLine.putExtra("id", productid);
+//                            intentLine.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intentLine);
+                            }
                         }
                     }
                     if (type == 2) { //订单
-                        if(bean.getType() == 3 ){
+                        if (bean.getType() == 3) {
                             getPlaneOrderMessage(id);
-                        }else{
+                        } else {
                             context.startActivity(new Intent(context, OrderDetailActivity.class).putExtra("id", id));
                         }
 
@@ -266,19 +294,19 @@ public class SystemMessageActivity extends BaseActivity {
             showDialog("数据加载中...");
             String url = Constants.URL_ORDERDETAIL;
             HashMap<String, String> params = new HashMap<>();
-            params.put("orderId",id);
-            params.put("token",myApp.getUserTicket());
+            params.put("orderId", id);
+            params.put("token", myApp.getUserTicket());
             RemoteDataHandler.asyncPost(url, params, SystemMessageActivity.this, true, new RemoteDataHandler.Callback() {
                 @Override
                 public void dataLoaded(ResponseData data) throws JSONException {
                     String json = data.getJson();
-                    System.out.println("友盟  json"+json);
+                    System.out.println("友盟  json" + json);
                     if (StringUtils.isStringNull(json)) {
                         return;
                     }
                     Gson gson = new Gson();
                     PlaneOrderMessageResult info = gson.fromJson(json, PlaneOrderMessageResult.class);
-                    System.out.println("友盟  orderInfo"+info.getData());
+                    System.out.println("友盟  orderInfo" + info.getData());
                     context.startActivity(new Intent(context, PlaneCompletedOrderActivity.class).putExtra("orderInfo", info.getData()));
                     dismissDialog();
                 }

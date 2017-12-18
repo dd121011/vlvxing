@@ -57,6 +57,9 @@ public class MessageModel {
          * redirection : null
          * ispush : 0
          * orderid : 149
+         * androidclassname :跳转内部Activity
+         * productid :线路ID
+         *
          */
 
         private String msgid;
@@ -73,6 +76,24 @@ public class MessageModel {
         private String orderid;
         private String msgurl;
         private int type;
+        private String androidclassname;
+        private Integer productid;
+
+        public String getAndroidclassname() {
+            return androidclassname;
+        }
+
+        public void setAndroidclassname(String androidclassname) {
+            this.androidclassname = androidclassname;
+        }
+
+        public Integer getProductid() {
+            return productid;
+        }
+
+        public void setProductid(Integer productid) {
+            this.productid = productid;
+        }
 
         public int getType() {
             return type;

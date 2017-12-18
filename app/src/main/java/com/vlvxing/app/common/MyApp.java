@@ -657,12 +657,12 @@ public class MyApp extends Application {
              * */
             @Override
             public Notification getNotification(Context context, UMessage msg) {
-                System.out.println("友盟推送 自定义通知栏样式的回调方法 getNotification"+msg.custom);
+                System.out.println("友盟推送 自定义通知栏样式的回调方法 getNotification" + msg.custom);
                 JSONObject jsonObject = null;
                 try {
                     jsonObject = new JSONObject(msg.custom);
                     int messageNum = jsonObject.getInt("messageNum");
-                    AppShortCutUtil.addNumShortCut(context,MainActivity.class,true,String.valueOf(messageNum),false);
+                    AppShortCutUtil.addNumShortCut(context, MainActivity.class, true, String.valueOf(messageNum), false);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -733,7 +733,6 @@ public class MyApp extends Application {
                                         //webview展示链接
                                         String url = json.getString("data");
 //                                    System.out.println("友盟推送 type = 1  " + url);
-
                                         Intent intent = new Intent(context, BrowseActivity.class);
                                         intent.putExtra("url", url);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -742,9 +741,17 @@ public class MyApp extends Application {
                                     case 2:
                                         //跳转Activity
 //                                    System.out.println("友盟推送 type = 2  ");
-//						    		Intent intent = new Intent();
-//							    	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//							    	startActivity(intent);
+                                        String activityName = json.getString("data");
+                                        try {
+                                            if (!"".equals(activityName) && activityName != null) {
+                                                Class clazz = Class.forName(activityName);
+                                                Intent intentActivity = new Intent(context, clazz);
+                                                intentActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                startActivity(intentActivity);
+                                            }
+                                        } catch (ClassNotFoundException e) {
+                                            e.printStackTrace();
+                                        }
                                         break;
                                     case 3:
                                         //线路

@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -24,11 +26,19 @@ import com.vlvxing.app.R;
 import com.vlvxing.app.common.Constants;
 import com.vlvxing.app.common.MyApp;
 import com.vlvxing.app.model.SysadModel;
+import com.vlvxing.app.utils.AsyncBitmapLoader;
+import com.vlvxing.app.utils.Contant;
 import com.vlvxing.app.utils.ToastUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,16 +52,20 @@ public class SplashActivity extends BaseActivity {
     private ImageView img;
     private Context mcontext;
     private Handler handler = new Handler();
+    private SharedPreferences sps;
+    private AsyncBitmapLoader aBitmapLoader;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         img = (ImageView) findViewById(R.id.img);
         mcontext = this;
+        sps = getSharedPreferences(Contant.SP, MODE_PRIVATE);
+        aBitmapLoader = new AsyncBitmapLoader();
     }
 
 
-    //获取bananer图
     public void getImgSource() {
         String url = Constants.URL_SYSAD;
         HashMap<String, String> params = new HashMap<>();
@@ -68,46 +82,36 @@ public class SplashActivity extends BaseActivity {
                         final int status = model.getStatus();
                         if (status == 1) {
 //                            Glide.with(mcontext).load("").into(img);
-                            if(model.getData()!=null){
+                            if (model.getData() != null) {
                                 String imgUrl = model.getData().get(0).getAdpicture();
-                                if (!StringUtils.isStringNull(imgUrl)) { // 加载图片
-                                    ImageLoader
-                                            .getInstance().displayImage(imgUrl,
-                                            img);
-                                } else {
-                                    img.setImageResource(R.mipmap.splash);
+                                String img_ulr = sps.getString(Contant.SP, "");
+                                if(imgUrl.equals(img_ulr)){
+                                    System.out.println("节日启动页  本次启动和上次相同");
+                                }else{
+                                    System.out.println("节日启动页  本次启动和上次不相同");
+                                    sps.edit().putString(Contant.SP, imgUrl).commit();
                                 }
-                            }else {
-                                img.setImageResource(R.mipmap.splash);
-                            }
 
+                                Bitmap bitmap = aBitmapLoader.loadBitMap(
+                                        img, imgUrl, new AsyncBitmapLoader.ImageCallBack() {
+
+                                            @Override
+                                            public void imageLoad(ImageView imageView,
+                                                                  Bitmap bitmap) {
+                                                img.setImageBitmap(bitmap);
+                                            }
+                                        });
+                                if (bitmap == null) {
+                                    img.setImageResource(R.mipmap.splash);
+                                } else {
+                                    img.setImageBitmap(bitmap);
+                                }
+
+
+                            }
                         } else {
                             img.setImageResource(R.mipmap.splash);
                         }
-                        handler.postDelayed(() -> {
-                            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                            Intent i_getvalue = getIntent();
-                            String action = i_getvalue.getAction();
-                            if (Intent.ACTION_VIEW.equals(action)) {
-                                Uri uri = i_getvalue.getData();
-
-                                if (uri != null) {
-                                    String id = uri.getQueryParameter("id");
-//                    String scheme = uri.getScheme();String host = uri.getHost();String port = uri.getPort() + "";String path = uri.getPath();String query = uri.getQuery();
-//                    System.out.println("获得的数据name=" + id + "/r" + "scheme" + scheme + "/r" + "host" +
-//                            "host" + host + "/r" + "port" + port + "/r" + "path" + path + "/r" + "query" + query);
-                                    if (!id.equals("")) {
-                                        System.out.println("获得数据 欢迎   id:" + id);
-                                        intent.putExtra("productId", id);
-                                        intent.putExtra("lineDetails", true);
-                                        MyApp.getInstance().setSendUrl(true);
-                                    }
-                                }
-                            }
-                            startActivity(intent);
-                            SplashActivity.this.finish();
-                        }, 3000);
-
                     }
                 }
         );
@@ -129,7 +133,31 @@ public class SplashActivity extends BaseActivity {
 
 
         if (splash1 == 1) {
-            getImgSource();
+//            getImgSource();
+
+            handler.postDelayed(() -> {
+                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                Intent i_getvalue = getIntent();
+                String action = i_getvalue.getAction();
+                if (Intent.ACTION_VIEW.equals(action)) {
+                    Uri uri = i_getvalue.getData();
+
+                    if (uri != null) {
+                        String id = uri.getQueryParameter("id");
+//                    String scheme = uri.getScheme();String host = uri.getHost();String port = uri.getPort() + "";String path = uri.getPath();String query = uri.getQuery();
+//                    System.out.println("获得的数据name=" + id + "/r" + "scheme" + scheme + "/r" + "host" +
+//                            "host" + host + "/r" + "port" + port + "/r" + "path" + path + "/r" + "query" + query);
+                        if (!id.equals("")) {
+                            System.out.println("获得数据 欢迎   id:" + id);
+                            intent.putExtra("productId", id);
+                            intent.putExtra("lineDetails", true);
+                            MyApp.getInstance().setSendUrl(true);
+                        }
+                    }
+                }
+                startActivity(intent);
+                SplashActivity.this.finish();
+            }, 3000);
 
         } else { //引导页
             splash.edit().putInt("splash", 1).commit();
